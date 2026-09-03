@@ -40,7 +40,7 @@ Settings for every number are in the linked documents. Nothing here was measured
 7. [06 — Benchmarks](docs/06-benchmarks.md) and [07 — Speed](docs/07-speed.md) — realistic and synthetic, separated.
 8. [08 — What we tried and rejected](docs/08-what-we-tried.md) and [09 — Open problems](docs/09-open-problems.md).
 9. [Audit](audit/README.md) — run it after install; expected ranges.
-10. [CREDITS](CREDITS.md) · [LICENSES](LICENSES.md)
+10. [CREDITS](CREDITS.md) · [LICENSES](LICENSES.md) · [CONTRIBUTING — tests we could not run; send us yours](CONTRIBUTING.md)
 
 ## Quick path (for an AI coding agent)
 

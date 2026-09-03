@@ -10,6 +10,9 @@ Boot to serving, measured on this cluster: **296–304 s** `[measured-here]` (ti
 unit started at +104 s, engine answering `/health` at +304 s; a second
 production reboot the same day: 296 s).
 
+> The unit file in this repository contains the placeholders `@USER@` and `@HOME@`. `install.sh` replaces them with the
+> account that runs the engine on that node (the one that owns `~/glm3x`). Nothing in the recipe requires a specific user name.
+
 ## The unit, line by line
 
 ```ini
@@ -98,7 +101,7 @@ long shutdown is slower.
 ## Install (on every node)
 
 ```bash
-sudo cp systemd/harem-motor.service /etc/systemd/system/harem-motor.service
+bash systemd/install.sh   # substitutes your user name and home directory into the unit, copies it, enables it
 ```
 
 ```bash

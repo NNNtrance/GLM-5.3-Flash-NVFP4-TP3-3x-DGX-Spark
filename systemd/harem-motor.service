@@ -7,12 +7,12 @@ Requires=docker.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-User=glm53
-Environment=ENV_FILE=/home/glm53/glm3x/.env.lil-t10
-Environment=HOME=/home/glm53
-WorkingDirectory=/home/glm53/glm3x
-ExecStartPre=/bin/bash /home/glm53/glm3x/scripts/engine-preflight.sh
-ExecStart=/bin/bash /home/glm53/glm3x/scripts/start-lil.sh
+User=@USER@
+Environment=ENV_FILE=@HOME@/glm3x/.env.lil-t10
+Environment=HOME=@HOME@
+WorkingDirectory=@HOME@/glm3x
+ExecStartPre=/bin/bash @HOME@/glm3x/scripts/engine-preflight.sh
+ExecStart=/bin/bash @HOME@/glm3x/scripts/start-lil.sh
 ExecStop=/usr/bin/docker stop -t 60 harem_glm53_lil
 TimeoutStartSec=900
 
