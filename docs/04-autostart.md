@@ -108,7 +108,7 @@ start in the right order (workers first, head last).
 
 ### 1. Boot to serving
 
-Measured on this cluster: **296–304 s** `[measured-here]`.
+Measured on this cluster: **296–304 s** `[measured-here]` — timed from the moment our watcher started polling, about 17 s after the reboot command was issued; count on roughly 5 min 15 s from the command.
 
 Three-node reboot, 3 Sep 2026, timed from the reboot command:
 

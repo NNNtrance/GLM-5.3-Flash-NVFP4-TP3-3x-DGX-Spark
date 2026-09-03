@@ -20,12 +20,12 @@ Per node, at production settings `[measured-here]`:
 | | |
 |---|---|
 | Total memory visible to the OS | 121.6 GiB |
-| Free on the device as the engine sees it at startup | **111.5–111.8 GiB** |
+| Free on the device as the engine sees it at startup | **111.3–111.8 GiB** |
 | Model weights | ~65.5 GiB (engine reports 65.78 GiB at load) |
 | Peak activations | 5.8 GiB at 0.86, rising to 6.3 GiB at 0.89 |
 | Everything left over | the KV pool |
 
-The difference between 121.6 and 111.7 GiB is held by the driver and does not come back
+The difference between 121.6 and 111.3–111.8 GiB is held by the driver and does not come back
 after a reboot. So the **device-side ceiling is about 0.915** — ask for more than that and
 vLLM refuses during its pre-check, cleanly, without allocating anything. (An earlier
 measurement in our pinned-KV era saw only 107.4 GiB free, a ~14 GiB driver reserve, and put
@@ -169,9 +169,9 @@ grow. You can define fifty agent profiles against this engine.
 requests are in flight at any moment, whatever the pool size. Worst case is 8 × the
 per-request context: at a 4.31M-token pool that is roughly 539K tokens each before the
 pool is the constraint. Our `--max-model-len` is 1,000,000 tokens, and the pool holds
-**4.3 full-length requests** at that length. Note the two conventions: the table above
-divides by 1,000,000 and says 4.31×, while vLLM prints its own ratio against 1,048,576 and
-says 4.11×. Same pool, two divisors.
+**4.3 full-length requests** at that length. vLLM prints the same ratio in its own start-up
+line — `Maximum concurrency for 1,000,000 tokens per request: 4.31x` — so the table above and
+the engine log agree; both divide by `--max-model-len`, not by 2^20.
 
 Verified end to end: a needle-in-a-haystack run scored 20/20 across four context sizes up
 to 974K tokens and five depths, with an effective context of 997,952 tokens
@@ -195,4 +195,4 @@ recomputation is cheap per token and expensive in total.
 
 ---
 
-Previous: [01-cluster-setup.md](01-cluster-setup.md).
+Previous: [04-autostart.md](04-autostart.md). Next: [06-benchmarks.md](06-benchmarks.md).

@@ -15,7 +15,7 @@ otherwise. Node names in this repository are always `head` (rank 0, serves the A
 | Item | What we have |
 |---|---|
 | Nodes | 3 × NVIDIA DGX Spark (GB10, `sm_121`, aarch64). Ours are ASUS Ascent GX10 units |
-| Memory | 128 GB unified per node; the OS sees **121 GiB**, and the engine sees 111.5–111.8 GiB free on the device (see [05-memory-ladder.md](05-memory-ladder.md)) |
+| Memory | 128 GB unified per node; the OS sees **121 GiB**, and the engine sees 111.3–111.8 GiB free on the device (see [05-memory-ladder.md](05-memory-ladder.md)) |
 | Storage | ~916 GB NVMe per node |
 | Interconnect | 2 ConnectX-7 QSFP cages per node, **no switch** — three direct cables in a ring |
 

@@ -317,7 +317,7 @@ exam that runs without a GPU):
 | `fix-A` — [`fix-A.md`](patches/fix-A.md), applied in [`scripts/start-lil.sh`](scripts/start-lil.sh) | launcher | Not an image patch. The draft model is loaded with `safetensors` instead of `instanttensor`, because the zero-copy mapped buffer plus our own padding copy segfaulted during weight loading. Draft load time 5.71 s. |
 
 **Scripts, unit and documentation:** everything in [`scripts/`](scripts/), [`systemd/`](systemd/),
-[`audit/`](audit/), [`tests/`](tests/), [`docs/`](docs/) and this README — the launcher, the
+[`audit/`](audit/), [`docs/`](docs/) and this README — the launcher, the
 preflight script that waits for Docker, for `ibv_devinfo` to report 4 of 4 active ports, for the
 fabric neighbours to answer, and then drops caches; the `harem-motor` systemd unit; the speed,
 category and cold/warm measurement scripts; and the raw measurement data in

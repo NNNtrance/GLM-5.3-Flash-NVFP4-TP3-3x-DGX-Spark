@@ -51,9 +51,17 @@ we had to move ours to avoid exactly that collision.
 
 | Link | Endpoints |
 |---|---|
-| `head` ↔ `worker-1`, cable 1 | `10.10.0.1/.2` and `10.10.1.1/.2` |
-| `head` ↔ `worker-2`, cable 3 | `10.10.2.1/.2` and `10.10.3.1/.2` |
-| `worker-1` ↔ `worker-2`, cable 2 | `10.10.4.1/.2` and `10.10.5.1/.2` |
+| `head` ↔ `worker-1`, cable 1 | `<fabric>.0.1/.2` and `<fabric>.1.1/.2` |
+| `head` ↔ `worker-2`, cable 3 | `<fabric>.2.1/.2` and `<fabric>.3.1/.2` |
+| `worker-1` ↔ `worker-2`, cable 2 | `<fabric>.4.1/.2` and `<fabric>.5.1/.2` |
+
+`<fabric>` stands for the first two octets of a private range you choose; the six
+subnets are then the six third-octet values. Two places have to agree with whatever you
+pick: `FABRIC_PEERS` in [`scripts/engine-preflight.sh`](../scripts/engine-preflight.sh)
+(the two neighbours each node pings at boot) and the optional `FABRIC_PREFIX` in
+[`scripts/env.example`](../scripts/env.example), which makes the launcher refuse a
+rendezvous address taken from the fabric range. Both files carry RFC 5737 documentation
+addresses as placeholders — replace them.
 
 Each node exposes four fabric interfaces (`enp1s0f0np0`, `enp1s0f1np1`, `enP2p1s0f0np0`,
 `enP2p1s0f1np1`) and four RoCE devices. We configure them as persistent NetworkManager
@@ -79,11 +87,17 @@ address, so each rank uses the cable that actually reaches that peer.
 | License | MIT |
 | What we use it for | NIC selection on the switchless triangle |
 
-Build it once per node and keep the result next to the engine:
+**Build it from `autoscriptlabs/nccl-mesh-plugin` at commit `19924dcc` following that
+repository's own README; our binary's exact build is not recorded** (see the open item at
+the end of this section). What we ran was a plain `make` in the checkout — if the README
+asks for anything else on your platform, the README wins:
 
 ```
 git clone https://github.com/autoscriptlabs/nccl-mesh-plugin.git && cd nccl-mesh-plugin && git checkout 19924dcc7c571d6e260953724d394ae50bad82cf && make
 ```
+
+Do this once **per node** — the plugin is bind-mounted from each node's own filesystem, so
+all three need it before the first launch.
 
 The build produces `libnccl-net-mesh.so`; NCCL loads it under the name `libnccl-net.so`,
 so keep both names in the directory:
@@ -98,8 +112,14 @@ environment selects it with `NCCL_NET=Mesh`, `NCCL_NET_PLUGIN=mesh` and
 
 Two things to get right, both of which cost real bandwidth if you get them wrong:
 
-- **`NCCL_IB_MERGE_NICS=1` is mandatory.** Each cable carries two logical ports. Without
-  the merge, NCCL uses one of them and you lose half the fabric.
+- **`NCCL_IB_MERGE_NICS` depends on which path you run.** Each cable carries two logical
+  ports, and on NCCL's own IB path only one of them is used unless the merge is enabled —
+  half the fabric. With the mesh plugin that flag is not the mechanism: our launcher ships
+  `NCCL_NET=Mesh`, `NCCL_IB_DISABLE=1` and `NCCL_IB_MERGE_NICS=0`
+  ([`scripts/start-lil.sh`](../scripts/start-lil.sh)), because the plugin does the NIC
+  selection itself. Set the merge to 1 only if you drop the plugin and go back to the IB
+  path. **What we actually measured** (98.0 Gb/s per logical link, 196.0 per cable) was
+  taken with `ib_write_bw`, not through NCCL.
 - **Do not pin `NCCL_IB_GID_INDEX`.** The widely-copied `NCCL_IB_GID_INDEX=3` line is
   correct for a two-node single-subnet link and is wrong on a pairwise triangle — leave
   NCCL to pick (the default, -1). Using `-x 3` with `ib_write_bw` for a single manually
@@ -191,7 +211,7 @@ automatic startup): `PORT_ACTIVE` 4/4 every time `[measured-here]`.
 
 ## 6. Power and thermal notes
 
-One of our units (`worker-2`) idles 10 °C hotter than the other two. The cause is not the
+One of our units (`worker-2`) idles 8–10 °C hotter than the other two. The cause is not the
 chip and not the airflow: **the ASUS embedded controller drives the fan from power draw,
 not temperature.** That unit's idle draw sits below the threshold, so the fan does not
 spin, so it heats up. Proven in place — after a CPU load the fan kept spinning and the
@@ -267,3 +287,14 @@ should verify and report on, one line per item, before it touches the engine.
 - [ ] Everyone who will operate this cluster knows: **reboot all three, together**
 
 Next: the engine image and its flags, then [05-memory-ladder.md](05-memory-ladder.md).
+
+## Ports and firewall
+
+| Port | Node | Protocol | Purpose |
+|---|---|---|---|
+| 8000/tcp | head | HTTP | OpenAI-compatible API (`/v1/*`, `/health`, `/metrics`) — the only port clients need |
+| 29521/tcp | head | torch distributed | rendezvous for the three vLLM ranks (`--master-addr`/`--master-port`); workers connect to it at startup |
+| ConnectX-7 links | all | NCCL over the mesh plugin | tensor/expert-parallel traffic; not routed through the LAN |
+
+If you run a host firewall, allow 29521/tcp from the two workers to the head, and 8000/tcp from your clients.
+Do not expose 8000 to the internet: the API has no authentication in this recipe.

@@ -5,7 +5,7 @@ every power cut, so each node runs the same unit, `harem-motor.service`, and the
 cluster comes back on its own. `docs/04-autostart.md` explains why it is built
 this way; this page is the install and operate reference.
 
-Boot to serving, measured on this cluster: **296–304 s** `[measured-here]`
+Boot to serving, measured on this cluster: **296–304 s** `[measured-here]` (timed from watcher start, ~17 s after the reboot command)
 (three-node reboot 3 Sep 2026: ssh back at +101 s, ConnectX-7 4/4 at +103 s,
 unit started at +104 s, engine answering `/health` at +304 s; a second
 production reboot the same day: 296 s).

@@ -26,6 +26,19 @@ explains what breaks and how to derive it safely.
 The evaluation runners need a couple of paths for third-party tools:
 `LM_EVAL`, `TOOL_EVAL_BENCH`, `TOKENIZER`. Set them in `cluster.env` too.
 
+**What the ssh account on each node needs.** The operator-side scripts run non-interactively
+(`ssh -o BatchMode=yes`, `sudo -n`), so the account named in `cluster.env` must have:
+
+- key-based ssh with no passphrase prompt;
+- membership of the `docker` group, because `run-audit.sh` and the memory scripts read
+  `docker logs` and container memory;
+- passwordless sudo for `systemctl start|stop|enable|disable harem-motor` — used by
+  `engine-start.sh`, `engine-stop.sh` and `memory-ladder-step.sh`. Without it those three
+  scripts fail silently on every node.
+
+The service account that the systemd unit itself runs as is a separate matter, including
+its own `drop_caches` sudoers line — see [systemd/README.md](../systemd/README.md).
+
 ## On a node
 
 | File | What it does |

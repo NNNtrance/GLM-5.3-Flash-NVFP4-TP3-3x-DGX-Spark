@@ -170,7 +170,8 @@ tag or how long it will exist. `[not tested]`
 ### 3.3 Stage the patch sources
 
 ```
-cp -r /path/to/this/repo/patches/* ~/glm53-build/
+git clone https://github.com/NNNtrance/GLM-5.3-Flash-NVFP4-TP3-3x-DGX-Spark.git ~/recipe
+cp -r ~/recipe/patches/* ~/glm53-build/
 ```
 
 ```

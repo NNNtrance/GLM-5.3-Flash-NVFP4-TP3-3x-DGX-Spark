@@ -114,7 +114,8 @@ restated with its evidence in `docs/02-image-build.md`.
   (around `vllm/config/kernel.py:250`; SM12x FlashInfer CuteDSL fused MoE).
   Only `b12x.py` and `hpc_moe.py` restrict `_supports_parallel_config`; the
   others allow EP.
-  **This line is WRONG and was corrected later** — see §2.6 of the write-up:
+  **This line is WRONG and was corrected later** — see section 9 of
+  [docs/02-image-build.md](../docs/02-image-build.md):
   `experts/flashinfer_b12x_moe.py:199-202` refuses expert maps too. Only
   `marlin` accepts EP on this hardware.
 - Conclusion at the time: for TP=3 either (a) pad `moe_intermediate_size`

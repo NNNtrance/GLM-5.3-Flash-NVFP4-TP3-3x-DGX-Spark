@@ -341,7 +341,7 @@ produced at **`low`**.
 | constrained writing (IFEval-like) | 198 | 936 | 4.7× | 7.6 | 20.7 |
 | code (palindrome function) | 509 | 4,112 | 8.1× | 8.0 | 73.5 |
 
-source: vault-derived, `DUSUNME-VE-EFOR-URETIM-AYARI` effort probe, t10, 2026-09-03. `[measured-here, raw lost]`
+source: our own working notes, effort probe, t10, 2026-09-03. `[measured-here, raw lost]`
 — the probe script's stdout was not captured to a file.
 
 Token cost is 4.6–18× and wall-clock cost is 5–12×. The IFEval run alone took 2 h 10 min at low; at max it
@@ -378,7 +378,7 @@ Being explicit about the holes matters more than the numbers above.
 
 | Benchmark | Status | Note |
 |---|---|---|
-| **ExtractBench Short** | **not run on this build** `[not tested]` | We have an earlier baseline from a different build (NVFP4-era checkpoint, different image, different draft): **94.51** on the fair-comparison 215-document set, against an official **96.3** `[reported]`. Mark it `[measured-here, different build]` — it is **not** a t10 number and must not be quoted as one. Engine limit worth knowing: the encoder budget is 32,242 tokens and pages cost ~2,837 tokens each, so at most ~11 pages per request; ExtractBench Medium and Long are physically impossible on this configuration. |
+| **ExtractBench Short** | **not run on this build** `[not tested]` | We have an earlier baseline from a different build (NVFP4-era checkpoint, different image, different draft): **94.51** on the fair-comparison 215-document set, against **96.46** for an H100 FP8 reference on the same 215 documents `[reported]`. (The model card's own Short figure, **96.3**, is in the official table below and was measured on the full set, not on that intersection.) Mark it `[measured-here, different build]` — it is **not** a t10 number and must not be quoted as one. Engine limit worth knowing: the encoder budget is 32,242 tokens and pages cost ~2,837 tokens each, so at most ~11 pages per request; ExtractBench Medium and Long are physically impossible on this configuration. |
 | **AutomationBench v1.0.6** | not run `[not tested]` | Open repository, ~600 tasks, an estimated 5–10 hours. Prepared but not started. |
 | **Terminal-Bench 2.1** | not run `[not tested]` | 89 tasks in Docker; the official setup drives it through a coding agent at T = 1.0 with a 65,536-token budget, which is a different regime from everything above. |
 | **DeepSWE, HLE with tools, GDPval-AA** | not run `[not tested]` | Days of runtime, and the last two need external judges or an external scoring service. |
@@ -402,7 +402,7 @@ comparable.
 | GDPval-AA v2 (Elo) | 1773 | scored by Artificial Analysis |
 | ExtractBench Short / Medium / Mean | 96.3 / 51.56 / 80.75 | single-shot structured output |
 
-source: vault-derived from the model card reading of 2026-09-03; we did not re-fetch the card for this page.
+source: our own working notes from the model card reading of 2026-09-03; we did not re-fetch the card for this page.
 
 ---
 

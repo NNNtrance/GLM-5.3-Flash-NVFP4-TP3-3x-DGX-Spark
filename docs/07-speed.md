@@ -182,7 +182,7 @@ and math heavy) and the inherent unpredictability of creative text. Read the pro
 | 50 × `clamp_XX` functions (code pattern) | **83.2** | 100 % |
 | hash-map explanation (prose) | 28.3 | 24 % |
 
-source: vault-derived from the post-reboot verification run of 2026-09-03; the same run's concurrency sweep is
+source: our own working notes from the post-reboot verification run of 2026-09-03; the same run's concurrency sweep is
 in [`results/speed/bench-sweep-reboot-t10-1.json`](../results/speed/bench-sweep-reboot-t10-1.json).
 `[measured-here, raw lost]` for the three synthetic lines — the protocol script prints to stdout only.
 
@@ -251,8 +251,8 @@ the whole range, which is the useful part: the draft keeps working under load.
 
 source: [`bench-sweep-lil-t10-{1,2}.json`](../results/speed/bench-sweep-lil-t10-1.json) ·
 [`bench-sweep-lil-t16-{1,2}.json`](../results/speed/bench-sweep-lil-t16-1.json) ·
-[`bench-sweep-lil-t17-{1,2}.json`](../results/speed/bench-sweep-lil-t17-1.json) · KV pool sizes are vault-derived
-from the engine's own startup line in each arm
+[`bench-sweep-lil-t17-{1,2}.json`](../results/speed/bench-sweep-lil-t17-1.json) · KV pool sizes are from our own working
+notes, taken from the engine's own startup line in each arm
 
 **Cost:** graphs buy +22 % single-stream and give back 5 % at C4–C6, nothing at C8, and **−12 % KV pool**.
 Capturing only sizes 8 and 16 keeps almost all of the C1 gain for a −7 % KV pool instead of −12 %. If you run
@@ -270,7 +270,7 @@ Single stream, warm, effort low, two prompts per cell:
 | T = 0.6, top_p 0.95 | 55.9 | 59.9 | 23.8 |
 | T = 1.0, top_p 0.95 | 52.9 | 58.4 | 22.4 |
 
-source: vault-derived, `DUSUNME-VE-EFOR-URETIM-AYARI` sampling probe. `[measured-here, raw lost]`
+source: our own working notes, sampling probe. `[measured-here, raw lost]`
 
 Within ±5 %, which is our run-to-run noise. Sampling temperature is not a speed knob on this stack — pick it
 for output quality. (The model card recommends T = 1.0, top_p 0.95.)

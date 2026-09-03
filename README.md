@@ -22,7 +22,7 @@ what we measured, what we tried and rejected, and what is still open. Written so
 | GSM8K (200 q, 8-shot CoT) | 94.0 % | |
 | Needle in a haystack | 20/20 up to 997,952 tokens | full 1M context works |
 | Speed, realistic (12 short English code prompts) | C1 ≈ 57–60 tok/s · C8 ≈ 22 tok/s per user, ≈ 150 tok/s total | acceptance 62–65 % on code; prose ≈ 21 tok/s (acceptance ≈ 13 %) |
-| Speed depends on prompt language | same code task: English 54–63 tok/s, Turkish 43–47 tok/s | the draft model predicts English far better; tables measured with mixed-language prompts are a floor for English work |
+| Speed depends on prompt language | same code task: English 54–63 tok/s, Turkish 41–47 tok/s | the draft model predicts English far better; tables measured with mixed-language prompts are a floor for English work |
 | Speed, synthetic ("count to 200") | ≈ 93 tok/s | speculative-decoding **ceiling**; will disappoint in real use |
 | KV pool | 4,321,739 tokens at gpu-memory-utilization 0.88 | 4.3 concurrent 1M-token requests |
 | Boot to serving (autostart after reboot) | ≈ 5 min | all three nodes |
@@ -45,12 +45,22 @@ Settings for every number are in the linked documents. Nothing here was measured
 ## Quick path (for an AI coding agent)
 
 ```text
+0. git clone https://github.com/NNNtrance/GLM-5.3-Flash-NVFP4-TP3-3x-DGX-Spark.git on the workstation and on the head node.
 1. Read docs/00 and docs/01; confirm versions and ibv_devinfo 4/4 on all three nodes.
 2. Download the checkpoint and the draft at the pinned revisions (docs/00).
-3. Build the image (docs/02) on the head node; export/import to the workers.
-4. Copy scripts/ to ~/glm3x/ on every node; derive env from scripts/env.example per node (docs/03).
-5. Install systemd/harem-motor.service on every node (docs/04); reboot all three.
-6. Run audit/run-audit.sh from a client; compare with audit/README.md ranges.
+   The draft is CC BY-NC-ND 4.0 and our permission for it does not transfer to you
+   (LICENSES.md) - the recipe also runs without it, more slowly.
+3. Build the NCCL mesh plugin on every node from autoscriptlabs/nccl-mesh-plugin at
+   commit 19924dcc, per its README (docs/01 section 3); our binary's exact build is
+   not recorded.
+4. Build the image (docs/02) on the head node; ship it to the workers and prove the
+   three image IDs match.
+5. Copy scripts/ to ~/glm3x/ on every node; derive env from scripts/env.example per node
+   with sed, never by copying (docs/03). Set FABRIC_PEERS in engine-preflight.sh per node.
+6. Install systemd/harem-motor.service on every node (docs/04); reboot all three.
+7. On your workstation, copy scripts/cluster.env.example to scripts/cluster.env and fill
+   in your ssh targets and API address.
+8. Run audit/run-audit.sh from that workstation; compare with audit/README.md ranges.
 ```
 
 Evidence tiers used throughout: `[measured-here]`, `[measured-here, raw lost]`, `[reported]`, `[estimate]`, `[not tested]`.

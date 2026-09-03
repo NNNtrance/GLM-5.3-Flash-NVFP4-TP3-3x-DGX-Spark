@@ -450,6 +450,11 @@ thinking on + low, aggregate tok/s):
 | k=8 | 47.34 | 71.13 | 92.86 | 114.60 | 134.52 | 5.16–5.51 | 5,332,675 (−1.1%) |
 | k=10 | 47.99 | 71.35 | 90.78 | 109.05 | 130.14 | 5.33–5.99 | 5,217,374 (−3.2%) |
 
+(Item 13 of [08 — What we tried](08-what-we-tried.md) carries a second transcription of
+this same 31 August run whose k=7 and k=8 rows differ by up to 2 tok/s from the ones above;
+the scan files are gone, so we cannot say which transcription is faithful. Neither changes
+the decision below.)
+
 k=8 was ahead on acceptance and at C2/C6 with non-overlapping ranges. **But** the three arms
 ran on machines with different uptimes, and the k=7 control run was started and never
 recorded, so there is no clean control. **k=7 is fixed by operator decision**: above 7 the

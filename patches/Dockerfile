@@ -123,7 +123,9 @@ RUN --mount=type=cache,target=/root/.cache/ccache \
 #   instanttensor  requirements/cuda.txt, needed by --load-format instanttensor
 #   b12x 1.3.0     pure Python, JIT/CuTe-DSL, exactly the version setup.py pins
 # ---------------------------------------------------------------------------
-RUN pip install --no-cache-dir "instanttensor>=0.1.9"
+# Pinned to the version PyPI served when we built (0.1.9 is the latest release as of 2026-09-04);
+# the exact version installed in our image was not recorded, see docs/09-open-problems.md.
+RUN pip install --no-cache-dir "instanttensor==0.1.9"
 COPY b12x /opt/b12x
 RUN cd /opt/b12x && pip install --no-build-isolation --no-deps --no-cache-dir . \
  && rm -rf /root/.cache/pip
