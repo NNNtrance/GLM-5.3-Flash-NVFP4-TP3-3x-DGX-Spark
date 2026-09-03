@@ -345,3 +345,27 @@ Anything below that threshold is written here with its range or marked `[estimat
 | Biggest lever | draft acceptance — what kind of text you are generating, and in which language | [(c)](#acceptance-rate-ie-content) |
 
 Benchmark scores are in [06-benchmarks.md](06-benchmarks.md).
+
+
+## Roofline: how close to the hardware limits
+
+Measured on the head node with the engine stopped, inside our image (torch micro-benchmarks) `[measured-here]`:
+memory copy 230–246 GB/s (read+write), read-only 243 GB/s; BF16 matmul 97 TFLOPS; FP8 `_scaled_mm` 199 TFLOPS (8192²).
+Byte model from `config.json` `[estimate]`: 45 layers (3 dense + 42 MoE), 288 experts, top-k 8, one shared expert;
+an expert is 3×4096×2048 = 25.2M params ≈ 14.2 MB at NVFP4 (~4.5 bit); non-expert weights ≈ 15 GB (fp8-class);
+≈ 20B active params per token. Per node (TP=3 slices + EP, busiest node ≈ 3.9 experts per layer) a single-token
+decode step streams ≈ 6.4 GB; the DFlash2 draft (bf16, 2.2 GB, TP=1) adds to rank 0.
+
+| Regime | Measured | Bytes per step per node | Effective bandwidth | Share of 243 GB/s | Share of FP8 TFLOPS |
+|---|---|---|---|---|---|
+| Decode C1, no draft (t9) | 20.5 tok/s (48.8 ms/step) | ≈ 6.4 GB | ≈ 131 GB/s | ≈ 54 % | ≈ 1 % |
+| Decode C1, DFlash2 k=7 (t10, code) | 57 tok/s, ≈ 5.5 tok/step (≈ 96 ms) | verify 8 tokens → 19–23 experts/layer/node: 18–20 GB | ≈ 190–210 GB/s | ≈ 80–85 % | ≈ 3 % |
+| Decode C8, DFlash2 (t10) | 150 tok/s total, 64 verify tokens/step (≈ 283 ms) | ≈ 85 % of experts touched: ≈ 52 GB | ≈ 184 GB/s | ≈ 75 % | ≈ 5 % |
+| Prefill, 7K prompt, chunk 2048 | 1,585 tok/s (1.29 s/chunk) | all experts: ≈ 61 GB/chunk | ≈ 47 GB/s | ≈ 19 % | ≈ 10 % (21 TFLOPS/node) |
+
+Reading: decode with the draft already sits near the bandwidth roof, so faster kernels buy little there — fewer bytes
+(smaller weights, fp8 KV) or higher acceptance are the only levers. Decode without the draft stalls at ~54 % because
+of per-layer synchronisation over the fabric and M=1 inefficiency. **Prefill is far from both roofs** (kernel
+efficiency at moderate M, the sparse-attention indexer, the KDA scans, communication, and the 22→24 head padding);
+this is where kernel work can still pay. Assumptions: non-expert weights fp8, draft on rank 0 only, KV reads ignored
+(short context); treat every ratio as ±15 %. No profiler run (nsys/ncu) backs these numbers.
