@@ -1,0 +1,10 @@
+=== category speed (warm) 06:29  | decode = (token-1)/(end-first token), acceptance = /metrics difference
+  C1 prose      decode avg= 20.6 tok/s (min 16.6 / max 24.6) | TTFT avg=0.33s | acceptance=13.3% | avg 680 tokens
+  C1 code        decode avg= 43.0 tok/s (min 30.9 / max 56.3) | TTFT avg=0.46s | acceptance=44.2% | avg 625 tokens
+  C1 math    decode avg= 57.0 tok/s (min 47.0 / max 74.7) | TTFT avg=0.57s | acceptance=60.3% | avg 474 tokens
+  C1 json       decode avg= 52.1 tok/s (min 42.3 / max 59.0) | TTFT avg=0.48s | acceptance=55.3% | avg 512 tokens
+  C4 prose      per-user decode avg= 10.8 tok/s | total= 37.5 tok/s | TTFT avg=0.54s | acceptance=11.3%
+  C4 code        per-user decode avg= 26.6 tok/s | total= 78.3 tok/s | TTFT avg=0.55s | acceptance=49.7%
+  C4 math    per-user decode avg= 34.1 tok/s | total= 79.9 tok/s | TTFT avg=1.12s | acceptance=57.2%
+  C4 json       per-user decode avg= 32.2 tok/s | total= 90.4 tok/s | TTFT avg=0.80s | acceptance=57.5%
+=== CATEGORY SPEED DONE 06:38

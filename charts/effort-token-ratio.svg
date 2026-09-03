@@ -1,0 +1,34 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='760' height='330' viewBox='0 0 760 330' font-family='system-ui,-apple-system,Segoe UI,Roboto,sans-serif'>
+<rect width='760' height='330' fill='#ffffff'/>
+<text x='20' y='28' font-size='17' font-weight='600' fill='#1c2430'>Reasoning effort: max / low token ratio</text>
+<text x='20' y='46' font-size='11.5' fill='#5c6675'>t10 image, temp 0, 4 prompts, 2026-09-03. Ratio of generated tokens at effort max vs effort low; wall-clock ratio in</text>
+<text x='20' y='61' font-size='11.5' fill='#5c6675'>brackets.</text>
+<line x1='230.0' y1='86' x2='230.0' y2='250' stroke='#d8dce3'/>
+<text x='230.0' y='266' font-size='10' fill='#5c6675' text-anchor='middle'>0x</text>
+<line x1='340.0' y1='86' x2='340.0' y2='250' stroke='#d8dce3'/>
+<text x='340.0' y='266' font-size='10' fill='#5c6675' text-anchor='middle'>5x</text>
+<line x1='450.0' y1='86' x2='450.0' y2='250' stroke='#d8dce3'/>
+<text x='450.0' y='266' font-size='10' fill='#5c6675' text-anchor='middle'>10x</text>
+<line x1='560.0' y1='86' x2='560.0' y2='250' stroke='#d8dce3'/>
+<text x='560.0' y='266' font-size='10' fill='#5c6675' text-anchor='middle'>15x</text>
+<line x1='670.0' y1='86' x2='670.0' y2='250' stroke='#d8dce3'/>
+<text x='670.0' y='266' font-size='10' fill='#5c6675' text-anchor='middle'>20x</text>
+<text x='220' y='115.8' font-size='11.5' fill='#1c2430' text-anchor='end'>easy tool call</text>
+<rect x='230' y='100.8' width='396.0' height='22' fill='#2b5fd9'/>
+<text x='633.0' y='115.8' font-size='11' fill='#1c2430'>18.0x  [12x time]</text>
+<text x='236' y='115.8' font-size='10.5' fill='#ffffff'>8 -&gt; 144 tok</text>
+<text x='220' y='155.2' font-size='11.5' fill='#1c2430' text-anchor='end'>GSM8K question</text>
+<rect x='230' y='140.2' width='101.2' height='22' fill='#2b5fd9'/>
+<text x='338.2' y='155.2' font-size='11' fill='#1c2430'>4.6x  [5x time]</text>
+<text x='236' y='155.2' font-size='10.5' fill='#ffffff'>88 -&gt; 405 tok</text>
+<text x='220' y='194.8' font-size='11.5' fill='#1c2430' text-anchor='end'>constrained writing (IFEval-like)</text>
+<rect x='230' y='179.8' width='104.0' height='22' fill='#2b5fd9'/>
+<text x='341.0' y='194.8' font-size='11' fill='#1c2430'>4.7x  [3x time]</text>
+<text x='236' y='194.8' font-size='10.5' fill='#ffffff'>198 -&gt; 936 tok</text>
+<text x='220' y='234.2' font-size='11.5' fill='#1c2430' text-anchor='end'>code (palindrome function)</text>
+<rect x='230' y='219.2' width='177.7' height='22' fill='#2b5fd9'/>
+<text x='414.7' y='234.2' font-size='11' fill='#1c2430'>8.1x  [9x time]</text>
+<text x='236' y='234.2' font-size='10.5' fill='#ffffff'>509 -&gt; 4112 tok</text>
+<line x1='230' y1='250' x2='670' y2='250' stroke='#1c2430'/>
+<text x='20' y='316' font-size='10.5' fill='#5c6675'>This is why every benchmark in this recipe was run at effort low: max effort costs 4.6-18x the tokens and 5-12x the wall clock.</text>
+</svg>

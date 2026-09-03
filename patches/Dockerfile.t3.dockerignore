@@ -1,0 +1,4 @@
+# t3 needs only the two scripts; keep the 742 MB context out of the daemon.
+*
+!patch_tp3_lil.py
+!verify_t3.py

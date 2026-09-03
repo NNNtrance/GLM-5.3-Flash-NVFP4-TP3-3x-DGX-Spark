@@ -1,0 +1,72 @@
+[
+  {
+    "conc": 1,
+    "requests": 8,
+    "wall_s": 102.04,
+    "out_tok": 2048,
+    "agg_tok_s": 20.07,
+    "per_stream_decode_tok_s": 20.39,
+    "ttft_med_s": 0.248,
+    "ttft_max_s": 0.268,
+    "tpot_ms": 49.04,
+    "accept_rate_pct": null,
+    "accept_len": null,
+    "label": "lil-t9-2"
+  },
+  {
+    "conc": 2,
+    "requests": 8,
+    "wall_s": 65.07,
+    "out_tok": 2048,
+    "agg_tok_s": 31.48,
+    "per_stream_decode_tok_s": 16.09,
+    "ttft_med_s": 0.409,
+    "ttft_max_s": 0.497,
+    "tpot_ms": 62.17,
+    "accept_rate_pct": null,
+    "accept_len": null,
+    "label": "lil-t9-2"
+  },
+  {
+    "conc": 4,
+    "requests": 16,
+    "wall_s": 80.15,
+    "out_tok": 4091,
+    "agg_tok_s": 51.04,
+    "per_stream_decode_tok_s": 13.03,
+    "ttft_med_s": 0.537,
+    "ttft_max_s": 0.58,
+    "tpot_ms": 76.75,
+    "accept_rate_pct": null,
+    "accept_len": null,
+    "label": "lil-t9-2"
+  },
+  {
+    "conc": 6,
+    "requests": 24,
+    "wall_s": 106.49,
+    "out_tok": 6063,
+    "agg_tok_s": 56.94,
+    "per_stream_decode_tok_s": 9.81,
+    "ttft_med_s": 0.628,
+    "ttft_max_s": 1.316,
+    "tpot_ms": 101.95,
+    "accept_rate_pct": null,
+    "accept_len": null,
+    "label": "lil-t9-2"
+  },
+  {
+    "conc": 8,
+    "requests": 32,
+    "wall_s": 107.38,
+    "out_tok": 7931,
+    "agg_tok_s": 73.86,
+    "per_stream_decode_tok_s": 9.67,
+    "ttft_med_s": 0.646,
+    "ttft_max_s": 1.442,
+    "tpot_ms": 103.44,
+    "accept_rate_pct": null,
+    "accept_len": null,
+    "label": "lil-t9-2"
+  }
+]

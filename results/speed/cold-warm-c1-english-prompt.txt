@@ -1,0 +1,33 @@
+cold-warm-c1.py, English code prompt (the prompt shipped in scripts/cold-warm-c1.py)
+Measured 4 September 2026 on the production cluster, engine already warm.
+
+Settings: image harem/glm53-lil:t10, TP=3 + expert parallelism + marlin MoE,
+NVFP4 weights, KV fp8, no KV pin, block size 256, CUDA graphs ON, DFlash2 k=7,
+gpu-memory-utilization 0.88, max-num-seqs 8, max-num-batched-tokens 2048,
+thinking ON at reasoning effort low, temperature 0, max_tokens 700,
+concurrency 1, realistic (not synthetic) prompt.
+
+Three consecutive runs of three requests each:
+
+C1-cold: TTFT=0.53s decode=54.7tok/s (626tok/12.0s) acceptance=58.4% | C1-warm: TTFT=0.57s decode=53.8tok/s (651tok/12.7s) acceptance=57.3% | C1-warm2: TTFT=0.75s decode=60.4tok/s (564tok/10.1s) acceptance=63.8%
+C1-cold: TTFT=0.51s decode=63.2tok/s (500tok/8.4s) acceptance=68.6% | C1-warm: TTFT=0.56s decode=60.0tok/s (628tok/11.0s) acceptance=65.1% | C1-warm2: TTFT=0.75s decode=56.5tok/s (683tok/12.8s) acceptance=59.6%
+C1-cold: TTFT=0.53s decode=56.6tok/s (635tok/11.7s) acceptance=60.7% | C1-warm: TTFT=0.75s decode=57.1tok/s (666tok/12.4s) acceptance=60.0% | C1-warm2: TTFT=0.56s decode=55.0tok/s (700tok/13.3s) acceptance=58.8%
+
+Range: decode 53.8-63.2 tok/s, acceptance 57.3-68.6 %.
+
+WHY THIS FILE EXISTS. Our published cold/warm C1 numbers (43-47 tok/s,
+acceptance 44-48 %) were measured with the SAME task written as a Turkish
+prompt. The script published in this repository asks for the same LRU cache in
+English, and on the identical engine that measures 10-15 tok/s faster with
+about 13 points more speculative acceptance.
+
+Nothing about the engine changed between the two sets. The difference is the
+prompt language: the DFlash2 drafter predicts English continuations
+considerably better than Turkish ones. We did not investigate further and we
+have not repeated the whole speed battery in English, so the tables elsewhere
+in this repository still carry the Turkish-prompt numbers. Treat that as a
+floor for English workloads rather than as a ceiling.
+
+The "cold" run above is not genuinely cold: the engine had been serving for
+some time. A true cold first request after an engine start is slower — see the
+post-reboot figures in audit/README.md.

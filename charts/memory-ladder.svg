@@ -1,0 +1,75 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='840' height='560' viewBox='0 0 840 560' font-family='system-ui,-apple-system,Segoe UI,Roboto,sans-serif'>
+<rect width='840' height='560' fill='#ffffff'/>
+<text x='20' y='28' font-size='17' font-weight='600' fill='#1c2430'>Memory ladder — KV pool vs gpu-memory-utilization</text>
+<text x='20' y='46' font-size='11.5' fill='#5c6675'>t10 image, TP3+EP, NVFP4, KV fp8, DFlash2 k=7, graphs on, no KV pin, 1M max-model-len, 3 nodes, 2026-09-03 night, correctness probe</text>
+<text x='20' y='61' font-size='11.5' fill='#5c6675'>10/10 at every rung. 0.88 chosen for production, 0.89 rejected on swap.</text>
+<text x='20' y='94' font-size='12' font-weight='600' fill='#1c2430'>KV cache pool (tokens)</text>
+<line x1='74' y1='254.7' x2='800' y2='254.7' stroke='#d8dce3'/>
+<text x='66' y='258.7' font-size='10' fill='#5c6675' text-anchor='end'>3.5M</text>
+<line x1='74' y1='188.0' x2='800' y2='188.0' stroke='#d8dce3'/>
+<text x='66' y='192.0' font-size='10' fill='#5c6675' text-anchor='end'>4.0M</text>
+<line x1='74' y1='121.3' x2='800' y2='121.3' stroke='#d8dce3'/>
+<text x='66' y='125.3' font-size='10' fill='#5c6675' text-anchor='end'>4.5M</text>
+<rect x='104.6' y='203.8' width='84' height='64.2' fill='#2b5fd9'/>
+<text x='146.6' y='196.8' font-size='11' fill='#1c2430' text-anchor='middle'>3,881,159</text>
+<rect x='249.8' y='184.9' width='84' height='83.1' fill='#2b5fd9'/>
+<text x='291.8' y='177.9' font-size='11' fill='#1c2430' text-anchor='middle'>4,023,188</text>
+<rect x='395.0' y='167.1' width='84' height='100.9' fill='#2b5fd9'/>
+<text x='437.0' y='160.1' font-size='11' fill='#1c2430' text-anchor='middle'>4,156,521</text>
+<rect x='540.2' y='146.6' width='84' height='121.4' fill='#2b5fd9'/>
+<text x='582.2' y='139.6' font-size='11' fill='#1c2430' text-anchor='middle'>4,310,144</text>
+<rect x='685.4' y='133.5' width='84' height='134.5' fill='#a9b6d6'/>
+<text x='727.4' y='126.5' font-size='11' fill='#1c2430' text-anchor='middle'>4,408,695</text>
+<line x1='74' y1='268' x2='800' y2='268' stroke='#1c2430'/>
+<text x='66' y='272' font-size='10' fill='#5c6675' text-anchor='end'>3.4M</text>
+<text x='20' y='318' font-size='12' font-weight='600' fill='#1c2430'>What it costs: host headroom</text>
+<rect x='268' y='310' width='11' height='11' rx='2' fill='#1f8a4c'/>
+<text x='284' y='319' font-size='11' fill='#1c2430'>lowest free RAM on any node (GiB)</text>
+<rect x='523.8' y='310' width='11' height='11' rx='2' fill='#c0392b'/>
+<text x='539.8' y='319' font-size='11' fill='#1c2430'>head-node swap in use (MiB)</text>
+<line x1='74' y1='452.0' x2='800' y2='452.0' stroke='#d8dce3'/>
+<text x='66' y='456.0' font-size='10' fill='#1f8a4c' text-anchor='end'>0 GiB</text>
+<text x='808' y='456.0' font-size='10' fill='#c0392b'>0</text>
+<line x1='74' y1='412.0' x2='800' y2='412.0' stroke='#d8dce3'/>
+<text x='66' y='416.0' font-size='10' fill='#1f8a4c' text-anchor='end'>4 GiB</text>
+<text x='808' y='416.0' font-size='10' fill='#c0392b'>333</text>
+<line x1='74' y1='372.0' x2='800' y2='372.0' stroke='#d8dce3'/>
+<text x='66' y='376.0' font-size='10' fill='#1f8a4c' text-anchor='end'>8 GiB</text>
+<text x='808' y='376.0' font-size='10' fill='#c0392b'>666</text>
+<line x1='74' y1='332.0' x2='800' y2='332.0' stroke='#d8dce3'/>
+<text x='66' y='336.0' font-size='10' fill='#1f8a4c' text-anchor='end'>12 GiB</text>
+<text x='808' y='336.0' font-size='10' fill='#c0392b'>1000</text>
+<text x='808' y='314' font-size='9.5' fill='#c0392b'>MiB</text>
+<rect x='106.6' y='388.0' width='36' height='64.0' fill='#1f8a4c'/>
+<text x='124.6' y='383.0' font-size='10' fill='#1c2430' text-anchor='middle'>6.4</text>
+<text x='168.6' y='452.0' font-size='10' fill='#1c2430' text-anchor='middle' dy='-5'>0</text>
+<text x='146.6' y='472.0' font-size='11.5' fill='#1c2430' text-anchor='middle'>0.85</text>
+<text x='146.6' y='488.0' font-size='9.5' fill='#5c6675' text-anchor='middle'>free 6.4-7.6 / 9.2 / 9.1 GiB</text>
+<rect x='251.8' y='382.0' width='36' height='70.0' fill='#1f8a4c'/>
+<text x='269.8' y='377.0' font-size='10' fill='#1c2430' text-anchor='middle'>7.0</text>
+<rect x='295.8' y='447.1' width='36' height='4.9' fill='#c0392b'/>
+<text x='313.8' y='447.1' font-size='10' fill='#1c2430' text-anchor='middle' dy='-5'>41</text>
+<text x='291.8' y='472.0' font-size='11.5' fill='#1c2430' text-anchor='middle'>0.86</text>
+<text x='291.8' y='488.0' font-size='9.5' fill='#5c6675' text-anchor='middle'>free 7.0 / 9.3 / 9.2 GiB</text>
+<rect x='397.0' y='394.0' width='36' height='58.0' fill='#1f8a4c'/>
+<text x='415.0' y='389.0' font-size='10' fill='#1c2430' text-anchor='middle'>5.8</text>
+<rect x='441.0' y='446.4' width='36' height='5.6' fill='#c0392b'/>
+<text x='459.0' y='446.4' font-size='10' fill='#1c2430' text-anchor='middle' dy='-5'>47</text>
+<text x='437.0' y='472.0' font-size='11.5' fill='#1c2430' text-anchor='middle'>0.87</text>
+<text x='437.0' y='488.0' font-size='9.5' fill='#5c6675' text-anchor='middle'>free 5.8 / 8.2 / 8.1 GiB</text>
+<rect x='542.2' y='406.0' width='36' height='46.0' fill='#1f8a4c'/>
+<text x='560.2' y='401.0' font-size='10' fill='#1c2430' text-anchor='middle'>4.6</text>
+<rect x='586.2' y='399.3' width='36' height='52.7' fill='#c0392b'/>
+<text x='604.2' y='399.3' font-size='10' fill='#1c2430' text-anchor='middle' dy='-5'>439</text>
+<text x='582.2' y='472.0' font-size='11.5' fill='#1c2430' text-anchor='middle'>0.88 (production)</text>
+<text x='582.2' y='488.0' font-size='9.5' fill='#5c6675' text-anchor='middle'>free 4.6 / 6.9 / 6.9 GiB</text>
+<rect x='687.4' y='400.0' width='36' height='52.0' fill='#1f8a4c'/>
+<text x='705.4' y='395.0' font-size='10' fill='#1c2430' text-anchor='middle'>5.2</text>
+<rect x='731.4' y='340.8' width='36' height='111.2' fill='#c0392b'/>
+<text x='749.4' y='340.8' font-size='10' fill='#1c2430' text-anchor='middle' dy='-5'>927</text>
+<text x='727.4' y='472.0' font-size='11.5' fill='#1c2430' text-anchor='middle'>0.89 (rejected)</text>
+<text x='727.4' y='488.0' font-size='9.5' fill='#5c6675' text-anchor='middle'>free 5.2 / 5.8 / 6.0 GiB</text>
+<line x1='74' y1='452' x2='800' y2='452' stroke='#1c2430'/>
+<text x='20' y='530' font-size='10.5' fill='#5c6675'>Free-RAM triple is head / worker-1 / worker-2. The binding limit is host RAM, not the device: the device still reported 111.3-111.8 GiB free at every rung,</text>
+<text x='20' y='546' font-size='10.5' fill='#5c6675'>so the device ceiling is around 0.915. Our stop rule: MemAvailable stays above 2 GiB and the head node does not swap heavily.</text>
+</svg>

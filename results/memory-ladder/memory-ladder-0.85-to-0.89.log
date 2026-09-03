@@ -1,0 +1,145 @@
+=== STEP gpu-memory-utilization 0.86 started 2026-09-03 22:17:25
+cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+  head: GPU_MEMORY_UTILIZATION=0.86
+cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+  worker-1: GPU_MEMORY_UTILIZATION=0.86
+cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+  worker-2: GPU_MEMORY_UTILIZATION=0.86
+  worker-2: start issued 22:18:05
+  worker-1: start issued 22:18:12
+  head: start issued 22:18:18
+  health OK 22:21:51 (210 s)
+  21:10 [gpu_worker.py:593] Available KV cache memory: 33.06 GiB
+  0 [kv_cache_utils.py:2044] GPU KV cache size: 4,023,188 tokens, Maximum concurrency for 1,000,000 tokens per request: 4.02x
+  21:27 [gpu_worker.py:824] Free memory on device (111.76/121.63 GiB) on startup. Desired GPU memory utilization is (0.86, 104.6 GiB). Actual usage is 65.78 GiB for consumed memory (weights + non-torch), 5.76 GiB for peak activation, and -0.06 GiB for CUDAGraph memory. Replace gpu_memory_util
+<runner script>: line 11: syntax error near unexpected token `('
+<runner script>: line 11: `sleep 30; echo "  memory (idle):"; bash $S/memory-snapshot.sh $U; for h in head worker-1 worker-2; do ssh $h "echo -n '  $h swap: '; free -m | awk '/Swap/{print $3\" MB used\"}'"; done'
+  memory (idle):
+  [0.86] free-memory= head:available=7.0G/used=114.6G/total=122G/container=9.135GiB worker-1:available=9.3G/used=112.3G/total=122G/container=12.15GiB worker-2:available=9.2G/used=112.4G/total=122G/container=12.41GiB
+  head swap: Swap: 16383 41 16342
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+  correctness-probe:
+      RESULT (model knowledge, both fields): 10/10
+  C1 cold/warm:
+      cold-c1: C1-cold: TTFT=0.39s decode=41.7tok/s (700tok/17.2s) acceptance=41.0% | C1-warm: TTFT=0.38s decode=45.5tok/s (700tok/15.7s) acceptance=46.3% | C1-warm2: TTFT=0.32s decode=44.1tok/s (700tok/16.2s) acceptance=44.1%
+  category C1+C4:
+    C1 prose      decode avg= 22.0 tok/s (min 18.4 / max 26.9) | TTFT avg=0.35s | acceptance=13.5% | avg 673 tokens
+    C1 code        decode avg= 47.5 tok/s (min 37.9 / max 62.5) | TTFT avg=0.43s | acceptance=46.6% | avg 608 tokens
+    C1 math    decode avg= 56.6 tok/s (min 41.4 / max 76.5) | TTFT avg=0.57s | acceptance=52.0% | avg 462 tokens
+    C1 json       decode avg= 55.6 tok/s (min 47.9 / max 63.8) | TTFT avg=0.56s | acceptance=55.1% | avg 512 tokens
+    C4 prose      per-user decode avg= 11.0 tok/s | total= 39.2 tok/s | TTFT avg=0.63s | acceptance=11.4%
+    C4 code        per-user decode avg= 27.1 tok/s | total= 80.0 tok/s | TTFT avg=0.90s | acceptance=48.8%
+    C4 math    per-user decode avg= 34.1 tok/s | total= 78.2 tok/s | TTFT avg=1.08s | acceptance=50.2%
+    C4 json       per-user decode avg= 33.1 tok/s | total= 90.5 tok/s | TTFT avg=0.70s | acceptance=56.0%
+  memory (after load):
+  [0.86-load] free-memory= head:available=7.0G/used=114.7G/total=122G/container=9.137GiB worker-1:available=9.3G/used=112.3G/total=122G/container=12.14GiB worker-2:available=9.2G/used=112.4G/total=122G/container=12.4GiB
+  head swap: Swap: 16383 40 16343
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+=== STEP gpu-memory-utilization 0.86 FINISHED 22:32:34 KV=4,023,188 lowest_free=7,0GiB
+=== STEP gpu-memory-utilization 0.87 started 2026-09-03 22:34:57
+  head: GPU_MEMORY_UTILIZATION=0.87
+  worker-1: GPU_MEMORY_UTILIZATION=0.87
+  worker-2: GPU_MEMORY_UTILIZATION=0.87
+  worker-2: start issued 22:35:36
+  worker-1: start issued 22:35:43
+  head: start issued 22:35:50
+  health OK 22:39:38 (225 s)
+  38:49 [gpu_worker.py:593] Available KV cache memory: 34.62 GiB
+  9 [kv_cache_utils.py:2044] GPU KV cache size: 4,156,521 tokens, Maximum concurrency for 1,000,000 tokens per request: 4.16x
+  39:05 [gpu_worker.py:824] Free memory on device (111.33/121.63 GiB) on startup. Desired GPU memory utilization is (0.87, 105.82 GiB). Actual usage is 65.35 GiB for consumed memory (weights + non-torch), 5.84 GiB for peak activation, and 0.49 GiB for CUDAGraph memory. Replace gpu_memory_util
+  memory (idle):
+  [0.87] free-memory= head:available=5.8G/used=115.8G/total=122G/container=9.257GiB worker-1:available=8.2G/used=113.4G/total=122G/container=12.16GiB worker-2:available=8.1G/used=113.5G/total=122G/container=12.35GiB
+  head swap: Swap: 16383 47 16336
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+  correctness-probe:
+      RESULT (model knowledge, both fields): 10/10
+  C1 cold/warm:
+      cold-c1: C1-cold: TTFT=0.39s decode=45.1tok/s (700tok/15.9s) acceptance=46.6% | C1-warm: TTFT=0.33s decode=43.9tok/s (700tok/16.3s) acceptance=45.1% | C1-warm2: TTFT=0.39s decode=46.0tok/s (700tok/15.6s) acceptance=47.9%
+  category C1+C4:
+    C1 prose      decode avg= 21.3 tok/s (min 17.9 / max 26.6) | TTFT avg=0.34s | acceptance=13.1% | avg 676 tokens
+    C1 code        decode avg= 45.6 tok/s (min 31.9 / max 59.9) | TTFT avg=0.37s | acceptance=45.0% | avg 626 tokens
+    C1 math    decode avg= 58.4 tok/s (min 44.0 / max 81.9) | TTFT avg=0.60s | acceptance=55.3% | avg 448 tokens
+    C1 json       decode avg= 54.9 tok/s (min 43.8 / max 65.5) | TTFT avg=0.48s | acceptance=55.8% | avg 512 tokens
+    C4 prose      per-user decode avg= 11.0 tok/s | total= 38.0 tok/s | TTFT avg=0.64s | acceptance=11.1%
+    C4 code        per-user decode avg= 26.4 tok/s | total= 78.5 tok/s | TTFT avg=0.53s | acceptance=47.2%
+    C4 math    per-user decode avg= 35.0 tok/s | total= 79.8 tok/s | TTFT avg=1.14s | acceptance=53.8%
+    C4 json       per-user decode avg= 33.2 tok/s | total= 91.0 tok/s | TTFT avg=0.66s | acceptance=58.5%
+  memory (after load):
+  [0.87-load] free-memory= head:available=5.8G/used=115.9G/total=122G/container=9.262GiB worker-1:available=8.2G/used=113.4G/total=122G/container=12.14GiB worker-2:available=8.1G/used=113.5G/total=122G/container=12.33GiB
+  head swap: Swap: 16383 47 16336
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+=== STEP gpu-memory-utilization 0.87 FINISHED 22:50:25 KV=4,156,521 lowest_free=5,8GiB
+=== STEP gpu-memory-utilization 0.88 started 2026-09-03 22:50:57
+  head: GPU_MEMORY_UTILIZATION=0.88
+  worker-1: GPU_MEMORY_UTILIZATION=0.88
+  worker-2: GPU_MEMORY_UTILIZATION=0.88
+  worker-2: start issued 22:51:36
+  worker-1: start issued 22:51:43
+  head: start issued 22:51:49
+  health OK 22:55:37 (225 s)
+  54:48 [gpu_worker.py:593] Available KV cache memory: 35.63 GiB
+  8 [kv_cache_utils.py:2044] GPU KV cache size: 4,310,144 tokens, Maximum concurrency for 1,000,000 tokens per request: 4.31x
+  55:04 [gpu_worker.py:824] Free memory on device (111.67/121.63 GiB) on startup. Desired GPU memory utilization is (0.88, 107.03 GiB). Actual usage is 65.65 GiB for consumed memory (weights + non-torch), 5.75 GiB for peak activation, and -0.05 GiB for CUDAGraph memory. Replace gpu_memory_uti
+  memory (idle):
+  [0.88] free-memory= head:available=4.7G/used=116.9G/total=122G/container=10.18GiB worker-1:available=6.9G/used=114.7G/total=122G/container=12.15GiB worker-2:available=6.8G/used=114.8G/total=122G/container=12.3GiB
+  head swap: Swap: 16383 439 15944
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+  correctness-probe:
+      RESULT (model knowledge, both fields): 10/10
+  C1 cold/warm:
+      cold-c1: C1-cold: TTFT=0.38s decode=43.0tok/s (700tok/16.6s) acceptance=44.5% | C1-warm: TTFT=0.39s decode=43.0tok/s (700tok/16.6s) acceptance=44.9% | C1-warm2: TTFT=0.39s decode=45.1tok/s (700tok/15.9s) acceptance=47.4%
+  category C1+C4:
+    C1 prose      decode avg= 21.2 tok/s (min 17.3 / max 25.8) | TTFT avg=0.32s | acceptance=13.1% | avg 672 tokens
+    C1 code        decode avg= 46.2 tok/s (min 37.4 / max 57.9) | TTFT avg=0.44s | acceptance=47.8% | avg 610 tokens
+    C1 math    decode avg= 56.5 tok/s (min 43.3 / max 77.6) | TTFT avg=0.57s | acceptance=54.7% | avg 477 tokens
+    C1 json       decode avg= 53.8 tok/s (min 45.8 / max 62.8) | TTFT avg=0.49s | acceptance=55.5% | avg 511 tokens
+    C4 prose      per-user decode avg= 10.7 tok/s | total= 36.6 tok/s | TTFT avg=0.65s | acceptance=10.7%
+    C4 code        per-user decode avg= 26.6 tok/s | total= 78.7 tok/s | TTFT avg=1.38s | acceptance=49.9%
+    C4 math    per-user decode avg= 33.2 tok/s | total= 81.1 tok/s | TTFT avg=1.05s | acceptance=56.2%
+    C4 json       per-user decode avg= 32.2 tok/s | total= 80.1 tok/s | TTFT avg=0.84s | acceptance=52.2%
+  memory (after load):
+  [0.88-load] free-memory= head:available=4.6G/used=117.0G/total=122G/container=10.18GiB worker-1:available=6.9G/used=114.7G/total=122G/container=12.14GiB worker-2:available=6.9G/used=114.8G/total=122G/container=12.28GiB
+  head swap: Swap: 16383 439 15944
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+=== STEP gpu-memory-utilization 0.88 FINISHED 23:06:32 KV=4,310,144 lowest_free=4,6GiB
+=== STEP gpu-memory-utilization 0.89 started 2026-09-03 23:07:05
+  head: GPU_MEMORY_UTILIZATION=0.89
+  worker-1: GPU_MEMORY_UTILIZATION=0.89
+  worker-2: GPU_MEMORY_UTILIZATION=0.89
+  worker-2: start issued 23:07:44
+  worker-1: start issued 23:07:50
+  head: start issued 23:07:57
+  health OK 23:11:45 (225 s)
+  10:53 [gpu_worker.py:593] Available KV cache memory: 36.22 GiB
+  3 [kv_cache_utils.py:2044] GPU KV cache size: 4,408,695 tokens, Maximum concurrency for 1,000,000 tokens per request: 4.41x
+  11:10 [gpu_worker.py:824] Free memory on device (111.77/121.63 GiB) on startup. Desired GPU memory utilization is (0.89, 108.25 GiB). Actual usage is 65.72 GiB for consumed memory (weights + non-torch), 6.31 GiB for peak activation, and -0.37 GiB for CUDAGraph memory. Replace gpu_memory_uti
+  memory (idle):
+  [0.89] free-memory= head:available=5.2G/used=116.4G/total=122G/container=8.8GiB worker-1:available=5.8G/used=115.8G/total=122G/container=7.189GiB worker-2:available=6.0G/used=115.6G/total=122G/container=7.236GiB
+  head swap: Swap: 16383 927 15456
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+  correctness-probe:
+      RESULT (model knowledge, both fields): 10/10
+  C1 cold/warm:
+      cold-c1: C1-cold: TTFT=0.39s decode=43.5tok/s (700tok/16.4s) acceptance=46.4% | C1-warm: TTFT=0.40s decode=42.6tok/s (700tok/16.8s) acceptance=44.8% | C1-warm2: TTFT=0.33s decode=42.8tok/s (700tok/16.6s) acceptance=45.2%
+  category C1+C4:
+    C1 prose      decode avg= 21.4 tok/s (min 17.2 / max 25.4) | TTFT avg=0.34s | acceptance=13.5% | avg 665 tokens
+    C1 code        decode avg= 45.5 tok/s (min 36.0 / max 58.8) | TTFT avg=0.40s | acceptance=46.6% | avg 630 tokens
+    C1 math    decode avg= 57.5 tok/s (min 46.3 / max 74.8) | TTFT avg=0.59s | acceptance=57.2% | avg 445 tokens
+    C1 json       decode avg= 53.3 tok/s (min 43.6 / max 60.9) | TTFT avg=0.49s | acceptance=56.0% | avg 512 tokens
+    C4 prose      per-user decode avg= 10.6 tok/s | total= 37.8 tok/s | TTFT avg=0.64s | acceptance=11.3%
+    C4 code        per-user decode avg= 26.0 tok/s | total= 77.6 tok/s | TTFT avg=0.55s | acceptance=48.2%
+    C4 math    per-user decode avg= 33.4 tok/s | total= 80.0 tok/s | TTFT avg=1.16s | acceptance=54.6%
+    C4 json       per-user decode avg= 32.2 tok/s | total= 89.5 tok/s | TTFT avg=0.71s | acceptance=57.3%
+  memory (after load):
+  [0.89-load] free-memory= head:available=5.2G/used=116.4G/total=122G/container=8.804GiB worker-1:available=5.8G/used=115.8G/total=122G/container=7.177GiB worker-2:available=6.0G/used=115.6G/total=122G/container=7.219GiB
+  head swap: Swap: 16383 923 15460
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+=== STEP gpu-memory-utilization 0.89 FINISHED 23:22:34 KV=4,408,695 lowest_free=5,2GiB

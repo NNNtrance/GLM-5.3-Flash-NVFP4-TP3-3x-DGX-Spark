@@ -1,0 +1,4 @@
+# t3e = t3d + HAREM-B12X-PREFILL-HPAD (b12x sparse-MLA prefill: 22 bas -> 24 dolgu, cikti 22'ye kirpilir)
+FROM harem/glm53-lil:t3d
+COPY hpad/patch_hpad_b12x.py hpad/verify_hpad.py /opt/harem/hpad/
+RUN python3 /opt/harem/hpad/patch_hpad_b12x.py && python3 /opt/harem/hpad/verify_hpad.py

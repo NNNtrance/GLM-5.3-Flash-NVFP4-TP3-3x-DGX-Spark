@@ -1,0 +1,4 @@
+# t4b = t4 + HAREM-B12X-MOE-EP-ROUTE (EP ile planlanan W4A16 'direct' rotasi -> 'auto', mapped route-pack yolu)
+FROM harem/glm53-lil:t4
+COPY t4b/patch_moe_route_ep.py t4b/verify_t4b.py /opt/harem/t4b/
+RUN python3 /opt/harem/t4b/patch_moe_route_ep.py && python3 /opt/harem/t4b/verify_t4b.py

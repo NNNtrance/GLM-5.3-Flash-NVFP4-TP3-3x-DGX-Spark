@@ -1,0 +1,8 @@
+# Copy this to `.dockerignore` in the build directory before building t2.
+# It keeps the Go toolchain, the logs and the `lil` checkout out of the context.
+**/.git
+goroot
+go.tgz
+*.log
+NOTES.md
+lil

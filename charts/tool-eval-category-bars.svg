@@ -1,0 +1,102 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='900' height='664' viewBox='0 0 900 664' font-family='system-ui,-apple-system,Segoe UI,Roboto,sans-serif'>
+<rect width='900' height='664' fill='#ffffff'/>
+<text x='20' y='28' font-size='17' font-weight='600' fill='#1c2430'>tool-eval-bench — score by category (%)</text>
+<text x='20' y='46' font-size='11.5' fill='#5c6675'>GLM-5.3-Flash: 8 trials, v2.6.1.dev39, 88 scenarios, hard mode, temp 0, seed 42, effort low, 2026-09-03. Other two: MiaAI-Lab page, v2.1.0, 84</text>
+<text x='20' y='61' font-size='11.5' fill='#5c6675'>scenarios — different version, indicative only.</text>
+<rect x='20' y='92' width='11' height='11' rx='2' fill='#8a93a0'/>
+<text x='36' y='101' font-size='11' fill='#1c2430'>DeepSeek-V4-Flash-Vision-Exp [reported]</text>
+<rect x='315.4' y='92' width='11' height='11' rx='2' fill='#2b5fd9'/>
+<text x='331.4' y='101' font-size='11' fill='#1c2430'>GLM-5.3-Flash NVFP4 3x Spark [measured-here]</text>
+<rect x='643.8' y='92' width='11' height='11' rx='2' fill='#b8860b'/>
+<text x='659.8' y='101' font-size='11' fill='#1c2430'>Qwen3.8-Flash-Next-NVFP4 [reported]</text>
+<line x1='186.0' y1='110' x2='186.0' y2='644' stroke='#d8dce3'/>
+<text x='186.0' y='660' font-size='10' fill='#5c6675' text-anchor='middle'>0</text>
+<line x1='350.5' y1='110' x2='350.5' y2='644' stroke='#d8dce3'/>
+<text x='350.5' y='660' font-size='10' fill='#5c6675' text-anchor='middle'>25</text>
+<line x1='515.0' y1='110' x2='515.0' y2='644' stroke='#d8dce3'/>
+<text x='515.0' y='660' font-size='10' fill='#5c6675' text-anchor='middle'>50</text>
+<line x1='679.5' y1='110' x2='679.5' y2='644' stroke='#d8dce3'/>
+<text x='679.5' y='660' font-size='10' fill='#5c6675' text-anchor='middle'>75</text>
+<line x1='844.0' y1='110' x2='844.0' y2='644' stroke='#d8dce3'/>
+<text x='844.0' y='660' font-size='10' fill='#5c6675' text-anchor='middle'>100</text>
+<text x='178' y='136' font-size='11.5' fill='#1c2430' text-anchor='end'>Tool Selection</text>
+<rect x='186' y='120' width='658.0' height='7' fill='#8a93a0'/>
+<rect x='186' y='128' width='658.0' height='7' fill='#2b5fd9'/>
+<text x='849' y='135' font-size='10' font-weight='600' fill='#2b5fd9'>100</text>
+<rect x='186' y='136' width='658.0' height='7' fill='#b8860b'/>
+<text x='178' y='169' font-size='11.5' fill='#1c2430' text-anchor='end'>Parameter Precision</text>
+<rect x='186' y='153' width='579.0' height='7' fill='#8a93a0'/>
+<rect x='186' y='161' width='658.0' height='7' fill='#2b5fd9'/>
+<text x='849' y='168' font-size='10' font-weight='600' fill='#2b5fd9'>100</text>
+<rect x='186' y='169' width='631.7' height='7' fill='#b8860b'/>
+<text x='178' y='202' font-size='11.5' fill='#1c2430' text-anchor='end'>Multi-Step Chains</text>
+<rect x='186' y='186' width='658.0' height='7' fill='#8a93a0'/>
+<rect x='186' y='194' width='493.5' height='7' fill='#2b5fd9'/>
+<text x='684' y='201' font-size='10' font-weight='600' fill='#2b5fd9'>75</text>
+<rect x='186' y='202' width='598.8' height='7' fill='#b8860b'/>
+<text x='178' y='235' font-size='11.5' fill='#1c2430' text-anchor='end'>Restraint &amp; Refusal</text>
+<rect x='186' y='219' width='658.0' height='7' fill='#8a93a0'/>
+<rect x='186' y='227' width='546.1' height='7' fill='#2b5fd9'/>
+<text x='737' y='234' font-size='10' font-weight='600' fill='#2b5fd9'>83</text>
+<rect x='186' y='235' width='658.0' height='7' fill='#b8860b'/>
+<text x='178' y='268' font-size='11.5' fill='#1c2430' text-anchor='end'>Error Recovery</text>
+<rect x='186' y='252' width='658.0' height='7' fill='#8a93a0'/>
+<rect x='186' y='260' width='605.4' height='7' fill='#2b5fd9'/>
+<text x='796' y='267' font-size='10' font-weight='600' fill='#2b5fd9'>92</text>
+<rect x='186' y='268' width='658.0' height='7' fill='#b8860b'/>
+<text x='178' y='301' font-size='11.5' fill='#1c2430' text-anchor='end'>Localization</text>
+<rect x='186' y='285' width='658.0' height='7' fill='#8a93a0'/>
+<rect x='186' y='293' width='658.0' height='7' fill='#2b5fd9'/>
+<text x='849' y='300' font-size='10' font-weight='600' fill='#2b5fd9'>100</text>
+<rect x='186' y='301' width='658.0' height='7' fill='#b8860b'/>
+<text x='178' y='334' font-size='11.5' fill='#1c2430' text-anchor='end'>Structured Reasoning</text>
+<rect x='186' y='318' width='658.0' height='7' fill='#8a93a0'/>
+<rect x='186' y='326' width='546.1' height='7' fill='#2b5fd9'/>
+<text x='737' y='333' font-size='10' font-weight='600' fill='#2b5fd9'>83</text>
+<rect x='186' y='334' width='658.0' height='7' fill='#b8860b'/>
+<text x='178' y='367' font-size='11.5' fill='#1c2430' text-anchor='end'>Instruction Following</text>
+<rect x='186' y='351' width='592.2' height='7' fill='#8a93a0'/>
+<rect x='186' y='359' width='658.0' height='7' fill='#2b5fd9'/>
+<text x='849' y='366' font-size='10' font-weight='600' fill='#2b5fd9'>100</text>
+<rect x='186' y='367' width='526.4' height='7' fill='#b8860b'/>
+<text x='178' y='400' font-size='11.5' fill='#1c2430' text-anchor='end'>Context &amp; State</text>
+<rect x='186' y='384' width='513.2' height='7' fill='#8a93a0'/>
+<rect x='186' y='392' width='519.8' height='7' fill='#2b5fd9'/>
+<text x='711' y='399' font-size='10' font-weight='600' fill='#2b5fd9'>79</text>
+<rect x='186' y='400' width='486.9' height='7' fill='#b8860b'/>
+<text x='178' y='433' font-size='11.5' fill='#1c2430' text-anchor='end'>Code Patterns</text>
+<rect x='186' y='417' width='658.0' height='7' fill='#8a93a0'/>
+<rect x='186' y='425' width='658.0' height='7' fill='#2b5fd9'/>
+<text x='849' y='432' font-size='10' font-weight='600' fill='#2b5fd9'>100</text>
+<rect x='186' y='433' width='631.7' height='7' fill='#b8860b'/>
+<text x='178' y='466' font-size='11.5' fill='#1c2430' text-anchor='end'>Safety &amp; Boundaries</text>
+<rect x='186' y='450' width='546.1' height='7' fill='#8a93a0'/>
+<rect x='186' y='458' width='546.1' height='7' fill='#2b5fd9'/>
+<text x='737' y='465' font-size='10' font-weight='600' fill='#2b5fd9'>83</text>
+<rect x='186' y='466' width='513.2' height='7' fill='#b8860b'/>
+<text x='178' y='499' font-size='11.5' fill='#1c2430' text-anchor='end'>Toolset Scale</text>
+<rect x='186' y='483' width='638.3' height='7' fill='#8a93a0'/>
+<rect x='186' y='491' width='592.2' height='7' fill='#2b5fd9'/>
+<text x='783' y='498' font-size='10' font-weight='600' fill='#2b5fd9'>90</text>
+<rect x='186' y='499' width='638.3' height='7' fill='#b8860b'/>
+<text x='178' y='532' font-size='11.5' fill='#1c2430' text-anchor='end'>Autonomous Planning</text>
+<rect x='186' y='516' width='631.7' height='7' fill='#8a93a0'/>
+<rect x='186' y='524' width='519.8' height='7' fill='#2b5fd9'/>
+<text x='711' y='531' font-size='10' font-weight='600' fill='#2b5fd9'>79</text>
+<rect x='186' y='532' width='559.3' height='7' fill='#b8860b'/>
+<text x='178' y='565' font-size='11.5' fill='#1c2430' text-anchor='end'>Creative Composition</text>
+<rect x='186' y='549' width='546.1' height='7' fill='#8a93a0'/>
+<rect x='186' y='557' width='658.0' height='7' fill='#2b5fd9'/>
+<text x='849' y='564' font-size='10' font-weight='600' fill='#2b5fd9'>100</text>
+<rect x='186' y='565' width='559.3' height='7' fill='#b8860b'/>
+<text x='178' y='598' font-size='11.5' fill='#1c2430' text-anchor='end'>Structured Output</text>
+<rect x='186' y='582' width='618.5' height='7' fill='#8a93a0'/>
+<rect x='186' y='590' width='658.0' height='7' fill='#2b5fd9'/>
+<text x='849' y='597' font-size='10' font-weight='600' fill='#2b5fd9'>100</text>
+<rect x='186' y='598' width='572.5' height='7' fill='#b8860b'/>
+<text x='178' y='631' font-size='11.5' fill='#1c2430' text-anchor='end'>Hard Mode</text>
+<rect x='186' y='615' width='526.4' height='7' fill='#8a93a0'/>
+<rect x='186' y='623' width='546.1' height='7' fill='#2b5fd9'/>
+<text x='737' y='630' font-size='10' font-weight='600' fill='#2b5fd9'>83</text>
+<rect x='186' y='631' width='506.7' height='7' fill='#b8860b'/>
+</svg>

@@ -1,0 +1,73 @@
+# HAREM — harem/glm53-lil:t3 = harem/glm53-lil:t2 + TP=3.
+#
+#   docker build -f Dockerfile.t3 -t harem/glm53-lil:t3 .
+#
+# t2 is the Local Inference Lab stack (fork dev/jovian-judgement @ 9c4dd0548,
+# b12x 1.3.0) built for sm_121a.  It serves GLM-5.3-Flash-NVFP4 at TP=2 and
+# stops dead at TP=3, because the checkpoint shape does not divide by three:
+#
+#   vllm/models/glm5next/nvidia/model.py:760-762
+#       assert config.num_attention_heads % world_size == 0        64 % 3 = 1
+#   vllm/models/glm5next/nvidia/attention.py:77-80
+#       raise ValueError("num_heads must be divisible by ...")     64 % 3 = 1
+#   vocab_size                                              154880 % 3 = 2
+#   BF16 shared expert  moe_intermediate_size * n_shared_experts   2048 % 3 = 2
+#
+# t3 pads the SHAPE (heads 64->66, vocab pad 192, shared expert 2048->2112) and
+# teaches every weight loader to zero-pad a checkpoint tensor that is short of
+# the padded shape.  It does NOT pad the routed experts: they stay 2048 wide and
+# are distributed by expert parallelism (288 % 3 = 0).
+#
+# WHAT IS DELIBERATELY ABSENT
+#   * No kernel-side 22 -> 32 attention pad and no FlashInfer overlay.  b12x's
+#     sparse-MLA runs 22 local heads natively — 16 plus a 6-head remainder grid
+#     (b12x/attention/_shared/mla/kernel.py:2843-2853, 3194-3200 VALID_HPB).
+#     The GLM native_glm_h8 fast path needs heads == 8 and a non-NVFP4 scale
+#     format, so it is off for this checkpoint at any TP.  See NOTES.md 05/08.
+#   * No DSA-indexer change: it replicates the global head count and never asks
+#     about TP divisibility (b12x/attention/dsa_indexer/paged.py:315-333).
+#   * No moe_intermediate_size pad.  Measured: with EP on, 2112 vs 2048 changed
+#     nothing but a VllmConfig check.
+#
+# The MoE backend for this image is marlin, not b12x: the fork's b12x MoE
+# refuses expert maps outright (fused_moe/b12x.py:486-495, 504-505, 764-765)
+# and marlin is the only SM12x backend here that accepts EP
+# (experts/marlin_moe.py:642-648 rejects only the FI-NVL two-sided kernels).
+# That is a serving flag, not an image decision, and it is set in start-lil.sh.
+
+ARG BASE=harem/glm53-lil:t2
+FROM ${BASE}
+
+# ---------------------------------------------------------------------------
+# STEP 0 — prove the base is the image every anchor below was verified against.
+# ---------------------------------------------------------------------------
+RUN python3 -c "import vllm, sys; v=vllm.__version__; sys.exit(0) if v=='0.1.dev0+lil.jovian.9c4dd0548' else sys.exit('base image moved: vllm '+v)"
+
+# ---------------------------------------------------------------------------
+# STEP 1 — the TP=3 patches.  Every edit asserts its anchor occurs EXACTLY ONCE
+# and is idempotent; each inserted block carries the marker HAREM-TP3-LIL.
+# Files touched (5):
+#   model_executor/parameter.py                          pad-then-narrow x4
+#   model_executor/model_loader/weight_utils.py          pad-then-narrow x2
+#   model_executor/layers/vocab_parallel_embedding.py    padding_size -> 192
+#   model_executor/layers/mamba/gdn/kimi_gdn_linear_attn.py  A_log + conv1d
+#   models/glm5next/nvidia/model.py                      shape + loader guards
+# ---------------------------------------------------------------------------
+COPY patch_tp3_lil.py /opt/harem/patch_tp3_lil.py
+RUN python3 /opt/harem/patch_tp3_lil.py
+
+# ---------------------------------------------------------------------------
+# STEP 2 — build-time exam.  CPU only: no GPU in a docker build, so nothing
+# here allocates a device or triggers a b12x JIT.  It asserts the markers, that
+# every patched module still imports without a driver, and that the pad helpers
+# produce the exact shards TP=3 needs.
+# ---------------------------------------------------------------------------
+COPY verify_t3.py /opt/harem/verify_t3.py
+RUN python3 /opt/harem/verify_t3.py
+
+ARG HAREM_STAMP=unknown
+LABEL harem.recipe="glm53-flash-lil-b12x-tp3" \
+      harem.stamp=${HAREM_STAMP} \
+      harem.tp="3" \
+      harem.patch.marker="HAREM-TP3-LIL" \
+      harem.base.image="harem/glm53-lil:t2"

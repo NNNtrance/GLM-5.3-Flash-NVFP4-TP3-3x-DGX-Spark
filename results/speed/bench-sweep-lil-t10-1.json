@@ -1,0 +1,72 @@
+[
+  {
+    "conc": 1,
+    "requests": 8,
+    "wall_s": 39.72,
+    "out_tok": 2048,
+    "agg_tok_s": 51.56,
+    "per_stream_decode_tok_s": 56.89,
+    "ttft_med_s": 0.407,
+    "ttft_max_s": 0.424,
+    "tpot_ms": 17.58,
+    "accept_rate_pct": 65.41,
+    "accept_len": 5.58,
+    "label": "lil-t10-1"
+  },
+  {
+    "conc": 2,
+    "requests": 8,
+    "wall_s": 27.75,
+    "out_tok": 2048,
+    "agg_tok_s": 73.8,
+    "per_stream_decode_tok_s": 42.74,
+    "ttft_med_s": 0.587,
+    "ttft_max_s": 0.68,
+    "tpot_ms": 23.4,
+    "accept_rate_pct": 64.4,
+    "accept_len": 5.51,
+    "label": "lil-t10-1"
+  },
+  {
+    "conc": 4,
+    "requests": 16,
+    "wall_s": 42.13,
+    "out_tok": 4096,
+    "agg_tok_s": 97.23,
+    "per_stream_decode_tok_s": 29.51,
+    "ttft_med_s": 0.803,
+    "ttft_max_s": 1.289,
+    "tpot_ms": 33.88,
+    "accept_rate_pct": 64.56,
+    "accept_len": 5.52,
+    "label": "lil-t10-1"
+  },
+  {
+    "conc": 6,
+    "requests": 24,
+    "wall_s": 52.72,
+    "out_tok": 6144,
+    "agg_tok_s": 116.55,
+    "per_stream_decode_tok_s": 22.88,
+    "ttft_med_s": 0.993,
+    "ttft_max_s": 1.064,
+    "tpot_ms": 43.7,
+    "accept_rate_pct": 61.95,
+    "accept_len": 5.34,
+    "label": "lil-t10-1"
+  },
+  {
+    "conc": 8,
+    "requests": 32,
+    "wall_s": 56.19,
+    "out_tok": 8192,
+    "agg_tok_s": 145.8,
+    "per_stream_decode_tok_s": 21.76,
+    "ttft_med_s": 1.067,
+    "ttft_max_s": 1.133,
+    "tpot_ms": 45.95,
+    "accept_rate_pct": 63.42,
+    "accept_len": 5.44,
+    "label": "lil-t10-1"
+  }
+]

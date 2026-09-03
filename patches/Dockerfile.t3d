@@ -1,0 +1,77 @@
+# HAREM — harem/glm53-lil:t3d = harem/glm53-lil:t3 + the C4 pool-stride fix.
+#
+#   docker build -f Dockerfile.t3d -t harem/glm53-lil:t3d .
+#
+# t3 cleared every TP=3 shape blocker and reached KV cache allocation, then died
+# at vllm/models/glm5next/nvidia/pooled_indexer.py:314-317
+#     ValueError: GLM MLA parent-page stride must be an exact number of C4 pages
+#
+# Measured on rank 0 (temporary print before that line):
+#     shape=(1505, 3328, 528) stride=(25559040, 528, 1)
+#     semantic=1757184 tail=109824 need=1867008 index_page_bytes=8448
+#     25559040 % 8448 = 3840
+#
+# The MLA page itself was never the problem: 3328*528 = 208*8448 and
+# 3328*33 = 13*8448, so the page 1,867,008 = 221*8448 is clean. What is not
+# clean is the POOL stride, which the DFlash draft group sets:
+#     5 draft layers * 3328 tokens * 1536 B/token = 25,559,040
+# (drafter bf16 KV at TP=3 = 3 local KV heads * 2 * 128 * 2 B).
+# 8448 = 2^8*3*11, while 3328 = 2^8*13 and 7680 = 2^9*15 carry no factor 11.
+# At TP=2/4 the drafter's per-token bytes and the chosen block differ, which is
+# why the lab's TP=2 configuration never hit this.
+#
+# The fix already exists in this fork and is merely gated behind an unrelated
+# experiment flag (kv_cache_utils.py:1310-1319 rounds bytes_per_block up to
+# 64*132 only when VLLM_GLM53_SPLIT_TARGET_BLOCK_SIZE is set). We drop the
+# env-var condition and keep the model condition. 25,559,040 -> 25,563,648,
+# +4,608 B per block (+0.018%).
+#
+# Rejected alternatives:
+#   * setting VLLM_GLM53_SPLIT_TARGET_BLOCK_SIZE — also flips
+#     kv_cache_utils.py:1931-1932 into the split-cache grouping path.
+#   * --block-size 5632 — pads the KDA/mamba page by ~79%.
+#
+# fix-A (drafter load format) is NOT in this image: it is a serving flag,
+# permanently carried by ~/glm3x/scripts/start-lil.sh as
+#   "draft_load_config":{"load_format":"${DRAFT_LOAD_FORMAT:-safetensors}"}
+# See fix-A.md. Without it the drafter segfaults on borrowed instanttensor
+# buffers, whatever this image does.
+
+ARG BASE=harem/glm53-lil:t3
+FROM ${BASE}
+
+# STEP 0 — prove the base is t3 with all five TP=3 patch sites intact.
+RUN python3 - <<'PY'
+from pathlib import Path
+site = Path("/usr/local/lib/python3.12/dist-packages/vllm")
+want = {
+    "model_executor/parameter.py": 5,
+    "model_executor/model_loader/weight_utils.py": 2,
+    "model_executor/layers/vocab_parallel_embedding.py": 1,
+    "model_executor/layers/mamba/gdn/kimi_gdn_linear_attn.py": 2,
+    "models/glm5next/nvidia/model.py": 7,
+}
+for rel, n in want.items():
+    got = (site / rel).read_text().count("HAREM-TP3-LIL")
+    assert got == n, f"base is not t3: {rel} has {got} markers, expected {n}"
+print("base t3 verified")
+PY
+
+# STEP 1 — the C4 pool-stride patch. count==1 anchor, idempotent,
+# marker HAREM-TP3-LIL-C4, one file:
+#   vllm/v1/core/kv_cache_utils.py  _get_kv_cache_bytes_per_block
+COPY patch_c4_lil.py /opt/harem/patch_c4_lil.py
+RUN python3 /opt/harem/patch_c4_lil.py
+
+# STEP 2 — build-time exam. CPU only. Asserts the marker, that t3's markers
+# survived, that the live function carries the patch, and reproduces the
+# measured arithmetic 25,559,040 -> 25,563,648 with remainder 0.
+COPY verify_t3d.py /opt/harem/verify_t3d.py
+RUN python3 /opt/harem/verify_t3d.py
+
+ARG HAREM_STAMP=unknown
+LABEL harem.recipe="glm53-flash-lil-b12x-tp3-c4" \
+      harem.stamp=${HAREM_STAMP} \
+      harem.tp="3" \
+      harem.patch.marker="HAREM-TP3-LIL-C4" \
+      harem.base.image="harem/glm53-lil:t3"

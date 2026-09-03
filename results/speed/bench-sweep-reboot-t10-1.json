@@ -1,0 +1,72 @@
+[
+  {
+    "conc": 1,
+    "requests": 8,
+    "wall_s": 38.1,
+    "out_tok": 2048,
+    "agg_tok_s": 53.76,
+    "per_stream_decode_tok_s": 59.6,
+    "ttft_med_s": 0.388,
+    "ttft_max_s": 0.397,
+    "tpot_ms": 16.78,
+    "accept_rate_pct": 63.4,
+    "accept_len": 5.44,
+    "label": "reboot-t10-1"
+  },
+  {
+    "conc": 2,
+    "requests": 8,
+    "wall_s": 26.67,
+    "out_tok": 2048,
+    "agg_tok_s": 76.8,
+    "per_stream_decode_tok_s": 44.45,
+    "ttft_med_s": 0.558,
+    "ttft_max_s": 0.995,
+    "tpot_ms": 22.5,
+    "accept_rate_pct": 64.04,
+    "accept_len": 5.48,
+    "label": "reboot-t10-1"
+  },
+  {
+    "conc": 4,
+    "requests": 16,
+    "wall_s": 39.68,
+    "out_tok": 4096,
+    "agg_tok_s": 103.22,
+    "per_stream_decode_tok_s": 29.07,
+    "ttft_med_s": 0.767,
+    "ttft_max_s": 1.105,
+    "tpot_ms": 34.41,
+    "accept_rate_pct": 62.41,
+    "accept_len": 5.37,
+    "label": "reboot-t10-1"
+  },
+  {
+    "conc": 6,
+    "requests": 24,
+    "wall_s": 48.83,
+    "out_tok": 6144,
+    "agg_tok_s": 125.82,
+    "per_stream_decode_tok_s": 25.24,
+    "ttft_med_s": 0.945,
+    "ttft_max_s": 1.199,
+    "tpot_ms": 39.62,
+    "accept_rate_pct": 63.36,
+    "accept_len": 5.44,
+    "label": "reboot-t10-1"
+  },
+  {
+    "conc": 8,
+    "requests": 32,
+    "wall_s": 53.62,
+    "out_tok": 8192,
+    "agg_tok_s": 152.77,
+    "per_stream_decode_tok_s": 22.3,
+    "ttft_med_s": 1.018,
+    "ttft_max_s": 1.077,
+    "tpot_ms": 44.85,
+    "accept_rate_pct": 62.89,
+    "accept_len": 5.4,
+    "label": "reboot-t10-1"
+  }
+]

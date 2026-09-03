@@ -1,0 +1,4 @@
+# t10 = t3e + HAREM-B12X-QPAD (fork backend: decode/extend planlari 24 bas, q sifir dolgu, O/LSE 22'ye kirpilir)
+FROM harem/glm53-lil:t3e
+COPY t10/patch_qpad_fork.py t10/verify_t10.py /opt/harem/t10/
+RUN python3 /opt/harem/t10/patch_qpad_fork.py && python3 /opt/harem/t10/verify_t10.py

@@ -1,0 +1,12 @@
+watch started 23:25:48
+  head ssh back: 82 s; ibv=4/4; precondition=active
+  worker-1 ssh back: 83 s; ibv=4/4; precondition=active
+  worker-2 ssh back: 85 s; ibv=4/4; precondition=active
+ENGINE UP 23:30:44 — since reboot 296 s (+reboot command issued 23:25:31)
+  5 [kv_cache_utils.py:2044] GPU KV cache size: 4,321,739 tokens, Maximum concurrency for 1,000,000 tokens per request: 4.32x
+  30:11 [gpu_worker.py:824] Free memory on device (111.51/121.63 GiB) on startup. Desired GPU memory utilization is (0.88, 107.03 GiB). Actual usage is 65.45 GiB for consumed memory (weights + non-torch), 5.8 GiB for peak activation, and -0.01 GiB for CUDAGraph m
+  [reboot-088] free-memory= head:available=4.7G/used=116.9G/total=122G/container=10.06GiB worker-1:available=6.8G/used=114.8G/total=122G/container=12.16GiB worker-2:available=6.8G/used=114.8G/total=122G/container=12.28GiB
+  head swap: Swap: 16383 456 15927
+  worker-1 swap: Swap: 16383 0 16383
+  worker-2 swap: Swap: 16383 0 16383
+  correctness-probe: both fields): 10/10
