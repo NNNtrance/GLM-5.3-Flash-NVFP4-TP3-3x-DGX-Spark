@@ -1,0 +1,10 @@
+INFO 09-05 23:09:44 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-05 23:09:44 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-05 23:09:46 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  dense      M=    8 uniform  ->   1466.88 us    206.3 GB/s   0.82 TF
+  dense      M=    8 zipf     ->    970.24 us    207.9 GB/s   1.25 TF
+  dense      M=   64 uniform  ->   5989.30 us    210.9 GB/s   1.61 TF
+  dense      M=   64 zipf     ->   4249.60 us    209.9 GB/s   2.27 TF
+  dense      M= 1792 uniform  ->   8708.16 us    175.6 GB/s  31.07 TF
+  dense      M= 1792 zipf     ->   9221.61 us    165.8 GB/s  29.34 TF
+WROTE /bench/out/B-fi-b12x-w4a4.json

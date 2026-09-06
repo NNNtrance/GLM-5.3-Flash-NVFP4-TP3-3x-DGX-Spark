@@ -1,0 +1,23 @@
+INFO 09-05 23:06:31 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-05 23:06:31 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-05 23:06:35 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+WARNING 09-05 23:06:38 [fused_moe.py:1167] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=96,N=2048,device_name=NVIDIA_GB10.json
+  dense      M=    8 uniform  ->   9998.56 us    236.6 GB/s   0.32 TF
+  dense      M=    8 zipf     ->   7706.06 us    235.1 GB/s   0.42 TF
+  dense      M=   64 uniform  ->  20804.11 us    232.3 GB/s   1.24 TF
+  dense      M=   64 zipf     ->  18080.85 us    228.3 GB/s   1.43 TF
+  dense      M= 1792 uniform  ->  46029.11 us    105.0 GB/s  15.68 TF
+  dense      M= 1792 zipf     ->  40327.24 us    119.8 GB/s  17.89 TF
+  epcompact  M=    8 uniform  ->   5240.39 us    192.1 GB/s   0.23 TF
+  epcompact  M=    8 zipf     ->   6075.97 us    231.9 GB/s   0.45 TF
+  epcompact  M=   64 uniform  ->  20868.46 us    207.4 GB/s   0.46 TF
+  epcompact  M=   64 zipf     ->  20556.74 us    208.1 GB/s   1.00 TF
+  epcompact  M= 1792 uniform  ->  27944.44 us    172.9 GB/s   8.74 TF
+  epcompact  M= 1792 zipf     ->  37384.26 us    129.2 GB/s  15.42 TF
+  nativeep   M=    8 uniform  ->   4349.55 us    231.4 GB/s   0.28 TF
+  nativeep   M=    8 zipf     ->   6019.51 us    234.1 GB/s   0.45 TF
+  nativeep   M=   64 uniform  ->  18719.04 us    231.2 GB/s   0.52 TF
+  nativeep   M=   64 zipf     ->  18616.70 us    229.8 GB/s   1.11 TF
+  nativeep   M= 1792 uniform  ->  29437.63 us    164.1 GB/s   8.30 TF
+  nativeep   M= 1792 zipf     ->  37871.31 us    127.6 GB/s  15.23 TF
+WROTE /bench/out/A-bf16.json

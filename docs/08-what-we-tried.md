@@ -72,6 +72,8 @@ longer exists anywhere.
 | 32 | TP=2 on two nodes instead of TP=3 | Rejected before purchase-level commitment | `[reported]` | 2026-08-29 |
 | 33 | PyTorch 2.14 upgrade | Not now — watch list | `[reported]` | 2026-09-03 |
 | 34 | Harness defaults (needle timeout, lm-eval queue timeout) | Both had to be changed | `[measured-here]` | 2026-09-03 |
+| 35 | Dropping expert parallelism: intermediate 2,304, sliced by 3, all 288 experts per rank | Closed — slower at every batch size and 12.5 % more expert bytes | `[measured-here]` | 2026-09-06 |
+| 36 | FP4 tensor-core MoE (cutlass W4A4, b12x W4A4) instead of marlin W4A16 | Closed for decode — the kernel is already at the DRAM roof | `[measured-here]` | 2026-09-06 |
 
 ---
 
@@ -636,3 +638,57 @@ content unchanged); the re-run completed in 2 h 3 min. Our runner is now pinned 
 **The general rule:** before a long harness run, check what the harness will do to a request that is
 legitimately slow. A harness default is part of the measurement instrument, and the instrument has to
 be verified like everything else.
+
+---
+
+## MoE kernel branches
+
+Both of these were closed by one model-free measurement that never started the engine: the MoE
+kernels were called directly inside the production image on synthetic NVFP4 expert banks in the
+checkpoint layout. Full method, every table and the limits:
+[`results/kernels/moe-kernel-bench-gb10.md`](../results/kernels/moe-kernel-bench-gb10.md); the bench
+itself is in [`bench/moe-kernels/`](../bench/moe-kernels/).
+
+### 35. Dropping expert parallelism (intermediate 2,304, sliced by 3)
+
+**What.** The alternative to EP: pad the routed intermediate 2,048 → 2,304 so it divides by three,
+give every rank all 288 experts at 768 columns each, and slice tensors instead of handing out whole
+experts. [03 §3.1](03-launch-and-flags.md#31-tensor-parallel-3--expert-parallel) already records that
+this *loads* wrong — weight and scale are cut at different granularities and the shards drift. This
+entry is about whether it would have been worth fixing.
+
+**It would not.** At equal token traffic and balanced routing it is slower at every batch size we
+measured — 1.08× at M = 8, 1.04× at M = 64, 1.26× at M = 1,792 on marlin, and 1.16–1.26× against
+production if the best FP4 kernel is used on it — and it needs **+12.52 %** routed-expert weight
+bytes per rank (1.424 against 1.266 GiB per set), which comes straight out of the KV pool. The FP4
+tensor-core advantage also vanishes entirely at that shape: 288 expert groups at N = 768 destroys the
+"many rows per expert" regime those kernels want.
+
+**What this does not cover.** Without EP there is no all-to-all dispatch/combine, only an all-reduce.
+The bench is single-GPU and cannot see that; whether communication could win back the 16–26 %
+kernel-side loss is **unmeasured**. The byte cost does not depend on it. `[measured-here]` for the
+kernel side, `[not tested]` for communication, 2026-09-06.
+
+### 36. FP4 tensor-core MoE instead of marlin W4A16
+
+**What.** marlin is weight-only, so it drops the checkpoint's W4A4 activation scales
+([09 item 7](09-open-problems.md#7-marlin-drops-the-checkpoints-activation-scales-the-speed-cost-is-now-measured-the-quality-cost-is-not)).
+Two FP4 tensor-core MoE paths exist in the image — vLLM's cutlass `run_cutlass_moe_fp4` and
+FlashInfer's `B12xMoEWrapper` — and the question was what marlin costs us against them. A third,
+`FLASHINFER_TRTLLM`, reports `_supports_current_device() = False` on sm_121 and was not run.
+
+**marlin costs us nothing at decode; it gains.** On our own shape and traffic the best FP4 path is
+7 % slower at M = 8, 7 % at M = 64 and 5 % at M = 1,792 than marlin, because at the first two sizes the
+kernel already runs at **94–99 % of measured DRAM bandwidth** — 225–237 GB/s against a 240.5 GB/s
+ruler. There is no idle arithmetic to sell, and the W4A4 activation-quantisation kernels consume
+4–13 % of that band. FP4 wins in exactly one regime: prefill-sized batches with all experts local,
+where b12x is **1.42×** faster at M = 1,792 (76.1 TFLOPS against marlin's 53.7) — a form three ranks
+with EP do not run. Two supporting findings: **there is no marlin W4A8 door** (the image's
+`marlin_utils_fp4.py` refuses NVFP4 weights with 1-byte activations in five places, including the MoE
+prepare path at line 363), and **b12x's own measured GB10 profile chooses W4A16 under expert
+parallelism** (`moe.ep_moe` is a single leaf, `"backend": "w4a16"`, named
+`measured-production-implementation`).
+
+**What this does not cover.** Quality. At the MoE layer W4A4 is about 29× numerically noisier than
+W4A16 on synthetic Gaussian activations; what that does to the model has not been measured.
+`[measured-here]`, 2026-09-06.

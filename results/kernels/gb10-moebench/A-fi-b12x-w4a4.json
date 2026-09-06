@@ -1,0 +1,135 @@
+{
+ "layout": "A",
+ "arm": "fi-b12x-w4a4",
+ "sets": 2,
+ "shapes": {
+  "E_local": 96,
+  "E_global": 288,
+  "K": 4096,
+  "N": 2048,
+  "topk": 8
+ },
+ "bank_raw_gib": 2.531,
+ "build_s": 0.7,
+ "runs": [
+  {
+   "form": "dense",
+   "M": 8,
+   "routing": "uniform",
+   "rows_or_pairs": 64,
+   "experts_touched": 47,
+   "us_rounds": [
+    3005.61,
+    2991.38,
+    2992.21
+   ],
+   "us": 2992.21,
+   "spread_pct": 0.48,
+   "touched_gib": 0.62,
+   "gbps": 222.4,
+   "tflops": 1.08
+  },
+  {
+   "form": "dense",
+   "M": 8,
+   "routing": "zipf",
+   "rows_or_pairs": 64,
+   "experts_touched": 36,
+   "us_rounds": [
+    2290.48,
+    2287.83,
+    2290.21
+   ],
+   "us": 2290.21,
+   "spread_pct": 0.12,
+   "touched_gib": 0.475,
+   "gbps": 222.5,
+   "tflops": 1.41
+  },
+  {
+   "form": "dense",
+   "M": 64,
+   "routing": "uniform",
+   "rows_or_pairs": 512,
+   "experts_touched": 96,
+   "us_rounds": [
+    6186.63,
+    6170.35,
+    6166.28
+   ],
+   "us": 6170.35,
+   "spread_pct": 0.33,
+   "touched_gib": 1.266,
+   "gbps": 220.2,
+   "tflops": 4.18
+  },
+  {
+   "form": "dense",
+   "M": 64,
+   "routing": "zipf",
+   "rows_or_pairs": 512,
+   "experts_touched": 82,
+   "us_rounds": [
+    5295.24,
+    5286.26,
+    5282.22
+   ],
+   "us": 5286.26,
+   "spread_pct": 0.25,
+   "touched_gib": 1.081,
+   "gbps": 219.6,
+   "tflops": 4.87
+  },
+  {
+   "form": "dense",
+   "M": 1792,
+   "routing": "uniform",
+   "rows_or_pairs": 14336,
+   "experts_touched": 96,
+   "us_rounds": [
+    9512.67,
+    9481.5,
+    9478.3
+   ],
+   "us": 9481.5,
+   "spread_pct": 0.36,
+   "touched_gib": 1.266,
+   "gbps": 143.3,
+   "tflops": 76.1
+  },
+  {
+   "form": "dense",
+   "M": 1792,
+   "routing": "zipf",
+   "rows_or_pairs": 14336,
+   "experts_touched": 96,
+   "us_rounds": [
+    10098.71,
+    10064.67,
+    10079.08
+   ],
+   "us": 10079.08,
+   "spread_pct": 0.34,
+   "touched_gib": 1.266,
+   "gbps": 134.8,
+   "tflops": 71.59
+  }
+ ],
+ "ruler": {
+  "shape": "512x32768 bf16 sum",
+  "bytes": 33554432,
+  "gbps": [
+   238.1,
+   245.9,
+   246.0
+  ],
+  "gbps_med": 245.9
+ },
+ "mem_after_prep": {
+  "alloc_gib": 2.53,
+  "reserved_gib": 3.0
+ },
+ "mem_peak": {
+  "peak_gib": 3.42
+ }
+}

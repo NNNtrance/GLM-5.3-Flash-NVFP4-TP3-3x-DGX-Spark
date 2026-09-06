@@ -1,0 +1,135 @@
+{
+ "layout": "B",
+ "arm": "vllm-cutlass-w4a4",
+ "sets": 2,
+ "shapes": {
+  "E_local": 288,
+  "E_global": 288,
+  "K": 4096,
+  "N": 768,
+  "topk": 8
+ },
+ "bank_raw_gib": 2.848,
+ "build_s": 0.9,
+ "runs": [
+  {
+   "form": "dense",
+   "M": 8,
+   "routing": "uniform",
+   "rows_or_pairs": 64,
+   "experts_touched": 57,
+   "us_rounds": [
+    1496.76,
+    1468.88,
+    1471.47
+   ],
+   "us": 1471.47,
+   "spread_pct": 1.89,
+   "touched_gib": 0.282,
+   "gbps": 205.6,
+   "tflops": 0.82
+  },
+  {
+   "form": "dense",
+   "M": 8,
+   "routing": "zipf",
+   "rows_or_pairs": 64,
+   "experts_touched": 38,
+   "us_rounds": [
+    1023.72,
+    1016.44,
+    1094.07
+   ],
+   "us": 1023.72,
+   "spread_pct": 7.58,
+   "touched_gib": 0.188,
+   "gbps": 197.0,
+   "tflops": 1.18
+  },
+  {
+   "form": "dense",
+   "M": 64,
+   "routing": "uniform",
+   "rows_or_pairs": 512,
+   "experts_touched": 238,
+   "us_rounds": [
+    5861.64,
+    5849.08,
+    5848.09
+   ],
+   "us": 5849.08,
+   "spread_pct": 0.23,
+   "touched_gib": 1.177,
+   "gbps": 216.0,
+   "tflops": 1.65
+  },
+  {
+   "form": "dense",
+   "M": 64,
+   "routing": "zipf",
+   "rows_or_pairs": 512,
+   "experts_touched": 168,
+   "us_rounds": [
+    4217.41,
+    4195.88,
+    4194.32
+   ],
+   "us": 4195.88,
+   "spread_pct": 0.55,
+   "touched_gib": 0.831,
+   "gbps": 212.5,
+   "tflops": 2.3
+  },
+  {
+   "form": "dense",
+   "M": 1792,
+   "routing": "uniform",
+   "rows_or_pairs": 14336,
+   "experts_touched": 288,
+   "us_rounds": [
+    12441.53,
+    12488.39,
+    12424.59
+   ],
+   "us": 12441.53,
+   "spread_pct": 0.51,
+   "touched_gib": 1.424,
+   "gbps": 122.9,
+   "tflops": 21.75
+  },
+  {
+   "form": "dense",
+   "M": 1792,
+   "routing": "zipf",
+   "rows_or_pairs": 14336,
+   "experts_touched": 288,
+   "us_rounds": [
+    12378.33,
+    12405.81,
+    12469.32
+   ],
+   "us": 12405.81,
+   "spread_pct": 0.73,
+   "touched_gib": 1.424,
+   "gbps": 123.2,
+   "tflops": 21.81
+  }
+ ],
+ "ruler": {
+  "shape": "512x32768 bf16 sum",
+  "bytes": 33554432,
+  "gbps": [
+   243.9,
+   246.1,
+   246.2
+  ],
+  "gbps_med": 246.1
+ },
+ "mem_after_prep": {
+  "alloc_gib": 2.85,
+  "reserved_gib": 2.96
+ },
+ "mem_peak": {
+  "peak_gib": 3.46
+ }
+}

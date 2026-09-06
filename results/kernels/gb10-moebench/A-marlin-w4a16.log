@@ -1,0 +1,23 @@
+INFO 09-05 23:04:19 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-05 23:04:19 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-05 23:04:21 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+WARNING 09-05 23:04:23 [marlin_utils_fp4.py:354] Your GPU does not have native support for FP4 computation but FP4 quantization is being used. Weight-only FP4 compression will be used leveraging the Marlin kernel. This may degrade performance for compute-heavy workloads.
+  dense      M=    8 uniform  ->   2806.06 us    237.1 GB/s   1.15 TF
+  dense      M=    8 zipf     ->   2168.54 us    235.0 GB/s   1.49 TF
+  dense      M=   64 uniform  ->   5813.16 us    233.8 GB/s   4.43 TF
+  dense      M=   64 zipf     ->   5059.48 us    229.4 GB/s   5.09 TF
+  dense      M= 1792 uniform  ->  13442.94 us    101.1 GB/s  53.68 TF
+  dense      M= 1792 zipf     ->  13335.63 us    101.9 GB/s  54.11 TF
+  epcompact  M=    8 uniform  ->   1215.41 us    232.9 GB/s   0.99 TF
+  epcompact  M=    8 zipf     ->   1709.28 us    231.9 GB/s   1.59 TF
+  epcompact  M=   64 uniform  ->   5144.95 us    236.6 GB/s   1.88 TF
+  epcompact  M=   64 zipf     ->   5147.11 us    233.8 GB/s   4.01 TF
+  epcompact  M= 1792 uniform  ->   6897.24 us    197.0 GB/s  35.42 TF
+  epcompact  M= 1792 zipf     ->  11789.45 us    115.3 GB/s  48.91 TF
+  nativeep   M=    8 uniform  ->   1217.98 us    232.4 GB/s   0.99 TF
+  nativeep   M=    8 zipf     ->   1709.87 us    231.8 GB/s   1.59 TF
+  nativeep   M=   64 uniform  ->   5171.64 us    235.4 GB/s   1.87 TF
+  nativeep   M=   64 zipf     ->   5151.81 us    233.6 GB/s   4.01 TF
+  nativeep   M= 1792 uniform  ->   7311.89 us    185.9 GB/s  33.41 TF
+  nativeep   M= 1792 zipf     ->  11602.94 us    117.1 GB/s  49.70 TF
+WROTE /bench/out/A-marlin-w4a16.json

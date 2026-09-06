@@ -8,6 +8,11 @@ All of it was produced on 2026-09-03 with the `harem/glm53-lil:t10` image, TP = 
 NVFP4 weights, `fp8` KV, DFlash2 draft k = 7, CUDA graphs on, temperature 0, thinking on at
 `reasoning_effort: low`. The exact settings per file are in the two documents above.
 
+**One exception:** [`kernels/`](kernels/) is a side study, not a serving run. It was produced on
+2026-09-06 in the same image but on **one GPU, with no engine and no model** — the MoE kernels called
+directly on synthetic weights. Its settings are in
+[`kernels/moe-kernel-bench-gb10.md`](kernels/moe-kernel-bench-gb10.md).
+
 ## Scrubbing
 
 These files are copies of our own run output. Before committing, host names were replaced with
@@ -36,6 +41,8 @@ scenario fixtures, MMLU questions) are part of those public datasets, not ours.
 | `speed/bench-sweep-*.json` | Concurrency sweeps (C1, C2, C4, C6, C8), two rounds each. `reboot-t10` is the post-reboot production run; `lil-t10` the same settings earlier the same day; `lil-t16` graphs off; `lil-t17` graphs captured only at sizes 8 and 16; `lil-t9` speculative decoding disabled; `lil-t7` the image before the attention head-padding fix |
 | `speed/category-speed-c1-c4.log` | Decode rate and draft acceptance by content type (prose / code / math / JSON) at C1 and C4 |
 | `speed/cold-warm-c1-english-prompt.txt` | The cold/warm single-stream probe re-run with the task written in English, showing that prompt language alone is worth ~10–15 tok/s and ~13 points of draft acceptance |
+| `kernels/moe-kernel-bench-gb10.md` | The MoE kernel study: marlin W4A16 against the two FP4 tensor-core MoE paths and against the no-expert-parallel layout, at the production shapes. Method, ruler, correctness gate, tables T1–T10, and what a custom sm_121 kernel would have to beat |
+| `kernels/gb10-moebench/` | Its raw output: one JSON per arm and layout (all rounds, touched bytes, GB/s, TFLOPS, the process's own bandwidth ruler), the two correctness-gate JSONs, the per-arm logs, the driver transcript and the 5-second telemetry CSV |
 
 ## Reading the sweep JSONs
 

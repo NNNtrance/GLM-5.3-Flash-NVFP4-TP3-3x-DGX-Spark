@@ -1,0 +1,108 @@
+###### LAYOUT A (EP: 96 local of 288, K=4096 N=2048 topk=8)
+=== 02:04:11  layout A  arm marlin-w4a16  sets 2  forms dense epcompact nativeep
+    rc=0  0 failed lines
+  dense      M=    8 uniform  ->   2806.06 us    237.1 GB/s   1.15 TF
+  dense      M=    8 zipf     ->   2168.54 us    235.0 GB/s   1.49 TF
+  dense      M=   64 uniform  ->   5813.16 us    233.8 GB/s   4.43 TF
+  dense      M=   64 zipf     ->   5059.48 us    229.4 GB/s   5.09 TF
+  dense      M= 1792 uniform  ->  13442.94 us    101.1 GB/s  53.68 TF
+  dense      M= 1792 zipf     ->  13335.63 us    101.9 GB/s  54.11 TF
+  epcompact  M=    8 uniform  ->   1215.41 us    232.9 GB/s   0.99 TF
+  epcompact  M=    8 zipf     ->   1709.28 us    231.9 GB/s   1.59 TF
+  epcompact  M=   64 uniform  ->   5144.95 us    236.6 GB/s   1.88 TF
+  epcompact  M=   64 zipf     ->   5147.11 us    233.8 GB/s   4.01 TF
+  epcompact  M= 1792 uniform  ->   6897.24 us    197.0 GB/s  35.42 TF
+  epcompact  M= 1792 zipf     ->  11789.45 us    115.3 GB/s  48.91 TF
+  nativeep   M=    8 uniform  ->   1217.98 us    232.4 GB/s   0.99 TF
+  nativeep   M=    8 zipf     ->   1709.87 us    231.8 GB/s   1.59 TF
+  nativeep   M=   64 uniform  ->   5171.64 us    235.4 GB/s   1.87 TF
+  nativeep   M=   64 zipf     ->   5151.81 us    233.6 GB/s   4.01 TF
+  nativeep   M= 1792 uniform  ->   7311.89 us    185.9 GB/s  33.41 TF
+  nativeep   M= 1792 zipf     ->  11602.94 us    117.1 GB/s  49.70 TF
+    MemAvailable now: 12925288 kB
+=== 02:05:02  layout A  arm vllm-cutlass-w4a4  sets 2  forms dense epcompact
+    rc=0  0 failed lines
+  dense      M=    8 uniform  ->   3089.50 us    215.3 GB/s   1.04 TF
+  dense      M=    8 zipf     ->   2383.07 us    213.8 GB/s   1.35 TF
+  dense      M=   64 uniform  ->   6331.17 us    214.6 GB/s   4.07 TF
+  dense      M=   64 zipf     ->   5443.85 us    213.2 GB/s   4.73 TF
+  dense      M= 1792 uniform  ->  12487.97 us    108.8 GB/s  57.78 TF
+  dense      M= 1792 zipf     ->  12644.91 us    107.5 GB/s  57.06 TF
+  epcompact  M=    8 uniform  ->   1366.39 us    207.2 GB/s   0.88 TF
+  epcompact  M=    8 zipf     ->   1890.66 us    209.6 GB/s   1.44 TF
+  epcompact  M=   64 uniform  ->   5606.79 us    217.1 GB/s   1.72 TF
+  epcompact  M=   64 zipf     ->   5656.84 us    212.7 GB/s   3.65 TF
+  epcompact  M= 1792 uniform  ->   8894.09 us    152.8 GB/s  27.47 TF
+  epcompact  M= 1792 zipf     ->  12533.48 us    108.4 GB/s  46.01 TF
+    MemAvailable now: 12876868 kB
+=== 02:05:41  layout A  arm fi-b12x-w4a4  sets 2  forms dense epcompact
+    rc=1  3 failed lines
+  dense      M=    8 uniform  ->   2982.96 us    223.0 GB/s   1.08 TF
+  dense      M=    8 zipf     ->   2283.24 us    223.2 GB/s   1.41 TF
+  dense      M=   64 uniform  ->   6173.72 us    220.1 GB/s   4.17 TF
+  dense      M=   64 zipf     ->   5276.29 us    220.0 GB/s   4.88 TF
+  dense      M= 1792 uniform  ->   9522.55 us    142.7 GB/s  75.77 TF
+  dense      M= 1792 zipf     ->  10117.36 us    134.3 GB/s  71.32 TF
+  epcompact  M=    8 uniform  -> FAILED Mismatched topk_ids.shape[0] on argument #1 when calling: `__call__(a_input: Tensor([24, 4096], bfloat16), topk_ids: Tensor([192], int32), topk_weights: Tensor([192], float32), packed_a: Tensor([640, 2048, 96], float4_e2m1fnx2), sfa_ptr: DataPointer, packed_a_storage: Tensor([125829120], uint8), scale_storage: Tensor([15728640], uint8), barrier_count: Tensor([1], int32), barrier_epoch: Tensor([1], int32), b_w13: Tensor([4096, 2048, 96], float4_e2m1fnx2), sfb_w13_ptr: DataPointer, b_down: Tensor([4096, 1024, 96], float4_e2m1fnx2), sfb_down_ptr: DataPointer, row_counts: Tensor([96], int32), active_expert_count: Tensor([1], int32), weight_expert_ids: Tensor([96], int32), global_to_local_expert: Tensor([96], int32), input_global_scale: Tensor([96], float32), alpha: Tensor([96], float32), down_alpha: Tensor([96], float32), global_scale: Tensor([96], float32), scatter_output: Tensor([24, 4096], bfloat16), token_map: Tensor([96, 640], int32), token_weights: Tensor([96, 640], float32), stream: Stream)`, expected to be 192
+  epcompact  M=    8 zipf     -> FAILED Mismatched topk_ids.shape[0] on argument #1 when calling: `__call__(a_input: Tensor([54, 4096], bfloat16), topk_ids: Tensor([432], int32), topk_weights: Tensor([432], float32), packed_a: Tensor([640, 2048, 96], float4_e2m1fnx2), sfa_ptr: DataPointer, packed_a_storage: Tensor([125829120], uint8), scale_storage: Tensor([15728640], uint8), barrier_count: Tensor([1], int32), barrier_epoch: Tensor([1], int32), b_w13: Tensor([4096, 2048, 96], float4_e2m1fnx2), sfb_w13_ptr: DataPointer, b_down: Tensor([4096, 1024, 96], float4_e2m1fnx2), sfb_down_ptr: DataPointer, row_counts: Tensor([96], int32), active_expert_count: Tensor([1], int32), weight_expert_ids: Tensor([96], int32), global_to_local_expert: Tensor([96], int32), input_global_scale: Tensor([96], float32), alpha: Tensor([96], float32), down_alpha: Tensor([96], float32), global_scale: Tensor([96], float32), scatter_output: Tensor([54, 4096], bfloat16), token_map: Tensor([96, 640], int32), token_weights: Tensor([96, 640], float32), stream: Stream)`, expected to be 432
+  epcompact  M=   64 uniform  -> FAILED CUDA error: operation not supported on global/shared address space
+    MemAvailable now: 12851492 kB
+=== 02:06:24  layout A  arm bf16  sets 1  forms dense epcompact nativeep
+    rc=0  0 failed lines
+  dense      M=    8 uniform  ->   9998.56 us    236.6 GB/s   0.32 TF
+  dense      M=    8 zipf     ->   7706.06 us    235.1 GB/s   0.42 TF
+  dense      M=   64 uniform  ->  20804.11 us    232.3 GB/s   1.24 TF
+  dense      M=   64 zipf     ->  18080.85 us    228.3 GB/s   1.43 TF
+  dense      M= 1792 uniform  ->  46029.11 us    105.0 GB/s  15.68 TF
+  dense      M= 1792 zipf     ->  40327.24 us    119.8 GB/s  17.89 TF
+  epcompact  M=    8 uniform  ->   5240.39 us    192.1 GB/s   0.23 TF
+  epcompact  M=    8 zipf     ->   6075.97 us    231.9 GB/s   0.45 TF
+  epcompact  M=   64 uniform  ->  20868.46 us    207.4 GB/s   0.46 TF
+  epcompact  M=   64 zipf     ->  20556.74 us    208.1 GB/s   1.00 TF
+  epcompact  M= 1792 uniform  ->  27944.44 us    172.9 GB/s   8.74 TF
+  epcompact  M= 1792 zipf     ->  37384.26 us    129.2 GB/s  15.42 TF
+  nativeep   M=    8 uniform  ->   4349.55 us    231.4 GB/s   0.28 TF
+  nativeep   M=    8 zipf     ->   6019.51 us    234.1 GB/s   0.45 TF
+  nativeep   M=   64 uniform  ->  18719.04 us    231.2 GB/s   0.52 TF
+  nativeep   M=   64 zipf     ->  18616.70 us    229.8 GB/s   1.11 TF
+  nativeep   M= 1792 uniform  ->  29437.63 us    164.1 GB/s   8.30 TF
+  nativeep   M= 1792 zipf     ->  37871.31 us    127.6 GB/s  15.23 TF
+    MemAvailable now: 12860536 kB
+###### LAYOUT B (TP-2304 no-EP: 288 local, K=4096 N=768 topk=8)
+=== 02:08:45  layout B  arm marlin-w4a16  sets 2  forms dense
+    rc=0  0 failed lines
+  dense      M=    8 uniform  ->   1306.70 us    231.6 GB/s   0.92 TF
+  dense      M=    8 zipf     ->    895.42 us    225.3 GB/s   1.35 TF
+  dense      M=   64 uniform  ->   5354.10 us    236.0 GB/s   1.80 TF
+  dense      M=   64 zipf     ->   3817.86 us    233.6 GB/s   2.53 TF
+  dense      M= 1792 uniform  ->   8718.19 us    175.4 GB/s  31.04 TF
+  dense      M= 1792 zipf     ->   9638.20 us    158.6 GB/s  28.07 TF
+    MemAvailable now: 14337324 kB
+=== 02:09:11  layout B  arm vllm-cutlass-w4a4  sets 2  forms dense
+    rc=0  0 failed lines
+  dense      M=    8 uniform  ->   1471.47 us    205.6 GB/s   0.82 TF
+  dense      M=    8 zipf     ->   1023.72 us    197.0 GB/s   1.18 TF
+  dense      M=   64 uniform  ->   5849.08 us    216.0 GB/s   1.65 TF
+  dense      M=   64 zipf     ->   4195.88 us    212.5 GB/s   2.30 TF
+  dense      M= 1792 uniform  ->  12441.53 us    122.9 GB/s  21.75 TF
+  dense      M= 1792 zipf     ->  12405.81 us    123.2 GB/s  21.81 TF
+    MemAvailable now: 14294984 kB
+=== 02:09:38  layout B  arm fi-b12x-w4a4  sets 2  forms dense
+    rc=0  0 failed lines
+  dense      M=    8 uniform  ->   1466.88 us    206.3 GB/s   0.82 TF
+  dense      M=    8 zipf     ->    970.24 us    207.9 GB/s   1.25 TF
+  dense      M=   64 uniform  ->   5989.30 us    210.9 GB/s   1.61 TF
+  dense      M=   64 zipf     ->   4249.60 us    209.9 GB/s   2.27 TF
+  dense      M= 1792 uniform  ->   8708.16 us    175.6 GB/s  31.07 TF
+  dense      M= 1792 zipf     ->   9221.61 us    165.8 GB/s  29.34 TF
+    MemAvailable now: 14040152 kB
+=== 02:10:09  layout B  arm bf16  sets 1  forms dense
+    rc=0  0 failed lines
+  dense      M=    8 uniform  ->   5155.99 us    208.7 GB/s   0.23 TF
+  dense      M=    8 zipf     ->   5073.76 us    141.4 GB/s   0.24 TF
+  dense      M=   64 uniform  ->  19076.47 us    235.5 GB/s   0.51 TF
+  dense      M=   64 zipf     ->  13544.91 us    234.1 GB/s   0.71 TF
+  dense      M= 1792 uniform  ->  31015.75 us    175.3 GB/s   8.72 TF
+  dense      M= 1792 zipf     ->  31057.40 us    175.0 GB/s   8.71 TF
+    MemAvailable now: 14246068 kB
+###### DONE Sun Sep  6 02:10:59 +03 2026

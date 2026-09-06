@@ -1,0 +1,84 @@
+{
+ "layout": "A",
+ "M": 64,
+ "E_gate": 24,
+ "K": 4096,
+ "N": 2048,
+ "topk": 8,
+ "arms": {
+  "bf16": {
+   "status": "ok",
+   "kind": "bf16",
+   "cosine_vs_bf16": 0.999992,
+   "cosine_vs_emul_w4a4": 0.987642,
+   "relerr_max_vs_bf16": 258.135,
+   "relerr_mean_vs_bf16": 0.02388,
+   "relerr_max_vs_w4a4": 33939.285,
+   "relerr_mean_vs_w4a4": 1.5313,
+   "out_absmax": 1004.0,
+   "gate_reference": "bf16",
+   "VERDICT": "COMPARABLE"
+  },
+  "marlin-w4a16": {
+   "status": "ok",
+   "kind": "w4a16",
+   "cosine_vs_bf16": 0.999985,
+   "cosine_vs_emul_w4a4": 0.987637,
+   "relerr_max_vs_bf16": 396.832,
+   "relerr_mean_vs_bf16": 0.03415,
+   "relerr_max_vs_w4a4": 33705.23,
+   "relerr_mean_vs_w4a4": 1.52841,
+   "out_absmax": 1008.0,
+   "gate_reference": "bf16",
+   "VERDICT": "COMPARABLE"
+  },
+  "vllm-cutlass-w4a4": {
+   "status": "ok",
+   "kind": "w4a4",
+   "cosine_vs_bf16": 0.987664,
+   "cosine_vs_emul_w4a4": 0.998054,
+   "relerr_max_vs_bf16": 14595.151,
+   "relerr_mean_vs_bf16": 1.22694,
+   "relerr_max_vs_w4a4": 12345.515,
+   "relerr_mean_vs_w4a4": 0.56507,
+   "out_absmax": 1004.0,
+   "gate_reference": "w4a4",
+   "VERDICT": "COMPARABLE"
+  },
+  "fi-b12x-w4a4": {
+   "status": "ok",
+   "kind": "w4a4",
+   "cosine_vs_bf16": 0.986637,
+   "cosine_vs_emul_w4a4": 0.985639,
+   "relerr_max_vs_bf16": 9897.693,
+   "relerr_mean_vs_bf16": 1.2045,
+   "relerr_max_vs_w4a4": 14824.619,
+   "relerr_mean_vs_w4a4": 1.46587,
+   "out_absmax": 1016.0,
+   "gate_reference": "w4a4",
+   "VERDICT": "NOT COMPARABLE"
+  }
+ },
+ "a13_dq": 0.0008719307952560484,
+ "a2_dq": 0.23606842756271362,
+ "ref_w4a4_vs_bf16": {
+  "cosine": 0.98765,
+  "note": "intrinsic W4A4 penalty on synthetic Gaussian data"
+ },
+ "cutlass_gscale_convention": "recip",
+ "rel_l2_vs_bf16": {
+  "emul_w4a4_reference": 0.15732,
+  "bf16": 0.00407,
+  "marlin-w4a16": 0.00543,
+  "vllm-cutlass-w4a4": 0.15711,
+  "fi-b12x-w4a4": 0.16311
+ },
+ "pairwise_cosine": {
+  "bf16 ~ marlin-w4a16": 0.999984,
+  "bf16 ~ vllm-cutlass-w4a4": 0.987656,
+  "bf16 ~ fi-b12x-w4a4": 0.986633,
+  "marlin-w4a16 ~ vllm-cutlass-w4a4": 0.987658,
+  "marlin-w4a16 ~ fi-b12x-w4a4": 0.986639,
+  "vllm-cutlass-w4a4 ~ fi-b12x-w4a4": 0.985679
+ }
+}

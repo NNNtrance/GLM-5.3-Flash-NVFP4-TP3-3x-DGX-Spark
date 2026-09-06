@@ -40,7 +40,15 @@ Settings for every number are in the linked documents. Nothing here was measured
 7. [06 — Benchmarks](docs/06-benchmarks.md) and [07 — Speed](docs/07-speed.md) — realistic and synthetic, separated.
 8. [08 — What we tried and rejected](docs/08-what-we-tried.md) and [09 — Open problems](docs/09-open-problems.md).
 9. [Audit](audit/README.md) — run it after install; expected ranges.
-10. [CREDITS](CREDITS.md) · [LICENSES](LICENSES.md) · [CONTRIBUTING — tests we could not run; send us yours](CONTRIBUTING.md)
+10. [CREDITS](CREDITS.md) · [LICENSES](LICENSES.md) · [CONTRIBUTING — tests we could not run; send us yours](CONTRIBUTING.md) · [CHANGELOG](CHANGELOG.md)
+
+### Side studies
+
+- [MoE kernel bench on GB10](results/kernels/moe-kernel-bench-gb10.md) — model-free, single GPU, engine
+  untouched: marlin W4A16 against both FP4 tensor-core MoE paths at the production shapes, and against
+  the no-expert-parallel alternative. The bench, its driver and the table generator are in
+  [`bench/moe-kernels/`](bench/moe-kernels/); the raw output is in
+  [`results/kernels/gb10-moebench/`](results/kernels/gb10-moebench/).
 
 ## Quick path (for an AI coding agent)
 

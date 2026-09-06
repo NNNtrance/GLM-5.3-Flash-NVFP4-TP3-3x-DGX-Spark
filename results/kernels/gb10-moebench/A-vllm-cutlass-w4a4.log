@@ -1,0 +1,16 @@
+INFO 09-05 23:05:09 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-05 23:05:09 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-05 23:05:11 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  dense      M=    8 uniform  ->   3089.50 us    215.3 GB/s   1.04 TF
+  dense      M=    8 zipf     ->   2383.07 us    213.8 GB/s   1.35 TF
+  dense      M=   64 uniform  ->   6331.17 us    214.6 GB/s   4.07 TF
+  dense      M=   64 zipf     ->   5443.85 us    213.2 GB/s   4.73 TF
+  dense      M= 1792 uniform  ->  12487.97 us    108.8 GB/s  57.78 TF
+  dense      M= 1792 zipf     ->  12644.91 us    107.5 GB/s  57.06 TF
+  epcompact  M=    8 uniform  ->   1366.39 us    207.2 GB/s   0.88 TF
+  epcompact  M=    8 zipf     ->   1890.66 us    209.6 GB/s   1.44 TF
+  epcompact  M=   64 uniform  ->   5606.79 us    217.1 GB/s   1.72 TF
+  epcompact  M=   64 zipf     ->   5656.84 us    212.7 GB/s   3.65 TF
+  epcompact  M= 1792 uniform  ->   8894.09 us    152.8 GB/s  27.47 TF
+  epcompact  M= 1792 zipf     ->  12533.48 us    108.4 GB/s  46.01 TF
+WROTE /bench/out/A-vllm-cutlass-w4a4.json

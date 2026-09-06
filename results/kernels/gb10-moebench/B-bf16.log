@@ -1,0 +1,11 @@
+INFO 09-05 23:10:16 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-05 23:10:16 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-05 23:10:19 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+WARNING 09-05 23:10:22 [fused_moe.py:1167] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=288,N=768,device_name=NVIDIA_GB10.json
+  dense      M=    8 uniform  ->   5155.99 us    208.7 GB/s   0.23 TF
+  dense      M=    8 zipf     ->   5073.76 us    141.4 GB/s   0.24 TF
+  dense      M=   64 uniform  ->  19076.47 us    235.5 GB/s   0.51 TF
+  dense      M=   64 zipf     ->  13544.91 us    234.1 GB/s   0.71 TF
+  dense      M= 1792 uniform  ->  31015.75 us    175.3 GB/s   8.72 TF
+  dense      M= 1792 zipf     ->  31057.40 us    175.0 GB/s   8.71 TF
+WROTE /bench/out/B-bf16.json

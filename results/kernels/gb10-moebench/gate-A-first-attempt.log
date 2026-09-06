@@ -1,0 +1,69 @@
+INFO 09-05 23:00:43 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+WARNING 09-05 23:00:46 [fused_moe.py:1167] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=24,N=2048,device_name=NVIDIA_GB10.json
+WARNING 09-05 23:00:47 [marlin_utils_fp4.py:354] Your GPU does not have native support for FP4 computation but FP4 quantization is being used. Weight-only FP4 compression will be used leveraging the Marlin kernel. This may degrade performance for compute-heavy workloads.
+{
+ "layout": "A",
+ "M": 64,
+ "E_gate": 24,
+ "K": 4096,
+ "N": 2048,
+ "topk": 8,
+ "arms": {
+  "marlin-w4a8fp8": {
+   "status": "FAILED",
+   "error": "AssertionError: Current vLLM config is not set. This typically means get_current_vllm_config() was called outside of a set_current_vllm_config() context, or a CustomOp was instantiated at module import time or model forward time when config is not set. For tests that directly test custom ops/modules, use the 'default_vllm_config' pytest fixture from tests/conftest.py.",
+   "tb": "ayers/quantization/utils/marlin_utils.py\", line 682, in get_marlin_input_dtype\n    _ = get__quant_fp8_method()\n        ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/utils/marlin_utils.py\", line 662, in get__quant_fp8_method\n    _quant_fp8_method = QuantFP8(False, GroupShape.PER_TOKEN)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/input_quant_fp8.py\", line 61, in __init__\n    super().__init__(compile_native=compile_native)\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/custom_op.py\", line 133, in __init__\n    self._forward_method = self.dispatch_forward(compile_native=compile_native)\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/custom_op.py\", line 177, in dispatch_forward\n    compilation_config = get_cached_compilation_config()\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/config/vllm.py\", line 2823, in get_cached_compilation_config\n    return get_current_vllm_config().compilation_config\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/config/vllm.py\", line 2828, in get_current_vllm_config\n    raise AssertionError(\nAssertionError: Current vLLM config is not set. This typically means get_current_vllm_config() was called outside of a set_current_vllm_config() context, or a CustomOp was instantiated at module import time or model forward time when config is not set. For tests that directly test custom ops/modules, use the 'default_vllm_config' pytest fixture from tests/conftest.py.\n"
+  },
+  "fi-b12x-w4a4": {
+   "status": "FAILED",
+   "error": "TypeError: block_scale_interleave() got an unexpected keyword argument 'm'",
+   "tb": "Traceback (most recent call last):\n  File \"/bench/moebench.py\", line 583, in cmd_gate\n    arm.prep()\n  File \"/bench/moebench.py\", line 299, in prep\n    sf1 = conv(w13bs.reshape(e1 * m1, ksf1), m=m1, k=ksf1 * 16, num_groups=e1)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: block_scale_interleave() got an unexpected keyword argument 'm'\n"
+  },
+  "bf16": {
+   "status": "ok",
+   "kind": "bf16",
+   "cosine_vs_bf16": 0.999992,
+   "cosine_vs_emul_w4a4": 0.987642,
+   "relerr_max_vs_bf16": 258.135,
+   "relerr_mean_vs_bf16": 0.02388,
+   "relerr_max_vs_w4a4": 33939.285,
+   "relerr_mean_vs_w4a4": 1.5313,
+   "out_absmax": 1004.0,
+   "gate_reference": "bf16",
+   "VERDICT": "COMPARABLE"
+  },
+  "marlin-w4a16": {
+   "status": "ok",
+   "kind": "w4a16",
+   "cosine_vs_bf16": 0.999985,
+   "cosine_vs_emul_w4a4": 0.987637,
+   "relerr_max_vs_bf16": 396.832,
+   "relerr_mean_vs_bf16": 0.03415,
+   "relerr_max_vs_w4a4": 33705.23,
+   "relerr_mean_vs_w4a4": 1.52841,
+   "out_absmax": 1008.0,
+   "gate_reference": "bf16",
+   "VERDICT": "COMPARABLE"
+  },
+  "vllm-cutlass-w4a4": {
+   "status": "ok",
+   "kind": "w4a4",
+   "cosine_vs_bf16": 0.987664,
+   "cosine_vs_emul_w4a4": 0.998054,
+   "relerr_max_vs_bf16": 14595.151,
+   "relerr_mean_vs_bf16": 1.22694,
+   "relerr_max_vs_w4a4": 12345.515,
+   "relerr_mean_vs_w4a4": 0.56507,
+   "out_absmax": 1004.0,
+   "gate_reference": "w4a4",
+   "VERDICT": "COMPARABLE"
+  }
+ },
+ "a13_dq": 0.0008719307952560484,
+ "a2_dq": 0.23606842756271362,
+ "ref_w4a4_vs_bf16": {
+  "cosine": 0.98765,
+  "note": "intrinsic W4A4 penalty on synthetic Gaussian data"
+ },
+ "cutlass_gscale_convention": "recip"
+}

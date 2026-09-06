@@ -1,0 +1,44 @@
+INFO 09-05 23:05:48 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-05 23:05:48 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-05 23:05:49 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  dense      M=    8 uniform  ->   2982.96 us    223.0 GB/s   1.08 TF
+  dense      M=    8 zipf     ->   2283.24 us    223.2 GB/s   1.41 TF
+  dense      M=   64 uniform  ->   6173.72 us    220.1 GB/s   4.17 TF
+  dense      M=   64 zipf     ->   5276.29 us    220.0 GB/s   4.88 TF
+  dense      M= 1792 uniform  ->   9522.55 us    142.7 GB/s  75.77 TF
+  dense      M= 1792 zipf     ->  10117.36 us    134.3 GB/s  71.32 TF
+  epcompact  M=    8 uniform  -> FAILED Mismatched topk_ids.shape[0] on argument #1 when calling: `__call__(a_input: Tensor([24, 4096], bfloat16), topk_ids: Tensor([192], int32), topk_weights: Tensor([192], float32), packed_a: Tensor([640, 2048, 96], float4_e2m1fnx2), sfa_ptr: DataPointer, packed_a_storage: Tensor([125829120], uint8), scale_storage: Tensor([15728640], uint8), barrier_count: Tensor([1], int32), barrier_epoch: Tensor([1], int32), b_w13: Tensor([4096, 2048, 96], float4_e2m1fnx2), sfb_w13_ptr: DataPointer, b_down: Tensor([4096, 1024, 96], float4_e2m1fnx2), sfb_down_ptr: DataPointer, row_counts: Tensor([96], int32), active_expert_count: Tensor([1], int32), weight_expert_ids: Tensor([96], int32), global_to_local_expert: Tensor([96], int32), input_global_scale: Tensor([96], float32), alpha: Tensor([96], float32), down_alpha: Tensor([96], float32), global_scale: Tensor([96], float32), scatter_output: Tensor([24, 4096], bfloat16), token_map: Tensor([96, 640], int32), token_weights: Tensor([96, 640], float32), stream: Stream)`, expected to be 192
+  epcompact  M=    8 zipf     -> FAILED Mismatched topk_ids.shape[0] on argument #1 when calling: `__call__(a_input: Tensor([54, 4096], bfloat16), topk_ids: Tensor([432], int32), topk_weights: Tensor([432], float32), packed_a: Tensor([640, 2048, 96], float4_e2m1fnx2), sfa_ptr: DataPointer, packed_a_storage: Tensor([125829120], uint8), scale_storage: Tensor([15728640], uint8), barrier_count: Tensor([1], int32), barrier_epoch: Tensor([1], int32), b_w13: Tensor([4096, 2048, 96], float4_e2m1fnx2), sfb_w13_ptr: DataPointer, b_down: Tensor([4096, 1024, 96], float4_e2m1fnx2), sfb_down_ptr: DataPointer, row_counts: Tensor([96], int32), active_expert_count: Tensor([1], int32), weight_expert_ids: Tensor([96], int32), global_to_local_expert: Tensor([96], int32), input_global_scale: Tensor([96], float32), alpha: Tensor([96], float32), down_alpha: Tensor([96], float32), global_scale: Tensor([96], float32), scatter_output: Tensor([54, 4096], bfloat16), token_map: Tensor([96, 640], int32), token_weights: Tensor([96, 640], float32), stream: Stream)`, expected to be 432
+  epcompact  M=   64 uniform  -> FAILED CUDA error: operation not supported on global/shared address space
+Search for `cudaErrorInvalidAddressSpace' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+For more detailed error information, run with CUDA_LOG_FILE=stderr
+
+Traceback (most recent call last):
+  File "/bench/moebench.py", line 680, in cmd_time
+    us = time_call(fn, args.warmup, args.iters, args.rounds)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/bench/moebench.py", line 390, in time_call
+    torch.cuda.synchronize()
+  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py", line 1219, in synchronize
+    return torch._C._cuda_synchronize()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: operation not supported on global/shared address space
+Search for `cudaErrorInvalidAddressSpace' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+For more detailed error information, run with CUDA_LOG_FILE=stderr
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/bench/moebench.py", line 750, in <module>
+    main()
+  File "/bench/moebench.py", line 746, in main
+    cmd_time(args)
+  File "/bench/moebench.py", line 705, in cmd_time
+    torch.cuda.empty_cache()
+  File "/usr/local/lib/python3.12/dist-packages/torch/cuda/memory.py", line 228, in empty_cache
+    torch._C._cuda_emptyCache()
+torch.AcceleratorError: CUDA error: operation not supported on global/shared address space
+Search for `cudaErrorInvalidAddressSpace' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+For more detailed error information, run with CUDA_LOG_FILE=stderr
+

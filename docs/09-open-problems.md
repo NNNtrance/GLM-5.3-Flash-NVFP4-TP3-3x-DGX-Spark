@@ -22,9 +22,9 @@ things we measured on this cluster whose raw file is not in [`results/`](../resu
 | 2 | One node is ~2.5 % slower, permanently; and its fan does not spin at idle | The slowest node sets the cluster's pace | `[measured-here, raw not published]` | 2026-08-29 |
 | 3 | The draft model's page layout costs 26–35 % of the KV pool | Concurrency at 1M context | `[measured-here]` | 2026-09-03 |
 | 4 | Speculative decoding flips near-ties at temperature 0 | Reproducibility, not accuracy | `[measured-here, raw not published]` | 2026-09-03 |
-| 5 | The b12x MoE + EP branch has no numerical unit test | Blocks reopening a closed branch | `[not tested]` | 2026-09-03 |
+| 5 | The b12x MoE + EP branch has no numerical unit test | Blocks reopening a closed branch — narrowed 2026-09-06: the kernel is clean without an expert map | `[measured-here]` + `[not tested]` | 2026-09-06 |
 | 6 | The TP=3 pad-then-narrow loader does not cover quantized draft weights | Blocks the MXFP8 draft | `[measured-here, raw not published]` | 2026-09-03 |
-| 7 | marlin drops the checkpoint's W4A4 activation scales; the quality cost is unmeasured | Unknown quality debt | `[not tested]` | 2026-09-03 |
+| 7 | marlin drops the checkpoint's W4A4 activation scales; the **quality** cost is unmeasured (the **speed** cost was measured on 2026-09-06: marlin is faster) | Unknown quality debt | `[measured-here]` + `[not tested]` | 2026-09-06 |
 | 8 | `--max-num-batched-tokens` 2048 against 4096 was never A/B'd on this stack | Possibly leaving prefill or pool on the table | `[not tested]` | 2026-09-03 |
 | 9 | `--reasoning-parser deepseek_r1` against `glm45` was never A/B'd on this stack | Two official sources disagree | `[not tested]` | 2026-09-03 |
 | 10 | A single C4 json speed reading at 0.88 is 11 % low and unverified | Might be nothing; might be a real cost of 0.88 | `[measured-here]` | 2026-09-03 |
@@ -149,6 +149,16 @@ numerical comparison against a reference implementation, per layer**, that branc
 responsibly. Writing that test is the actual open work; the patch itself already exists in
 [`patches/ep-patch/`](../patches/ep-patch/). `[not tested]`, 2026-09-03.
 
+**Narrowed, 2026-09-06.** Half of that test now exists. The model-free MoE kernel bench
+([`results/kernels/moe-kernel-bench-gb10.md`](../results/kernels/moe-kernel-bench-gb10.md)) puts the
+b12x FP4 MoE kernel on the exact production shapes against a dequantised reference and an emulated
+W4A4 reference, and it comes out in the same error class as the reference (rel-L2 0.163 against
+0.157, cosine 0.9856) — nothing like the 0.1–0.7 cosine band a corruption would produce.
+**So the b12x FP4 arithmetic itself is not what broke `t4b`.** What that bench cannot exercise is
+the part that is left: the FP4 paths refuse `expert_map` outright, so the expert-parallel routing
+around the kernel — the only remaining suspect — is still untested. `[measured-here]` for the
+kernel, `[not tested]` for the EP path, 2026-09-06.
+
 ### 6. The TP=3 loader does not cover quantized draft weights
 
 Our pad-then-narrow loader pads only the BF16 weight paths. An MXFP8 draft goes through the
@@ -158,16 +168,32 @@ weight-plus-scale path, which the patch never touches, so rank 2 dies with
 node) did not justify it. `[measured-here, raw not published]`, 2026-09-03. Details in
 [08 — What we tried](08-what-we-tried.md), item 8.
 
-### 7. marlin drops the checkpoint's activation scales, and the cost is unmeasured
+### 7. marlin drops the checkpoint's activation scales: the speed cost is now measured, the quality cost is not
 
 marlin is the only MoE backend in this fork that accepts expert maps, which is what makes TP=3 plus
 expert parallelism possible at all. It is weight-only, so the checkpoint's W4A4 activation scales are
-dropped and the experts run A16. **We do not know what that costs in quality.** The only route we had
-to measure it was the b12x MoE + EP branch, which produces corrupt output, so the comparison arm does
-not exist. This is a known, unmeasured debt and it is stated here rather than hidden: every quality
-number in [06 — Benchmarks](06-benchmarks.md) was produced *with* this fallback in effect, so they are
-valid for this recipe as shipped — they just do not tell you what the checkpoint could do.
-`[not tested]`, 2026-09-03.
+dropped and the experts run A16. **We do not know what that costs in quality.** This is a known,
+unmeasured debt and it is stated here rather than hidden: every quality number in
+[06 — Benchmarks](06-benchmarks.md) was produced *with* this fallback in effect, so they are valid for
+this recipe as shipped — they just do not tell you what the checkpoint could do. `[not tested]`,
+2026-09-03.
+
+**The speed half is closed, 2026-09-06, and it went the other way.** The original wording said the
+only route to measure this was the corrupt b12x MoE + EP branch. That was wrong: the MoE kernels can
+be called directly, in the production image, with synthetic weights in the checkpoint layout and no
+model at all. Done that way
+([`results/kernels/moe-kernel-bench-gb10.md`](../results/kernels/moe-kernel-bench-gb10.md)), at our
+own shape and traffic the best FP4 tensor-core path on this chip is **5–7 % slower** than marlin, not
+faster, because at M = 8 and M = 64 the MoE kernel is already at **94–99 % of measured DRAM
+bandwidth** — there is no idle arithmetic for FP4 to sell, and the W4A4 activation-quantisation
+kernels give back 4–13 % of the band. FP4 wins only at prefill-sized M with all experts local
+(b12x 1.42× at M = 1,792), which is not the shape three ranks run. So restoring the activation
+scales would **cost** speed as well as work. `[measured-here]`, 2026-09-06.
+
+What is still open is exactly the quality question and nothing else. The same bench measured that at
+the MoE layer W4A4 is about **29× noisier** than W4A16 on synthetic Gaussian activations (rel-L2
+0.157 against 0.0054) — a direction, not a verdict: real activations are far more structured, and
+MMLU, the code exam and the correctness probe have **not** been run on a W4A4 MoE. `[not tested]`.
 
 ### 8. `--max-num-batched-tokens` 2048 against 4096
 
