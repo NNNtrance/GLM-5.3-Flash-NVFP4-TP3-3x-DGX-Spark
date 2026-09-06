@@ -9,6 +9,13 @@ Accepted settings are in [03 — Launch and flags](03-launch-and-flags.md); numb
 [06 — Benchmarks](06-benchmarks.md), [07 — Speed](07-speed.md) and
 [05 — Memory ladder](05-memory-ladder.md).
 
+Levers closed by the final round of work on 2026-09-06 — the CUDA-graph memory estimator, DVFS and
+clock locking, CPU idle states, page-cache and allocator cleanup, prefill chunk granularity, launch
+overhead and the memory fraction above 0.88 — are in
+[12 — What we closed](12-what-we-closed.md), each with the measurement that closes it. Two items
+below are marked in place where that work touched them, and [12 §13](12-what-we-closed.md#13-what-opened-while-these-closed)
+lists five problems that opened as those closed and were never worked on.
+
 Evidence tiers are the ones from the style guide, plus `[measured-here, raw not published]` for
 things we measured on this cluster whose raw file is not in [`results/`](../results/).
 
@@ -19,13 +26,13 @@ things we measured on this cluster whose raw file is not in [`results/`](../resu
 | # | Problem | Impact | Tier | Date |
 |---|---|---|---|---|
 | 1 | Rank 0 loads weights ~3× slower than the workers | ≈ 43 % of a boot in the pin era; ~5 min boot today | `[measured-here, raw not published]` | 2026-08-31 |
-| 2 | One node is ~2.5 % slower, permanently; and its fan does not spin at idle | The slowest node sets the cluster's pace | `[measured-here, raw not published]` | 2026-08-29 |
+| 2 | One node is ~2.5 % slower, permanently; and its fan does not spin at idle | The slowest node sets the cluster's pace — **closed as to remedy 2026-09-06: a clock lock changes nothing** | `[measured-here, raw not published]` | 2026-09-06 |
 | 3 | The draft model's page layout costs 26–35 % of the KV pool | Concurrency at 1M context | `[measured-here]` | 2026-09-03 |
 | 4 | Speculative decoding flips near-ties at temperature 0 | Reproducibility, not accuracy | `[measured-here, raw not published]` | 2026-09-03 |
 | 5 | The b12x MoE + EP branch has no numerical unit test | Blocks reopening a closed branch — narrowed 2026-09-06: the kernel is clean without an expert map | `[measured-here]` + `[not tested]` | 2026-09-06 |
 | 6 | The TP=3 pad-then-narrow loader does not cover quantized draft weights | Blocks the MXFP8 draft | `[measured-here, raw not published]` | 2026-09-03 |
 | 7 | marlin drops the checkpoint's W4A4 activation scales; the **quality** cost is unmeasured (the **speed** cost was measured on 2026-09-06: marlin is faster) | Unknown quality debt | `[measured-here]` + `[not tested]` | 2026-09-06 |
-| 8 | `--max-num-batched-tokens` 2048 against 4096 was never A/B'd on this stack | Possibly leaving prefill or pool on the table | `[not tested]` | 2026-09-03 |
+| 8 | `--max-num-batched-tokens` 2048 against 4096 was never A/B'd on this stack | Possibly leaving prefill or pool on the table — **narrowed 2026-09-06: the chunk fills 99.7 % of the 2048 budget** | `[not tested]` + `[measured-here]` | 2026-09-06 |
 | 9 | `--reasoning-parser deepseek_r1` against `glm45` was never A/B'd on this stack | Two official sources disagree | `[not tested]` | 2026-09-03 |
 | 10 | A single C4 json speed reading at 0.88 is 11 % low and unverified | Might be nothing; might be a real cost of 0.88 | `[measured-here]` | 2026-09-03 |
 | 11 | IFEval was not cross-checked against lm-eval's own `ifeval` task | Our 78.9 % may understate the model | `[measured-here]` | 2026-09-03 |
@@ -90,6 +97,16 @@ and the middle node sits between the other two rather than the distribution bein
 not proved it and there is nothing to do about it if it is true. The operational consequence is real
 and belongs in any three-node plan: **the slowest node sets the pace of the cluster**, so a mixed
 configuration (one node clock-capped, two not) is the worst of both worlds. Raw not published.
+
+**Closed as to remedy, 2026-09-06.** A clock-lock A/B and 1,478 telemetry samples per the session
+([12 §3](12-what-we-closed.md#3-gpu-clock-lock-dvfs-power-and-cooling)) reproduce the per-node
+plateaus — 2,500 / 2,535 / 2,437 MHz against the earlier 2,502 / 2,485 / 2,440 — and show that
+`nvidia-smi -lgc 3003,3003` is accepted on all three nodes while changing the actual clock by
++0.3 / +0.5 / −0.04 %. The throttle flag never lit. An independent published measurement on the same
+part agrees. So: the **cause** is still unproven, but there is now a measurement saying there is no
+software remedy, and the "mixed configuration is the worst of both worlds" advice above is
+strengthened rather than weakened — capping the fast nodes is the only thing a clock knob can
+actually do here.
 
 ### 3. The draft model's page layout costs 26–35 % of the KV pool
 
@@ -201,6 +218,12 @@ We run 2048. The lab recipe our fork derives from uses 4096. On the NVFP4-era st
 and rejected decisively (pool −28 %, no speed gain, and a lock-up when combined with a KV pin), but
 **4096 was never tried, and 2048 against 4096 has never been run as a single-variable A/B on this
 stack.** The 8192 result does not settle the midpoint. `[not tested]`, 2026-09-03.
+
+**Narrowed, 2026-09-06.** The profile measures the real steady prefill chunk at **2,041 tokens —
+99.7 % of the 2,048 budget** ([11 §3](11-measured-profile.md#3-prefill--a-steady-2041-token-chunk)).
+So the concern that the current setting wastes budget is answered: it does not. What remains untested
+is whether a *larger* budget would be worth its KV cost, and there is no reason from the profile to
+expect it would. `[measured-here, raw not published]`
 
 ### 9. `--reasoning-parser deepseek_r1` against `glm45`
 

@@ -5,9 +5,37 @@ the exact image build, every launch flag with its reason, the patches we had to 
 what we measured, what we tried and rejected, and what is still open. Written so that a person
 **or their AI coding agent** can follow it step by step.
 
-Our EXL3 recipe for the same model on the same hardware is
+## Status (2026-09-06)
+
+**This repository is a complete, working recipe and stays up as one, but it is not under active
+development: the maintainers' main line has moved to the EXL3 recipe for the same model on the same
+hardware.**
+
+Everything here runs. The launch command, the patches, the autostart unit and the measured numbers
+are the ones we served from, and the last round of work — a production candidate, a kernel-level
+profile, and a list of levers closed with their numbers — is written up in
+[10](docs/10-production-candidate-and-lessons.md), [11](docs/11-measured-profile.md),
+[12](docs/12-what-we-closed.md) and [13](docs/13-checkpoints.md). What we are no longer doing is
+pushing this path further ourselves. The short version of why is in
+[12 §12](docs/12-what-we-closed.md#12-quantising-the-bf16-dense-path--the-one-open-lever-deliberately-not-taken):
+half of a single-stream step is spent on weights this checkpoint leaves in BF16, and quantising them
+would at best reach parity at single stream while staying ~15 % behind on concurrent throughput and
+KV pool — a quality risk taken for a speed goal we can already meet another way.
+
+The other way is
 [`NNNtrance/GLM-5.3-Flash-EXL3-DGX-Spark`](https://github.com/NNNtrance/GLM-5.3-Flash-EXL3-DGX-Spark)
-— a different quantization path, with measured **two-node and three-node** tracks.
+— the same model on the same three nodes through the EXL3 path, with measured **two-node and
+three-node** tracks. Start at its
+[`docs/00-start-here.md`](https://github.com/NNNtrance/GLM-5.3-Flash-EXL3-DGX-Spark/blob/main/docs/00-start-here.md).
+The head-to-head numbers between the two lines, and the reason the gap is a **quantization-scope**
+difference rather than a format difference, are in
+[12 §12](docs/12-what-we-closed.md#12-quantising-the-bf16-dense-path--the-one-open-lever-deliberately-not-taken)
+and [11 §8](docs/11-measured-profile.md#8-why-the-dense-half-was-not-quantized).
+
+**Contributions are still welcome.** Issues and pull requests are read — corrections, results from
+other GB10 clusters, and the tests we could not run ourselves
+([CONTRIBUTING](CONTRIBUTING.md)) are all useful, and a correction to a published number is the most
+useful of all.
 
 > **About the name "HAREM".** HAREM is simply the name we gave our three-node setup. It is hardcoded
 > in several places (image tag `harem/glm53-lil:t10`, systemd unit `harem-motor`, container
@@ -45,6 +73,23 @@ Settings for every number are in the linked documents. Nothing here was measured
 8. [08 — What we tried and rejected](docs/08-what-we-tried.md) and [09 — Open problems](docs/09-open-problems.md).
 9. [Audit](audit/README.md) — run it after install; expected ranges.
 10. [CREDITS](CREDITS.md) · [LICENSES](LICENSES.md) · [CONTRIBUTING — tests we could not run; send us yours](CONTRIBUTING.md) · [CHANGELOG](CHANGELOG.md)
+
+### Closing state (2026-09-06)
+
+Written when the line was put down. Not needed to install or run the recipe; read it before
+optimising anything, or before repeating an experiment we already ran.
+
+- [10 — The production candidate, and the five lessons we tried to carry over](docs/10-production-candidate-and-lessons.md)
+  — the configuration we would ship today, what each change bought, the two verdicts we had to
+  correct, and the fabric latency/bandwidth sweep.
+- [11 — Where a step actually goes: the measured profile](docs/11-measured-profile.md) — kernel-level
+  breakdowns of a prefill chunk and of a decode step at C1 and C8, on all three ranks, plus which
+  weight families the BF16 half is made of.
+- [12 — What we closed, with the numbers](docs/12-what-we-closed.md) — twelve levers, each with the
+  measurement that closes it, and the five things that opened while they closed.
+- [13 — The NVFP4 checkpoints, compared](docs/13-checkpoints.md) — five public quantizations, a
+  silent-quality defect measured from their safetensors headers, and why the production checkpoint
+  stays.
 
 ### Side studies
 

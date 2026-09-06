@@ -8,6 +8,14 @@ All of it was produced on 2026-09-03 with the `harem/glm53-lil:t10` image, TP = 
 NVFP4 weights, `fp8` KV, DFlash2 draft k = 7, CUDA graphs on, temperature 0, thinking on at
 `reasoning_effort: low`. The exact settings per file are in the two documents above.
 
+**Not here:** the closing-state documents [10](../docs/10-production-candidate-and-lessons.md),
+[11](../docs/11-measured-profile.md), [12](../docs/12-what-we-closed.md) and
+[13](../docs/13-checkpoints.md) were written from a later round of measurement (2026-09-05/06) whose
+raw output — sweep JSONs, memory samplers, telemetry CSVs, profiler traces and dry-run transcripts —
+stayed on our nodes. Every number in them is tagged `[measured-here, raw not published]` for that
+reason, and the tag is not decoration: it means you cannot check those numbers against a file in this
+repository, only reproduce them.
+
 **One exception:** [`kernels/`](kernels/) is a side study, not a serving run. It holds two runs, both
 produced on 2026-09-06 in the same image but on **one GPU, with no engine and no model** — the MoE
 kernels called directly on synthetic weights. Their settings are in
