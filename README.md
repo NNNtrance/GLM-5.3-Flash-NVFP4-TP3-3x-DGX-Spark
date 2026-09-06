@@ -5,6 +5,10 @@ the exact image build, every launch flag with its reason, the patches we had to 
 what we measured, what we tried and rejected, and what is still open. Written so that a person
 **or their AI coding agent** can follow it step by step.
 
+Our EXL3 recipe for the same model on the same hardware is
+[`NNNtrance/GLM-5.3-Flash-EXL3-DGX-Spark`](https://github.com/NNNtrance/GLM-5.3-Flash-EXL3-DGX-Spark)
+— a different quantization path, with measured **two-node and three-node** tracks.
+
 > **About the name "HAREM".** HAREM is simply the name we gave our three-node setup. It is hardcoded
 > in several places (image tag `harem/glm53-lil:t10`, systemd unit `harem-motor`, container
 > `harem_glm53_lil`, patch markers `HAREM-*`, some function names and log lines). You can keep it.
