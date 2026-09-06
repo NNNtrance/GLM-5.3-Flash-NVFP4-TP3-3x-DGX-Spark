@@ -1,0 +1,8 @@
+INFO 09-06 02:12:17 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:12:17 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-06 02:12:19 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  dense      M=    8 uniform  -> full   3172.26  gemm   3027.34  actq   173.07  meta   256.92 us
+  dense      M= 1792 uniform  -> full  12273.62  gemm   7397.14  actq  2104.95  meta  2803.41 us
+  epcompact  M=    8 uniform  -> full   1470.60  gemm   1350.45  actq   168.78  meta   261.46 us
+  epcompact  M= 1792 uniform  -> full   8829.53  gemm   7054.15  actq   821.82  meta  1493.19 us
+WROTE /bench/out/smoke-split.json

@@ -1,5 +1,18 @@
 # The MoE kernel is at the DRAM roof at decode, so the FP4 tensor cores have nothing to sell
 
+> **Superseded on coverage, not on numbers.** Every figure on this page stands as measured, and this
+> page's verdict survived — but this bench measured only M = 8, 64 and 1,792, and it charged the FP4
+> path's activation quantisation, row shuffle, metadata and epilogue combine to the FP4 kernel. Both
+> were re-measured adversarially the same day in
+> [`fp4-crossover-sweep-gb10.md`](fp4-crossover-sweep-gb10.md): ten batch sizes, a memory ceiling
+> measured three ways, and the FP4 GEMM timed with its plumbing stripped off. Read that page for the
+> crossover, for the M = 512 → 1,024 marlin cliff this grid stepped over, and for the correction it
+> owed: at prefill size 38 % of what is charged to "cutlass W4A4" below is not the GEMM, and the
+> **29 % prefill gap is plumbing, not kernel** — bare, the FP4 GEMM is level with marlin in the
+> production form. Two claims made against this page were also tested there and **disproved**:
+> marlin does not inflate its scales to bf16, and this bench did not bypass b12x's wrapper. The one
+> sentence on this page that the re-run weakened is flagged in place, in *Side findings 2*.
+
 **One line.** At the shapes this recipe actually runs, the production marlin W4A16 MoE path sits at
 **94–99 % of measured DRAM bandwidth** at M = 8 and M = 64, and both FP4 tensor-core paths on this
 chip are **1.05–1.07× slower** there; FP4 wins only at prefill-sized M with all experts local
@@ -376,6 +389,15 @@ marlin.** That is the vendor arriving at our answer independently. `[measured-he
 not exhaustive: our engine boot logs carry `b12x policy fallback: attention.gdn is using a heuristic
 on nvidia gb10 … because profile 'nvidia.gb10.48sm' does not cover the query` for a different
 component. It exists and it is measured; it just does not cover every shape we ask for.)
+
+> **Weakened by the re-run.** The profile above belongs to the `b12x` package's own policy layer
+> (`b12x/policy`, `b12x/integration/tp_moe.py`), and vLLM's `flashinfer_b12x` backend does not go
+> through it — our path selects by rows routed per call (`select_sm120_moe_backend()` with
+> `_STATIC_COMPACT_CUTOVER_PAIRS = 640`). It stays as a **vendor signal** about what the vendor
+> measured; it is not a statement about the code we run. See
+> [`fp4-crossover-sweep-gb10.md`](fp4-crossover-sweep-gb10.md), *Two hypotheses raised and
+> disproved*. The related claim that this bench skipped a production layer was **disproved**:
+> production constructs the same `B12xMoEWrapper` this bench called.
 
 **3. Generating our own b12x profile is not possible in this image.** `generate_gpu_profile.py`
 fails on `--list-components` with `ModuleNotFoundError: No module named 'benchmarks.benchmark_qsa'`

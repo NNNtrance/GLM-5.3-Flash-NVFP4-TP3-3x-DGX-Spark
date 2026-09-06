@@ -1,0 +1,7 @@
+INFO 09-06 02:13:02 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:13:02 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+  a_torch_sum_small        -> 238.6 GB/s
+  a2_torch_sum_big         -> 240.8 GB/s
+  b_memcpy_d2d             -> 245.9 GB/s
+  c_custom_stream_read     -> 239.5 GB/s
+CEILING = 245.9 GB/s   WROTE /bench/out/ruler.json

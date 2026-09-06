@@ -1,0 +1,45 @@
+INFO 09-06 02:14:22 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:14:22 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+  set_bytes=1358955264 (1.266 GiB)  per-expert=14155784 B
+INFO 09-06 02:14:23 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  dense      M=    8 uniform  rows=     8 exp= 47 ->   3114.01 us   213.7 GB/s   1.03 TF
+  dense      M=    8 zipf     rows=     8 exp= 36 ->   2405.76 us   211.8 GB/s   1.34 TF
+  dense      M=   16 uniform  rows=    16 exp= 71 ->   4635.81 us   216.8 GB/s   1.39 TF
+  dense      M=   16 zipf     rows=    16 exp= 52 ->   3432.77 us   214.4 GB/s   1.88 TF
+  dense      M=   32 uniform  rows=    32 exp= 90 ->   5895.48 us   216.1 GB/s   2.19 TF
+  dense      M=   32 zipf     rows=    32 exp= 66 ->   4382.00 us   213.2 GB/s   2.94 TF
+  dense      M=   64 uniform  rows=    64 exp= 96 ->   6381.58 us   212.9 GB/s   4.04 TF
+  dense      M=   64 zipf     rows=    64 exp= 82 ->   5479.02 us   211.9 GB/s   4.70 TF
+  dense      M=  128 uniform  rows=   128 exp= 96 ->   6575.55 us   206.7 GB/s   7.84 TF
+  dense      M=  128 zipf     rows=   128 exp= 95 ->   6487.11 us   207.3 GB/s   7.94 TF
+  dense      M=  256 uniform  rows=   256 exp= 96 ->   6954.09 us   195.4 GB/s  14.82 TF
+  dense      M=  256 zipf     rows=   256 exp= 96 ->   6915.22 us   196.5 GB/s  14.91 TF
+  dense      M=  512 uniform  rows=   512 exp= 96 ->   7985.25 us   170.2 GB/s  25.82 TF
+  dense      M=  512 zipf     rows=   512 exp= 96 ->   7921.16 us   171.6 GB/s  26.03 TF
+  dense      M= 1024 uniform  rows=  1024 exp= 96 ->   9716.26 us   139.9 GB/s  42.44 TF
+  dense      M= 1024 zipf     rows=  1024 exp= 96 ->   9721.96 us   139.8 GB/s  42.41 TF
+  dense      M= 1792 uniform  rows=  1792 exp= 96 ->  12454.19 us   109.1 GB/s  57.94 TF
+  dense      M= 1792 zipf     rows=  1792 exp= 96 ->  12704.43 us   107.0 GB/s  56.80 TF
+  dense      M= 4096 uniform  rows=  4096 exp= 96 ->  20565.67 us    66.1 GB/s  80.20 TF
+  dense      M= 4096 zipf     rows=  4096 exp= 96 ->  21508.31 us    63.2 GB/s  76.68 TF
+  epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1380.76 us   205.0 GB/s   0.87 TF
+  epcompact  M=    8 zipf     rows=    54 exp= 28 ->   1897.58 us   208.9 GB/s   1.43 TF
+  epcompact  M=   16 uniform  rows=    41 exp= 34 ->   2272.07 us   211.8 GB/s   0.91 TF
+  epcompact  M=   16 zipf     rows=   107 exp= 45 ->   3010.86 us   211.6 GB/s   1.79 TF
+  epcompact  M=   32 uniform  rows=    86 exp= 56 ->   3700.91 us   214.2 GB/s   1.17 TF
+  epcompact  M=   32 zipf     rows=   211 exp= 68 ->   4526.15 us   212.7 GB/s   2.35 TF
+  epcompact  M=   64 uniform  rows=   192 exp= 86 ->   5661.77 us   215.0 GB/s   1.71 TF
+  epcompact  M=   64 zipf     rows=   410 exp= 85 ->   5698.44 us   211.2 GB/s   3.62 TF
+  epcompact  M=  128 uniform  rows=   345 exp= 91 ->   6054.02 us   212.8 GB/s   2.87 TF
+  epcompact  M=  128 zipf     rows=   797 exp= 93 ->   6398.82 us   205.7 GB/s   6.27 TF
+  epcompact  M=  256 uniform  rows=   662 exp= 95 ->   6467.62 us   207.9 GB/s   5.15 TF
+  epcompact  M=  256 zipf     rows=  1620 exp= 96 ->   6930.99 us   196.1 GB/s  11.76 TF
+  epcompact  M=  512 uniform  rows=  1350 exp= 96 ->   6845.34 us   198.5 GB/s   9.93 TF
+  epcompact  M=  512 zipf     rows=  3229 exp= 96 ->   7924.17 us   171.5 GB/s  20.51 TF
+  epcompact  M= 1024 uniform  rows=  2720 exp= 96 ->   7700.89 us   176.5 GB/s  17.78 TF
+  epcompact  M= 1024 zipf     rows=  6600 exp= 96 ->   9773.18 us   139.0 GB/s  33.99 TF
+  epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   8889.31 us   152.9 GB/s  27.48 TF
+  epcompact  M= 1792 zipf     rows= 11457 exp= 96 ->  12477.78 us   108.9 GB/s  46.21 TF
+  epcompact  M= 4096 uniform  rows= 10929 exp= 96 ->  12091.80 us   112.4 GB/s  45.49 TF
+  epcompact  M= 4096 zipf     rows= 26211 exp= 96 ->  20635.49 us    65.9 GB/s  63.93 TF
+WROTE /bench/out/cutlass.json

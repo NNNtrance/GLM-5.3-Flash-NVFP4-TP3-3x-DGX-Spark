@@ -1,0 +1,9 @@
+INFO 09-06 02:11:38 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:11:38 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+  set_bytes=1358955264 (1.266 GiB)  per-expert=14155784 B
+INFO 09-06 02:11:40 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  dense      M=    8 uniform  rows=     8 exp= 47 ->   3178.77 us   209.3 GB/s   1.01 TF
+  dense      M= 1792 uniform  rows=  1792 exp= 96 ->  12554.59 us   108.2 GB/s  57.47 TF
+  epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1608.87 us   176.0 GB/s   0.75 TF
+  epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   9055.81 us   150.1 GB/s  26.98 TF
+WROTE /bench/out/smoke-cutlass.json

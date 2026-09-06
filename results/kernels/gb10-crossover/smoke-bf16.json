@@ -1,0 +1,95 @@
+{
+ "layout": "A",
+ "arm": "bf16",
+ "tag": "",
+ "sets": 1,
+ "shapes": {
+  "E_local": 96,
+  "E_global": 288,
+  "K": 4096,
+  "N": 2048,
+  "topk": 8
+ },
+ "build_s": 3.2,
+ "set_bytes_measured": 4831838208,
+ "bytes_per_expert_measured": 50331648,
+ "b12x_maxtok_mode": null,
+ "memavail_start_gib": 6.75,
+ "mem_after_prep": 4.5,
+ "runs": [
+  {
+   "form": "dense",
+   "M": 8,
+   "routing": "uniform",
+   "rows": 8,
+   "pairs": 64,
+   "experts_touched": 47,
+   "us_rounds": [
+    10140.12
+   ],
+   "us": 10140.12,
+   "spread_pct": 0.0,
+   "weight_bytes": 2365587456,
+   "gflop": 3.22,
+   "gbps": 233.3,
+   "tflops": 0.32,
+   "b12x_maxtok": null
+  },
+  {
+   "form": "dense",
+   "M": 1792,
+   "routing": "uniform",
+   "rows": 1792,
+   "pairs": 14336,
+   "experts_touched": 96,
+   "us_rounds": [
+    47613.43
+   ],
+   "us": 47613.43,
+   "spread_pct": 0.0,
+   "weight_bytes": 4831838208,
+   "gflop": 721.55,
+   "gbps": 101.5,
+   "tflops": 15.15,
+   "b12x_maxtok": null
+  },
+  {
+   "form": "epcompact",
+   "M": 8,
+   "routing": "uniform",
+   "rows": 24,
+   "pairs": 24,
+   "experts_touched": 20,
+   "us_rounds": [
+    5290.6
+   ],
+   "us": 5290.6,
+   "spread_pct": 0.0,
+   "weight_bytes": 1006632960,
+   "gflop": 1.21,
+   "gbps": 190.3,
+   "tflops": 0.23,
+   "b12x_maxtok": null
+  },
+  {
+   "form": "epcompact",
+   "M": 1792,
+   "routing": "uniform",
+   "rows": 4854,
+   "pairs": 4854,
+   "experts_touched": 96,
+   "us_rounds": [
+    29035.67
+   ],
+   "us": 29035.67,
+   "spread_pct": 0.0,
+   "weight_bytes": 4831838208,
+   "gflop": 244.31,
+   "gbps": 166.4,
+   "tflops": 8.41,
+   "b12x_maxtok": null
+  }
+ ],
+ "mem_peak_gib": 5.78,
+ "memavail_min_gib": 6.32
+}

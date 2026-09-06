@@ -1,0 +1,42 @@
+INFO 09-06 02:24:08 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:24:08 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+  set_bytes=4831838208 (4.500 GiB)  per-expert=50331648 B
+INFO 09-06 02:24:12 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+WARNING 09-06 02:24:14 [fused_moe.py:1167] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=96,N=2048,device_name=NVIDIA_GB10.json
+  dense      M=    8 uniform  rows=     8 exp= 47 ->  10175.86 us   232.5 GB/s   0.32 TF
+  dense      M=    8 zipf     rows=     8 exp= 36 ->   7794.27 us   232.5 GB/s   0.41 TF
+  dense      M=   16 uniform  rows=    16 exp= 71 ->  15280.90 us   233.9 GB/s   0.42 TF
+  dense      M=   16 zipf     rows=    16 exp= 52 ->  11363.62 us   230.3 GB/s   0.57 TF
+  dense      M=   32 uniform  rows=    32 exp= 90 ->  19447.66 us   232.9 GB/s   0.66 TF
+  dense      M=   32 zipf     rows=    32 exp= 66 ->  14621.57 us   227.2 GB/s   0.88 TF
+  dense      M=   64 uniform  rows=    64 exp= 96 ->  21203.23 us   227.9 GB/s   1.22 TF
+  dense      M=   64 zipf     rows=    64 exp= 82 ->  18624.22 us   221.6 GB/s   1.38 TF
+  dense      M=  128 uniform  rows=   128 exp= 96 ->  24088.02 us   200.6 GB/s   2.14 TF
+  dense      M=  128 zipf     rows=   128 exp= 95 ->  23901.96 us   200.0 GB/s   2.16 TF
+  dense      M=  256 uniform  rows=   256 exp= 96 ->  24109.97 us   200.4 GB/s   4.28 TF
+  dense      M=  256 zipf     rows=   256 exp= 96 ->  24776.35 us   195.0 GB/s   4.16 TF
+  dense      M=  512 uniform  rows=   512 exp= 96 ->  24354.96 us   198.4 GB/s   8.46 TF
+  dense      M=  512 zipf     rows=   512 exp= 96 ->  27157.32 us   177.9 GB/s   7.59 TF
+  dense      M= 1024 uniform  rows=  1024 exp= 96 ->  31037.78 us   155.7 GB/s  13.28 TF
+  dense      M= 1024 zipf     rows=  1024 exp= 96 ->  35565.83 us   135.9 GB/s  11.59 TF
+  dense      M= 1792 uniform  rows=  1792 exp= 96 ->  48352.44 us    99.9 GB/s  14.92 TF
+  dense      M= 1792 zipf     rows=  1792 exp= 96 ->  43841.00 us   110.2 GB/s  16.46 TF
+  epcompact  M=    8 uniform  rows=    24 exp= 20 ->   5386.94 us   186.9 GB/s   0.22 TF
+  epcompact  M=    8 zipf     rows=    54 exp= 28 ->   6256.65 us   225.2 GB/s   0.43 TF
+  epcompact  M=   16 uniform  rows=    41 exp= 34 ->   7455.80 us   229.5 GB/s   0.28 TF
+  epcompact  M=   16 zipf     rows=   107 exp= 45 ->  11478.19 us   197.3 GB/s   0.47 TF
+  epcompact  M=   32 uniform  rows=    86 exp= 56 ->  14215.06 us   198.3 GB/s   0.30 TF
+  epcompact  M=   32 zipf     rows=   211 exp= 68 ->  17265.37 us   198.2 GB/s   0.62 TF
+  epcompact  M=   64 uniform  rows=   192 exp= 86 ->  21224.94 us   203.9 GB/s   0.46 TF
+  epcompact  M=   64 zipf     rows=   410 exp= 85 ->  21028.70 us   203.4 GB/s   0.98 TF
+  epcompact  M=  128 uniform  rows=   345 exp= 91 ->  22413.33 us   204.4 GB/s   0.77 TF
+  epcompact  M=  128 zipf     rows=   797 exp= 93 ->  25484.49 us   183.7 GB/s   1.57 TF
+  epcompact  M=  256 uniform  rows=   662 exp= 95 ->  25968.81 us   184.1 GB/s   1.28 TF
+  epcompact  M=  256 zipf     rows=  1620 exp= 96 ->  27169.59 us   177.8 GB/s   3.00 TF
+  epcompact  M=  512 uniform  rows=  1350 exp= 96 ->  26809.94 us   180.2 GB/s   2.53 TF
+  epcompact  M=  512 zipf     rows=  3229 exp= 96 ->  29311.95 us   164.8 GB/s   5.54 TF
+  epcompact  M= 1024 uniform  rows=  2720 exp= 96 ->  28082.70 us   172.1 GB/s   4.87 TF
+  epcompact  M= 1024 zipf     rows=  6600 exp= 96 ->  33459.61 us   144.4 GB/s   9.93 TF
+  epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->  29604.59 us   163.2 GB/s   8.25 TF
+  epcompact  M= 1792 zipf     rows= 11457 exp= 96 ->  40032.14 us   120.7 GB/s  14.40 TF
+WROTE /bench/out/bf16.json

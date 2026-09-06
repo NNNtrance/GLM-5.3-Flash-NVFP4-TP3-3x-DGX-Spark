@@ -1,0 +1,13 @@
+###### 2b. GEMM-ONLY BOUND (M capped at 1792: 4096 exceeds production MNBT 2048)
+=== 05:22:28  split (split)   MemAvailable 12569 MiB
+    rc=0   MemAvailable now 12443 MiB
+      epcompact  M= 1792 uniform  -> full   8880.72  gemm   6764.93  actq   797.82  meta  1361.48 us
+      epcompact  M= 1792 zipf     -> full  12537.18  gemm   7618.22  actq  1873.61  meta  3165.74 us
+    WROTE /bench/out/split.json
+###### 3b. BF16 REFERENCE
+=== 05:24:01  bf16 (time)   MemAvailable 12443 MiB
+    rc=0   MemAvailable now 12601 MiB
+      epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->  29604.59 us   163.2 GB/s   8.25 TF
+      epcompact  M= 1792 zipf     rows= 11457 exp= 96 ->  40032.14 us   120.7 GB/s  14.40 TF
+    WROTE /bench/out/bf16.json
+###### DONE Sun Sep  6 05:26:43 +03 2026

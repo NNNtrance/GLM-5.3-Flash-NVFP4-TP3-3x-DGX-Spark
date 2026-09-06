@@ -1,0 +1,40 @@
+###### 0. RULERS (three ways)
+=== 05:12:56  ruler (ruler)   MemAvailable 12526 MiB
+    rc=0   MemAvailable now 12543 MiB
+      b_memcpy_d2d             -> 245.9 GB/s
+      c_custom_stream_read     -> 239.5 GB/s
+    CEILING = 245.9 GB/s   WROTE /bench/out/ruler.json
+###### 1. MAIN SWEEP - Layout A, forms dense + epcompact, routing uniform + zipf
+=== 05:13:11  marlin (time)   MemAvailable 12543 MiB
+    rc=0   MemAvailable now 12588 MiB
+      epcompact  M= 4096 uniform  rows= 10929 exp= 96 ->  10338.28 us   131.4 GB/s  53.21 TF
+      epcompact  M= 4096 zipf     rows= 26211 exp= 96 ->  22242.80 us    61.1 GB/s  59.31 TF
+    WROTE /bench/out/marlin.json
+=== 05:14:15  cutlass (time)   MemAvailable 12588 MiB
+    rc=0   MemAvailable now 12586 MiB
+      epcompact  M= 4096 uniform  rows= 10929 exp= 96 ->  12091.80 us   112.4 GB/s  45.49 TF
+      epcompact  M= 4096 zipf     rows= 26211 exp= 96 ->  20635.49 us    65.9 GB/s  63.93 TF
+    WROTE /bench/out/cutlass.json
+=== 05:15:21  b12x-matched (time)   MemAvailable 12586 MiB
+    rc=0   MemAvailable now 12564 MiB
+      epcompact  M= 4096 uniform  rows= 10929 exp= 96 ->   8873.60 us   153.1 GB/s  61.99 TF
+      epcompact  M= 4096 zipf     rows= 26211 exp= 96 ->  15790.09 us    86.1 GB/s  83.55 TF
+    WROTE /bench/out/b12x-matched.json
+=== 05:17:16  b12x-fixed2k (time)   MemAvailable 12564 MiB
+    rc=0   MemAvailable now 12568 MiB
+      epcompact  M= 4096 uniform  rows= 10929 exp= 96 ->   8890.49 us   152.9 GB/s  61.87 TF
+      epcompact  M= 4096 zipf     rows= 26211 exp= 96 ->  15873.22 us    85.6 GB/s  83.11 TF
+    WROTE /bench/out/b12x-fixed2k.json
+###### 2. GEMM-ONLY BOUND (cutlass FP4 decomposed)
+=== 05:19:02  split (split)   MemAvailable 12568 MiB
+    rc=137   MemAvailable now 12608 MiB
+      dense      M= 1024 zipf     -> full   9770.68  gemm   7093.22  actq  1135.99  meta  1526.11 us
+      dense      M= 1792 uniform  -> full  12466.00  gemm   7432.47  actq  2071.89  meta  2671.07 us
+      dense      M= 1792 zipf     -> full  12641.10  gemm   7846.77  actq  2091.34  meta  2645.56 us
+###### 3. BF16 REFERENCE (1 weight set; heaviest, runs last)
+=== 05:20:02  bf16 (time)   MemAvailable 12608 MiB
+    rc=137   MemAvailable now 12575 MiB
+      dense      M= 1024 zipf     rows=  1024 exp= 96 ->  34655.69 us   139.4 GB/s  11.90 TF
+      dense      M= 1792 uniform  rows=  1792 exp= 96 ->  47830.64 us   101.0 GB/s  15.09 TF
+      dense      M= 1792 zipf     rows=  1792 exp= 96 ->  42751.80 us   113.0 GB/s  16.88 TF
+###### DONE Sun Sep  6 05:21:37 +03 2026

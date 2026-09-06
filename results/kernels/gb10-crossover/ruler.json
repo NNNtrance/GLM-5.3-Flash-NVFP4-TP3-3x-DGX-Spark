@@ -1,0 +1,58 @@
+{
+ "device": "NVIDIA GB10",
+ "sm_count": 48,
+ "capability": [
+  12,
+  1
+ ],
+ "spec_lpddr5x_gbps": 273.0,
+ "memavail_start_gib": 11.68,
+ "rulers": {
+  "a_torch_sum_small": {
+   "method": "torch .sum(), 4 x 32 MiB bf16 (tonight's ruler)",
+   "buf_mib": 32,
+   "rounds_gbps": [
+    239.5,
+    238.6,
+    229.3
+   ],
+   "gbps": 238.6
+  },
+  "a2_torch_sum_big": {
+   "method": "torch .sum(), one 2.0 GiB bf16 buffer",
+   "buf_mib": 2048,
+   "rounds_gbps": [
+    240.4,
+    241.2,
+    240.8
+   ],
+   "gbps": 240.8
+  },
+  "b_memcpy_d2d": {
+   "method": "cudaMemcpyDeviceToDevice, 2.0 GiB buffer",
+   "buf_mib": 2048,
+   "copy_gbps": 123.0,
+   "rounds_gbps": [
+    244.6,
+    246.1,
+    245.9
+   ],
+   "gbps": 245.9,
+   "note": "gbps = (read+write)/t = read-equivalent traffic"
+  },
+  "c_custom_stream_read": {
+   "gbps": 239.5,
+   "threads": 256,
+   "blocks": 96,
+   "rounds_gbps": [
+    238.9,
+    239.7,
+    239.5
+   ],
+   "method": "custom __ldg/uint4 streaming read, 2.0 GiB",
+   "buf_mib": 2048
+  }
+ },
+ "ceiling_gbps": 245.9,
+ "memavail_min_gib": 11.35
+}

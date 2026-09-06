@@ -1,0 +1,45 @@
+INFO 09-06 02:15:27 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:15:27 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-06 02:15:28 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  set_bytes=1358954496 (1.266 GiB)  per-expert=14155776 B
+  dense      M=    8 uniform  rows=     8 exp= 47 ->   2962.64 us   224.6 GB/s   1.09 TF
+  dense      M=    8 zipf     rows=     8 exp= 36 ->   2265.80 us   224.9 GB/s   1.42 TF
+  dense      M=   16 uniform  rows=    16 exp= 71 ->   4513.65 us   222.7 GB/s   1.43 TF
+  dense      M=   16 zipf     rows=    16 exp= 52 ->   3310.89 us   222.3 GB/s   1.95 TF
+  dense      M=   32 uniform  rows=    32 exp= 90 ->   5755.98 us   221.3 GB/s   2.24 TF
+  dense      M=   32 zipf     rows=    32 exp= 66 ->   4217.56 us   221.5 GB/s   3.06 TF
+  dense      M=   64 uniform  rows=    64 exp= 96 ->   6192.51 us   219.5 GB/s   4.16 TF
+  dense      M=   64 zipf     rows=    64 exp= 82 ->   5274.33 us   220.1 GB/s   4.89 TF
+  dense      M=  128 uniform  rows=   128 exp= 96 ->   6282.79 us   216.3 GB/s   8.20 TF
+  dense      M=  128 zipf     rows=   128 exp= 95 ->   6286.44 us   213.9 GB/s   8.20 TF
+  dense      M=  256 uniform  rows=   256 exp= 96 ->   6332.80 us   214.6 GB/s  16.28 TF
+  dense      M=  256 zipf     rows=   256 exp= 96 ->   6647.89 us   204.4 GB/s  15.51 TF
+  dense      M=  512 uniform  rows=   512 exp= 96 ->   7032.04 us   193.3 GB/s  29.32 TF
+  dense      M=  512 zipf     rows=   512 exp= 96 ->   7541.78 us   180.2 GB/s  27.34 TF
+  dense      M= 1024 uniform  rows=  1024 exp= 96 ->   7584.79 us   179.2 GB/s  54.36 TF
+  dense      M= 1024 zipf     rows=  1024 exp= 96 ->   8780.74 us   154.8 GB/s  46.96 TF
+  dense      M= 1792 uniform  rows=  1792 exp= 96 ->   9504.64 us   143.0 GB/s  75.92 TF
+  dense      M= 1792 zipf     rows=  1792 exp= 96 ->  10083.35 us   134.8 GB/s  71.56 TF
+  dense      M= 4096 uniform  rows=  4096 exp= 96 ->  13986.22 us    97.2 GB/s 117.92 TF
+  dense      M= 4096 zipf     rows=  4096 exp= 96 ->  16092.33 us    84.4 GB/s 102.49 TF
+  epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1289.66 us   219.5 GB/s   0.94 TF
+  epcompact  M=    8 zipf     rows=    54 exp= 28 ->   1793.78 us   221.0 GB/s   1.52 TF
+  epcompact  M=   16 uniform  rows=    41 exp= 34 ->   2168.61 us   221.9 GB/s   0.95 TF
+  epcompact  M=   16 zipf     rows=   107 exp= 45 ->   2908.31 us   219.0 GB/s   1.85 TF
+  epcompact  M=   32 uniform  rows=    86 exp= 56 ->   3556.07 us   222.9 GB/s   1.22 TF
+  epcompact  M=   32 zipf     rows=   211 exp= 68 ->   4381.12 us   219.7 GB/s   2.42 TF
+  epcompact  M=   64 uniform  rows=   192 exp= 86 ->   5511.56 us   220.9 GB/s   1.75 TF
+  epcompact  M=   64 zipf     rows=   410 exp= 85 ->   5489.75 us   219.2 GB/s   3.76 TF
+  epcompact  M=  128 uniform  rows=   345 exp= 91 ->   5870.36 us   219.4 GB/s   2.96 TF
+  epcompact  M=  128 zipf     rows=   797 exp= 93 ->   6192.47 us   212.6 GB/s   6.48 TF
+  epcompact  M=  256 uniform  rows=   662 exp= 95 ->   6061.91 us   221.8 GB/s   5.50 TF
+  epcompact  M=  256 zipf     rows=  1620 exp= 96 ->   6615.81 us   205.4 GB/s  12.32 TF
+  epcompact  M=  512 uniform  rows=  1350 exp= 96 ->   6638.95 us   204.7 GB/s  10.23 TF
+  epcompact  M=  512 zipf     rows=  3229 exp= 96 ->   7510.36 us   180.9 GB/s  21.64 TF
+  epcompact  M= 1024 uniform  rows=  2720 exp= 96 ->   7093.76 us   191.6 GB/s  19.30 TF
+  epcompact  M= 1024 zipf     rows=  6600 exp= 96 ->   8504.38 us   159.8 GB/s  39.06 TF
+  epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   7193.27 us   188.9 GB/s  33.96 TF
+  epcompact  M= 1792 zipf     rows= 11457 exp= 96 ->  10052.72 us   135.2 GB/s  57.36 TF
+  epcompact  M= 4096 uniform  rows= 10929 exp= 96 ->   8873.60 us   153.1 GB/s  61.99 TF
+  epcompact  M= 4096 zipf     rows= 26211 exp= 96 ->  15790.09 us    86.1 GB/s  83.55 TF
+WROTE /bench/out/b12x-matched.json

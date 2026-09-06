@@ -1,0 +1,32 @@
+###### -1. SMOKE (API check, ~2 min; every arm + the decomposition)
+=== 05:11:16  smoke-marlin (time)   MemAvailable 12632 MiB
+    rc=0   MemAvailable now 12660 MiB
+      epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1270.56 us   222.8 GB/s   0.95 TF
+      epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   7194.67 us   188.9 GB/s  33.96 TF
+    WROTE /bench/out/smoke-marlin.json
+=== 05:11:31  smoke-cutlass (time)   MemAvailable 12660 MiB
+    rc=0   MemAvailable now 12645 MiB
+      epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1608.87 us   176.0 GB/s   0.75 TF
+      epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   9055.81 us   150.1 GB/s  26.98 TF
+    WROTE /bench/out/smoke-cutlass.json
+=== 05:11:45  smoke-b12x (time)   MemAvailable 12645 MiB
+    rc=0   MemAvailable now 12615 MiB
+      epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1312.47 us   215.7 GB/s   0.92 TF
+      epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   7561.74 us   179.7 GB/s  32.31 TF
+    WROTE /bench/out/smoke-b12x.json
+=== 05:12:11  smoke-split (split)   MemAvailable 12615 MiB
+    rc=0   MemAvailable now 12601 MiB
+      epcompact  M=    8 uniform  -> full   1470.60  gemm   1350.45  actq   168.78  meta   261.46 us
+      epcompact  M= 1792 uniform  -> full   8829.53  gemm   7054.15  actq   821.82  meta  1493.19 us
+    WROTE /bench/out/smoke-split.json
+=== 05:12:24  smoke-bf16 (time)   MemAvailable 12601 MiB
+    rc=0   MemAvailable now 12535 MiB
+      epcompact  M=    8 uniform  rows=    24 exp= 20 ->   5290.60 us   190.3 GB/s   0.23 TF
+      epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->  29035.67 us   166.4 GB/s   8.41 TF
+    WROTE /bench/out/smoke-bf16.json
+  SMOKE marlin-w4a16   runs=4 failed=0 OK
+  SMOKE vllm-cutlass-w4a4 runs=4 failed=0 OK
+  SMOKE fi-b12x-w4a4   runs=4 failed=0 OK
+  SMOKE vllm-cutlass-w4a4-split runs=4 failed=0 OK
+  SMOKE bf16           runs=4 failed=0 OK
+SMOKE_ONLY - stopping

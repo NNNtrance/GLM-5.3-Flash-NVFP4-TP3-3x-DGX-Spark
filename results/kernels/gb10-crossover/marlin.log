@@ -1,0 +1,46 @@
+INFO 09-06 02:13:18 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:13:18 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-06 02:13:19 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+WARNING 09-06 02:13:21 [marlin_utils_fp4.py:354] Your GPU does not have native support for FP4 computation but FP4 quantization is being used. Weight-only FP4 compression will be used leveraging the Marlin kernel. This may degrade performance for compute-heavy workloads.
+  set_bytes=1358955264 (1.266 GiB)  per-expert=14155784 B
+  dense      M=    8 uniform  rows=     8 exp= 47 ->   2833.92 us   234.8 GB/s   1.14 TF
+  dense      M=    8 zipf     rows=     8 exp= 36 ->   2164.33 us   235.5 GB/s   1.49 TF
+  dense      M=   16 uniform  rows=    16 exp= 71 ->   4265.44 us   235.6 GB/s   1.51 TF
+  dense      M=   16 zipf     rows=    16 exp= 52 ->   3154.26 us   233.4 GB/s   2.04 TF
+  dense      M=   32 uniform  rows=    32 exp= 90 ->   5405.63 us   235.7 GB/s   2.38 TF
+  dense      M=   32 zipf     rows=    32 exp= 66 ->   4043.57 us   231.1 GB/s   3.19 TF
+  dense      M=   64 uniform  rows=    64 exp= 96 ->   5834.62 us   232.9 GB/s   4.42 TF
+  dense      M=   64 zipf     rows=    64 exp= 82 ->   5079.10 us   228.5 GB/s   5.07 TF
+  dense      M=  128 uniform  rows=   128 exp= 96 ->   5948.94 us   228.4 GB/s   8.66 TF
+  dense      M=  128 zipf     rows=   128 exp= 95 ->   5868.97 us   229.1 GB/s   8.78 TF
+  dense      M=  256 uniform  rows=   256 exp= 96 ->   5975.53 us   227.4 GB/s  17.25 TF
+  dense      M=  256 zipf     rows=   256 exp= 96 ->   6214.42 us   218.7 GB/s  16.59 TF
+  dense      M=  512 uniform  rows=   512 exp= 96 ->   6618.53 us   205.3 GB/s  31.15 TF
+  dense      M=  512 zipf     rows=   512 exp= 96 ->   7033.67 us   193.2 GB/s  29.31 TF
+  dense      M= 1024 uniform  rows=  1024 exp= 96 ->  10355.34 us   131.2 GB/s  39.82 TF
+  dense      M= 1024 zipf     rows=  1024 exp= 96 ->   9431.61 us   144.1 GB/s  43.72 TF
+  dense      M= 1792 uniform  rows=  1792 exp= 96 ->  13143.99 us   103.4 GB/s  54.90 TF
+  dense      M= 1792 zipf     rows=  1792 exp= 96 ->  13315.33 us   102.1 GB/s  54.19 TF
+  dense      M= 4096 uniform  rows=  4096 exp= 96 ->  25806.10 us    52.7 GB/s  63.91 TF
+  dense      M= 4096 zipf     rows=  4096 exp= 96 ->  25972.19 us    52.3 GB/s  63.50 TF
+  epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1273.00 us   222.4 GB/s   0.95 TF
+  epcompact  M=    8 zipf     rows=    54 exp= 28 ->   1723.64 us   230.0 GB/s   1.58 TF
+  epcompact  M=   16 uniform  rows=    41 exp= 34 ->   2052.98 us   234.4 GB/s   1.01 TF
+  epcompact  M=   16 zipf     rows=   107 exp= 45 ->   2730.29 us   233.3 GB/s   1.97 TF
+  epcompact  M=   32 uniform  rows=    86 exp= 56 ->   3384.80 us   234.2 GB/s   1.28 TF
+  epcompact  M=   32 zipf     rows=   211 exp= 68 ->   4150.65 us   231.9 GB/s   2.56 TF
+  epcompact  M=   64 uniform  rows=   192 exp= 86 ->   5190.46 us   234.5 GB/s   1.86 TF
+  epcompact  M=   64 zipf     rows=   410 exp= 85 ->   5186.23 us   232.0 GB/s   3.98 TF
+  epcompact  M=  128 uniform  rows=   345 exp= 91 ->   5536.18 us   232.7 GB/s   3.14 TF
+  epcompact  M=  128 zipf     rows=   797 exp= 93 ->   5782.97 us   227.6 GB/s   6.94 TF
+  epcompact  M=  256 uniform  rows=   662 exp= 95 ->   6001.03 us   224.1 GB/s   5.55 TF
+  epcompact  M=  256 zipf     rows=  1620 exp= 96 ->   6125.09 us   221.9 GB/s  13.31 TF
+  epcompact  M=  512 uniform  rows=  1350 exp= 96 ->   6241.76 us   217.7 GB/s  10.89 TF
+  epcompact  M=  512 zipf     rows=  3229 exp= 96 ->   6824.78 us   199.1 GB/s  23.81 TF
+  epcompact  M= 1024 uniform  rows=  2720 exp= 96 ->   6438.24 us   211.1 GB/s  21.26 TF
+  epcompact  M= 1024 zipf     rows=  6600 exp= 96 ->   8590.78 us   158.2 GB/s  38.67 TF
+  epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   6908.68 us   196.7 GB/s  35.36 TF
+  epcompact  M= 1792 zipf     rows= 11457 exp= 96 ->  11823.06 us   114.9 GB/s  48.77 TF
+  epcompact  M= 4096 uniform  rows= 10929 exp= 96 ->  10338.28 us   131.4 GB/s  53.21 TF
+  epcompact  M= 4096 zipf     rows= 26211 exp= 96 ->  22242.80 us    61.1 GB/s  59.31 TF
+WROTE /bench/out/marlin.json

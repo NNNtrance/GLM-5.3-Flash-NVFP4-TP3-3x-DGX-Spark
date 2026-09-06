@@ -1,0 +1,45 @@
+INFO 09-06 02:17:22 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:17:22 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-06 02:17:23 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  set_bytes=1358954496 (1.266 GiB)  per-expert=14155776 B
+  dense      M=    8 uniform  rows=     8 exp= 47 ->   3010.88 us   221.0 GB/s   1.07 TF
+  dense      M=    8 zipf     rows=     8 exp= 36 ->   2291.18 us   222.4 GB/s   1.41 TF
+  dense      M=   16 uniform  rows=    16 exp= 71 ->   4522.95 us   222.2 GB/s   1.42 TF
+  dense      M=   16 zipf     rows=    16 exp= 52 ->   3299.91 us   223.1 GB/s   1.95 TF
+  dense      M=   32 uniform  rows=    32 exp= 90 ->   5754.89 us   221.4 GB/s   2.24 TF
+  dense      M=   32 zipf     rows=    32 exp= 66 ->   4214.84 us   221.7 GB/s   3.06 TF
+  dense      M=   64 uniform  rows=    64 exp= 96 ->   6160.44 us   220.6 GB/s   4.18 TF
+  dense      M=   64 zipf     rows=    64 exp= 82 ->   5264.32 us   220.5 GB/s   4.90 TF
+  dense      M=  128 uniform  rows=   128 exp= 96 ->   6838.54 us   198.7 GB/s   7.54 TF
+  dense      M=  128 zipf     rows=   128 exp= 95 ->   6727.68 us   199.9 GB/s   7.66 TF
+  dense      M=  256 uniform  rows=   256 exp= 96 ->   6943.21 us   195.7 GB/s  14.85 TF
+  dense      M=  256 zipf     rows=   256 exp= 96 ->   6988.73 us   194.4 GB/s  14.75 TF
+  dense      M=  512 uniform  rows=   512 exp= 96 ->   7145.93 us   190.2 GB/s  28.85 TF
+  dense      M=  512 zipf     rows=   512 exp= 96 ->   7379.16 us   184.2 GB/s  27.94 TF
+  dense      M= 1024 uniform  rows=  1024 exp= 96 ->   7655.75 us   177.5 GB/s  53.86 TF
+  dense      M= 1024 zipf     rows=  1024 exp= 96 ->   8471.29 us   160.4 GB/s  48.67 TF
+  dense      M= 1792 uniform  rows=  1792 exp= 96 ->   9448.55 us   143.8 GB/s  76.37 TF
+  dense      M= 1792 zipf     rows=  1792 exp= 96 ->  10129.75 us   134.2 GB/s  71.23 TF
+  dense      M= 4096 uniform  rows=  4096 exp= 96 ->  13960.85 us    97.3 GB/s 118.14 TF
+  dense      M= 4096 zipf     rows=  4096 exp= 96 ->  16108.75 us    84.4 GB/s 102.38 TF
+  epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1307.68 us   216.5 GB/s   0.92 TF
+  epcompact  M=    8 zipf     rows=    54 exp= 28 ->   1808.34 us   219.2 GB/s   1.50 TF
+  epcompact  M=   16 uniform  rows=    41 exp= 34 ->   2212.70 us   217.5 GB/s   0.93 TF
+  epcompact  M=   16 zipf     rows=   107 exp= 45 ->   2912.12 us   218.7 GB/s   1.85 TF
+  epcompact  M=   32 uniform  rows=    86 exp= 56 ->   3610.93 us   219.5 GB/s   1.20 TF
+  epcompact  M=   32 zipf     rows=   211 exp= 68 ->   4369.57 us   220.3 GB/s   2.43 TF
+  epcompact  M=   64 uniform  rows=   192 exp= 86 ->   5502.50 us   221.2 GB/s   1.76 TF
+  epcompact  M=   64 zipf     rows=   410 exp= 85 ->   5513.76 us   218.2 GB/s   3.74 TF
+  epcompact  M=  128 uniform  rows=   345 exp= 91 ->   5858.52 us   219.9 GB/s   2.96 TF
+  epcompact  M=  128 zipf     rows=   797 exp= 93 ->   6111.86 us   215.4 GB/s   6.56 TF
+  epcompact  M=  256 uniform  rows=   662 exp= 95 ->   6111.18 us   220.1 GB/s   5.45 TF
+  epcompact  M=  256 zipf     rows=  1620 exp= 96 ->   6624.59 us   205.1 GB/s  12.31 TF
+  epcompact  M=  512 uniform  rows=  1350 exp= 96 ->   6333.96 us   214.6 GB/s  10.73 TF
+  epcompact  M=  512 zipf     rows=  3229 exp= 96 ->   7450.50 us   182.4 GB/s  21.81 TF
+  epcompact  M= 1024 uniform  rows=  2720 exp= 96 ->   7169.54 us   189.5 GB/s  19.09 TF
+  epcompact  M= 1024 zipf     rows=  6600 exp= 96 ->   8555.65 us   158.8 GB/s  38.83 TF
+  epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   7212.06 us   188.4 GB/s  33.88 TF
+  epcompact  M= 1792 zipf     rows= 11457 exp= 96 ->  10034.88 us   135.4 GB/s  57.46 TF
+  epcompact  M= 4096 uniform  rows= 10929 exp= 96 ->   8890.49 us   152.9 GB/s  61.87 TF
+  epcompact  M= 4096 zipf     rows= 26211 exp= 96 ->  15873.22 us    85.6 GB/s  83.11 TF
+WROTE /bench/out/b12x-fixed2k.json

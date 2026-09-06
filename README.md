@@ -49,6 +49,14 @@ Settings for every number are in the linked documents. Nothing here was measured
   the no-expert-parallel alternative. The bench, its driver and the table generator are in
   [`bench/moe-kernels/`](bench/moe-kernels/); the raw output is in
   [`results/kernels/gb10-moebench/`](results/kernels/gb10-moebench/).
+- [FP4 crossover sweep on GB10](results/kernels/fp4-crossover-sweep-gb10.md) — the adversarial re-run
+  of that bench after the `cuda-exl3` author challenged it, with the design and the verdict criteria
+  written **before** the run: ten batch sizes, the memory ceiling measured three ways, and the FP4
+  path timed with its plumbing stripped off so a fused custom kernel's floor can be seen. Where the
+  crossover is, what a custom sm_121 path could win at each operating point, the marlin cliff the
+  first grid stepped over, and the correction the first bench owed. Sweep and driver in
+  [`bench/moe-kernels/crossover/`](bench/moe-kernels/crossover/); raw output in
+  [`results/kernels/gb10-crossover/`](results/kernels/gb10-crossover/).
 
 ## Quick path (for an AI coding agent)
 

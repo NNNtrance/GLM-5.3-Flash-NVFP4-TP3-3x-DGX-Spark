@@ -1,0 +1,10 @@
+INFO 09-06 02:11:24 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:11:24 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-06 02:11:25 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+WARNING 09-06 02:11:28 [marlin_utils_fp4.py:354] Your GPU does not have native support for FP4 computation but FP4 quantization is being used. Weight-only FP4 compression will be used leveraging the Marlin kernel. This may degrade performance for compute-heavy workloads.
+  set_bytes=1358955264 (1.266 GiB)  per-expert=14155784 B
+  dense      M=    8 uniform  rows=     8 exp= 47 ->   2976.44 us   223.5 GB/s   1.08 TF
+  dense      M= 1792 uniform  rows=  1792 exp= 96 ->  13681.13 us    99.3 GB/s  52.74 TF
+  epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1270.56 us   222.8 GB/s   0.95 TF
+  epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   7194.67 us   188.9 GB/s  33.96 TF
+WROTE /bench/out/smoke-marlin.json

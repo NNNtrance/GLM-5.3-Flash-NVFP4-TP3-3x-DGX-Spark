@@ -1,0 +1,9 @@
+INFO 09-06 02:11:51 [scheduler.py:241] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 09-06 02:11:51 [kernel.py:365] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 09-06 02:11:52 [import_utils.py:478] DeepEP v2 requires NCCL >= 2.30.4 but found 2.29.7. deepep_v2 backend will not be available.
+  set_bytes=1358954496 (1.266 GiB)  per-expert=14155776 B
+  dense      M=    8 uniform  rows=     8 exp= 47 ->   3054.46 us   217.8 GB/s   1.05 TF
+  dense      M= 1792 uniform  rows=  1792 exp= 96 ->  10039.73 us   135.4 GB/s  71.87 TF
+  epcompact  M=    8 uniform  rows=    24 exp= 20 ->   1312.47 us   215.7 GB/s   0.92 TF
+  epcompact  M= 1792 uniform  rows=  4854 exp= 96 ->   7561.74 us   179.7 GB/s  32.31 TF
+WROTE /bench/out/smoke-b12x.json

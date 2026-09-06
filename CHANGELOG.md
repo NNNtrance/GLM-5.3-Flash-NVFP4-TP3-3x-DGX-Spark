@@ -9,6 +9,82 @@ This is a working record, not a release history.
 
 ---
 
+## 2026-09-06 — the FP4 crossover sweep: the crossover is real, and it is above our traffic
+
+**New: [`results/kernels/fp4-crossover-sweep-gb10.md`](results/kernels/fp4-crossover-sweep-gb10.md)
+and [`bench/moe-kernels/crossover/`](bench/moe-kernels/crossover/).** The author of the `cuda-exl3`
+kernel project did not accept the MoE kernel study below — b12x is not perfect for sm121, he argued,
+and an sm_121-native NVFP4 path would be much better both at prefill and under concurrency, so set
+the earlier bias aside and measure again. This is that re-measurement, built wanting the theory to
+come out true: **the measurement design, the thresholds and the verdict rule were written before the
+run** and are published unchanged, because a verdict rule written after seeing the numbers cannot
+answer a charge of bias. Same conditions as the first study — one GPU, no engine, no checkpoint, no
+model, the production image's own kernels on synthetic NVFP4 expert banks in the checkpoint layout.
+`[measured-here]`
+
+**The earlier verdict survives, on much harder evidence.** The memory ceiling was rebuilt three
+independent ways — `torch.sum()`, `cudaMemcpyD2D` and a hand-written `__ldg`/`uint4` streaming reader
+— and they agree inside 3 % at **238.6 / 245.9 / 239.5 GB/s**; the single-method 240.5 GB/s ruler the
+first study leaned on is **2.2 %** below the best of them, so that objection failed. Against a
+245.9 GB/s ceiling, marlin sits at **91–96 %** at every decode and concurrency point, and the decisive
+new number is that **even a zero-overhead FP4 GEMM is 1.03–1.07× slower there**: the FP4 path was
+timed with pre-quantised activations, pre-built routing metadata, no row shuffle and no epilogue
+combine — the floor no fused kernel can go below — and it still loses. A custom sm_121 path could win
+at most **4–9 %** at M = 8 / 64 / 128 / 256, and the measured reality today is minus 3–7 %.
+
+**The crossover was located, and it sits above the traffic this recipe runs.** Ten batch sizes instead
+of three. With all eight experts local the best FP4 path first beats marlin by more than 5 % at
+**M = 1,024** (uniform and Zipf); in the EP-effective form every rank actually sees, at **M = 4,096**
+under balanced routing and **M = 1,792** under the worst rank imbalance. Production runs
+`max-num-batched-tokens 2048`, so a single forward pass never reaches the balanced-routing crossover.
+Pre-registered verdicts: **NOT SUPPORTED** at M = 8, 64, 128 and 256 in both forms; **SUPPORTED** at
+M = 1,792 all-8-local (GEMM-only 0.56×, roofline 2.33×) and in the EP form only under the Zipf
+pathology (0.64×) — and **NOT SUPPORTED** at M = 1,792 in the production EP form with balanced
+routing (0.98×).
+
+**Two flaws in the study below, found and fixed.** *Coverage:* nothing had been measured between
+M = 64 and M = 1,792, and that gap hides a **marlin cliff at M = 512 → 1,024** in the all-local form
+(6,619 → 10,355 us, +56 %, round spread 0.2–1.9 %, so not noise) that the FP4 GEMM does not have.
+That cliff is where the whole all-local FP4 advantage comes from — a marlin scheduling artefact, not
+an FP4 tensor-core win. *Plumbing charged to the kernel:* at M = 1,792 all-local, **38 %** of the FP4
+path's wall time is outside the GEMM (2,052 us act-quant + 2,673 us metadata/combine of 12,461 us).
+Stripped bare the FP4 GEMM is **level with marlin** in the production form at prefill (0.98×) rather
+than 29 % behind. That correction is owed to the author and is recorded as one — but level is not
+ahead, and at M ≤ 512 the same plumbing costs only 142–148 us, about 3 % of the call.
+
+**Two hypotheses raised against the first study and disproved.** Marlin does **not** inflate its
+NVFP4 scales to bf16 — byte accounting taken from the arms' resident tensors gives all three
+quantised arms **14,155,78x B per expert**, 1.0000× the 4-bit + fp8-scale model — so the first
+study's GB/s tables were right. And the first bench did **not** bypass b12x's wrapper: production
+constructs the same `B12xMoEWrapper`. One sentence in the study below is weakened by the second check
+and is flagged in place: b12x's measured `nvidia.gb10.48sm` profile is a **vendor signal**, not a
+statement about the code we run, because vLLM's `flashinfer_b12x` backend does not go through that
+policy layer.
+
+**Two concrete things handed to the kernel author.** On identical byte counts the FP4 grouped GEMM
+sustains **211–220 GB/s** where marlin's complete W4A16 path sustains **228–236 GB/s** — 89 % against
+95 % of the ceiling — and closing that ~7 % weight-streaming gap is worth more at our operating points
+than any tensor-core work. And sizing the SM12x MoE wrapper per batch instead of once from
+`max_num_batched_tokens` is worth **8.8 % at M = 128 and 9.6 % at M = 256** in the all-local form
+(nothing measurable in the EP form). The last part of the results page is written to stand alone for
+that audience.
+
+**Also updated:** a banner at the top of
+[`results/kernels/moe-kernel-bench-gb10.md`](results/kernels/moe-kernel-bench-gb10.md) — superseded on
+coverage, not on numbers; none of its figures changed — a *Side studies* entry in the README, and the
+two new rows in [`results/README.md`](results/README.md).
+
+**What it cost:** fifteen minutes of one GPU, 6.94 GiB peak GPU allocation, no engine restart and no
+configuration change. The first study's host cost was **not** repeated: building one weight set at a
+time held the GPU peak near 3.5 GiB, host `MemAvailable` never went below 6.26 GiB in an accepted arm
+and nothing went into swap; the resident engine stayed idle and healthy and was sent a warm-up request
+at the end. What it did cost: a **2 hour 2 minute** wait for the cluster measurement lock, and the
+run's own memory watchdog killing the `split` and `bf16` arms at M = 4,096 — re-run capped at
+M ≤ 1,792, which is above the production `max-num-batched-tokens` and affects no verdict. Zero
+throttle events in 153 samples; round-to-round spread median 0.52 %, max 4.17 %.
+
+---
+
 ## 2026-09-06 — the MoE kernel study: marlin loses nothing, and the no-EP layout is closed
 
 **New: [`results/kernels/moe-kernel-bench-gb10.md`](results/kernels/moe-kernel-bench-gb10.md) and
