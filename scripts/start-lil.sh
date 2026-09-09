@@ -194,9 +194,24 @@ fi
 # reads enable_thinking. Send both keys — each template reads the one it knows.
 # There is no OFF switch: enable_thinking=false only removes the filter and
 # leaks the reasoning into the answer. Never set it (see docs).
+#
+# clear_thinking is the THIRD key this template reads, and it decides whether
+# every PRIOR turn's <think> block is re-rendered into the prompt. The template
+# defaults it to false -- i.e. RETAIN -- from 04c4e9e9 (27 Aug) onward, current
+# 690b7052 included. The retention fires on ordinary agent clients without them
+# asking for it: they echo the previous assistant turn back verbatim, and the
+# template extracts <think> out of `content` itself ("elif '</think>' in
+# content"), so the block comes back even though the request never set
+# reasoning_content. The cost compounds every turn.
+# Set CLEAR_THINKING=0 to restore the template's own default.
+# NOTE this only protects requests that do NOT send their own
+# chat_template_kwargs: a per-request block REPLACES these defaults rather than
+# merging, so a client sending {"reasoning_effort":"low"} drops clear_thinking
+# again. Gateways must send it on every variant. docs/03 section 3.5.
 THINKING_ARG=()
 if [ -n "${REASONING_EFFORT:-}" ]; then
-  THINKING_ARG=(--default-chat-template-kwargs "{\"enable_thinking\":true,\"reasoning_effort\":\"${REASONING_EFFORT}\"}")
+  if [ "${CLEAR_THINKING:-1}" = "1" ]; then _clear_thinking=true; else _clear_thinking=false; fi
+  THINKING_ARG=(--default-chat-template-kwargs "{\"enable_thinking\":true,\"clear_thinking\":${_clear_thinking},\"reasoning_effort\":\"${REASONING_EFFORT}\"}")
 fi
 
 EXTRA_ENV_ARG=()
