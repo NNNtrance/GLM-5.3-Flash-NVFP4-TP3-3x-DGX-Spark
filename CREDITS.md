@@ -342,3 +342,12 @@ acceptance 62–65 %, single-stream 56.9 tok/s against 48.3 before `[measured-he
 To our knowledge this has not been reported elsewhere. If you run any b12x sparse-MLA path at a head
 count that is not a multiple of 8, check your output quality before you trust it — the failure is
 silent. We would be glad to be shown prior art.
+
+## Field reports
+
+### jdecker76 — the `clear_thinking` default, from production
+
+Ran this recipe in production with a team for days, then its EXL3 sibling side by side; found that
+the shipped chat template re-renders prior turns' reasoning into every later prompt unless
+`clear_thinking` is sent, and that the template is the only file that has ever changed in
+`zai-org/GLM-5.3-Flash` (EXL3 sibling issue #1). The launcher guard above is theirs in substance.

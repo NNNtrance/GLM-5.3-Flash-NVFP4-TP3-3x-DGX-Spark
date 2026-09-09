@@ -9,6 +9,19 @@ This is a working record, not a release history.
 
 ---
 
+## 2026-09-10 — `clear_thinking: true` in the launcher
+
+The chat template this recipe ships (the 27 August upstream revision, SHA-256 `34d5ee66…`) defaults
+`clear_thinking` to `false`: every prior assistant turn's `<think>` block that a client echoes back
+inside `content` is re-rendered into the next prompt, compounding turn over turn. Measured on the
+EXL3 sibling stack at 30 → 1,771 prompt tokens for one prior reasoning turn (its docs/14 §9.12); the
+file, and therefore the mechanism, is the same here. `scripts/start-lil.sh` now always passes
+`{"enable_thinking":true,"clear_thinking":true,…}` and docs/03 is updated in both places the flag
+appears. Reported and root-caused in the field by jdecker76 (EXL3 sibling issue #1), who also
+established that `chat_template.jinja` is the only file that has ever changed in
+`zai-org/GLM-5.3-Flash`. Nothing measured in this repository changes: every number here is single-turn.
+---
+
 ## 2026-09-06 — closing state: the production candidate, the measured profile, and what we closed
 
 **Status change, stated at the top of the [README](README.md).** This repository is a complete,

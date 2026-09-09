@@ -156,7 +156,7 @@ argument.
 --mm-processor-cache-gb 0 \
 --skip-mm-profiling \
 --limit-mm-per-prompt {"image": 4, "video": 1} \
---default-chat-template-kwargs {"enable_thinking":true,"reasoning_effort":"low"}
+--default-chat-template-kwargs {"enable_thinking":true,"clear_thinking":true,"reasoning_effort":"low"}
 ```
 
 ### 1.4 What differs per node
@@ -247,7 +247,7 @@ Sections are linked where a decision has one; otherwise the rationale is the who
 
 | Flag / value | Rationale | Evidence |
 |---|---|---|
-| `--default-chat-template-kwargs {"enable_thinking":true,"reasoning_effort":"low"}` | There is **no thinking-off switch** in this chat template. The effort whitelist is `low`/`high`; anything else silently means `max`. See [3.5](#35-reasoning-thinking-effort-and-sampling) | `[measured-here]` |
+| `--default-chat-template-kwargs {"enable_thinking":true,"clear_thinking":true,"reasoning_effort":"low"}` | There is **no thinking-off switch** in this chat template. The effort whitelist is `low`/`high`; anything else silently means `max`. `clear_thinking:true` (added 10 Sep 2026) stops every prior turn's `<think>` block that a client echoes back in `content` from being re-rendered into later prompts; the 27 Aug template this recipe ships defaults to retaining it, measured on the EXL3 sibling at 30 → 1,771 prompt tokens for one prior reasoning turn (its docs/14 §9.12, issue #1 there). See [3.5](#35-reasoning-thinking-effort-and-sampling) | `[measured-here]` |
 | `--reasoning-parser deepseek_r1` | The model card says `deepseek_r1`, `recipes.vllm.ai` says `glm45`; we followed the card. Measured: the parser is **not** the cause of empty-content responses. The lab runs `glm45`; we never A/B'd the two on this stack | `[measured-here]` for the empty-content ruling, `[not tested]` for the A/B |
 | `--tool-call-parser glm47 --enable-auto-tool-choice` | Tool calling. Our tool-eval-bench score of 87.8 was obtained with exactly this setting | `[measured-here]` |
 | `--trust-remote-code` | The checkpoint carries its own config class (`glm5_next.py`) | required |

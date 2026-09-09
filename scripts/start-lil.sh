@@ -194,10 +194,10 @@ fi
 # reads enable_thinking. Send both keys — each template reads the one it knows.
 # There is no OFF switch: enable_thinking=false only removes the filter and
 # leaks the reasoning into the answer. Never set it (see docs).
-THINKING_ARG=()
-if [ -n "${REASONING_EFFORT:-}" ]; then
-  THINKING_ARG=(--default-chat-template-kwargs "{\"enable_thinking\":true,\"reasoning_effort\":\"${REASONING_EFFORT}\"}")
-fi
+# clear_thinking:true — prior turns' <think> blocks are NOT re-rendered into later prompts. The 27 Aug 2026
+# upstream template this recipe ships defaults to retaining them (EXL3 sibling docs/14 §9.12; issue #1 there).
+# Always sent; reasoning_effort is appended when REASONING_EFFORT is set.
+THINKING_ARG=(--default-chat-template-kwargs "{\"enable_thinking\":true,\"clear_thinking\":true${REASONING_EFFORT:+,\"reasoning_effort\":\"${REASONING_EFFORT}\"}}")
 
 EXTRA_ENV_ARG=()
 if [ -n "${EXTRA_ENV:-}" ]; then
